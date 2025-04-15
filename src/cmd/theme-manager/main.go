@@ -83,7 +83,7 @@ func main() {
 		logging.LogDebug("Current screen: %d", currentScreen)
 
 		// Ensure screen value is valid - update the upper bound to include all new screens
-		if currentScreen < app.Screens.MainMenu || currentScreen > app.Screens.ComponentExportMenu {
+		if currentScreen < app.Screens.MainMenu || currentScreen > 500 {
 			logging.LogDebug("CRITICAL ERROR: Invalid screen value: %d, resetting to MainMenu", currentScreen)
 			app.SetCurrentScreen(app.Screens.MainMenu)
 			continue
@@ -490,7 +490,7 @@ func main() {
 		logging.LogDebug("Current screen: %d, Next screen: %d", currentScreen, nextScreen)
 
 		// Updated range check for valid screen values
-		if nextScreen < app.Screens.MainMenu || nextScreen > app.Screens.ResetMenu {
+        if nextScreen < app.Screens.MainMenu || nextScreen > 500 {
 			logging.LogDebug("ERROR: Invalid next screen value: %d, defaulting to MainMenu", nextScreen)
 			nextScreen = app.Screens.MainMenu
 		}

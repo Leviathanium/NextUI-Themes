@@ -323,20 +323,39 @@ func GetCurrentScreen() Screen {
 
 // SetCurrentScreen sets the current screen
 func SetCurrentScreen(screen Screen) {
-	// Validate screen value before setting
-	if screen < MainMenu || screen > ResetMenu {
-		logging.LogDebug("WARNING: Attempted to set invalid screen value: %d, using MainMenu instead", screen)
-		screen = MainMenu
-	}
+	// ENHANCED LOGGING: Log important screen range values
+    logging.LogDebug("SetCurrentScreen DETAILS - Called with screen value: %d", screen)
+    logging.LogDebug("SetCurrentScreen DETAILS - Screen constants - MainMenu: %d, ComponentExportMenu: %d, ResetMenu: %d",
+                     MainMenu, ComponentExportMenu, ResetMenu)
 
-	// Add explicit debug logging
-	logging.LogDebug("Setting current screen from %d to %d", state.CurrentScreen, screen)
+    // ENHANCED LOGGING: Check values in Screens struct
+    logging.LogDebug("SetCurrentScreen DETAILS - Screens struct values - MainMenu: %d, ComponentExportMenu: %d",
+                     Screens.MainMenu, Screens.ComponentExportMenu)
 
-	// Set the screen
-	state.CurrentScreen = screen
+    // Check if values in Screens struct match constants
+    if Screens.MainMenu != MainMenu || Screens.ComponentExportMenu != ComponentExportMenu {
+        logging.LogDebug("WARNING: Mismatch between const values and Screens struct values!")
+    }
 
-	// Verify the screen was set correctly
-	logging.LogDebug("Current screen is now: %d", state.CurrentScreen)
+    // Validate screen value before setting
+    // IMPORTANT: Using ComponentExportMenu as upper bound instead of ResetMenu
+    if screen < MainMenu || screen > ComponentExportMenu {
+        logging.LogDebug("WARNING: Attempted to set invalid screen value: %d, using MainMenu instead", screen)
+        logging.LogDebug("SetCurrentScreen DETAILS - Validation failed: screen < MainMenu=%v, screen > ComponentExportMenu=%v",
+                        screen < MainMenu, screen > ComponentExportMenu)
+        screen = MainMenu
+    } else {
+        logging.LogDebug("SetCurrentScreen DETAILS - Screen value %d passed validation", screen)
+    }
+
+    // Add explicit debug logging
+    logging.LogDebug("Setting current screen from %d to %d", state.CurrentScreen, screen)
+
+    // Set the screen
+    state.CurrentScreen = screen
+
+    // Verify the screen was set correctly
+    logging.LogDebug("Current screen is now: %d", state.CurrentScreen)
 }
 
 // GetSelectedThemeType returns the selected theme type
