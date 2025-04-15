@@ -312,13 +312,14 @@ var (
 )
 
 // GetCurrentScreen returns the current screen
+// In state.go, change GetCurrentScreen()
 func GetCurrentScreen() Screen {
-	// Ensure we never return an invalid screen value
-	if state.CurrentScreen < MainMenu || state.CurrentScreen > ResetMenu {
-		logging.LogDebug("WARNING: Invalid current screen value: %d, defaulting to MainMenu", state.CurrentScreen)
-		state.CurrentScreen = MainMenu
-	}
-	return state.CurrentScreen
+    // Using ComponentExportMenu (102) as the upper bound instead of ResetMenu (83)
+    if state.CurrentScreen < MainMenu || state.CurrentScreen > ComponentExportMenu {
+        logging.LogDebug("WARNING: Invalid current screen value: %d, defaulting to MainMenu", state.CurrentScreen)
+        state.CurrentScreen = MainMenu
+    }
+    return state.CurrentScreen
 }
 
 // SetCurrentScreen sets the current screen
