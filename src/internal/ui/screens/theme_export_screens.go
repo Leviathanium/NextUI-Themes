@@ -11,6 +11,7 @@ import (
 
 	"nextui-themes/internal/app"
 	"nextui-themes/internal/logging"
+	"nextui-themes/internal/themes"
 	"nextui-themes/internal/ui"
 )
 
@@ -423,45 +424,27 @@ func HandleThemeExportConfirm(selection string, exitCode int) app.Screen {
 
 // performExport executes the actual export operation based on current settings
 func performExport() error {
-	// This is a placeholder - actual implementation will depend on the backend
-	// The real implementation would call the appropriate functions in the themes package
-
-	componentType := app.GetExportComponentType()
+	// Get export parameters from app state
+	componentType := themes.ComponentType(app.GetExportComponentType())
 	exportName := app.GetExportName()
-	fileExt := getExportFileExtension()
 
-	logging.LogDebug("Performing export of %s%s, type: %d", exportName, fileExt, componentType)
+	// Check if we're exporting selected components or all components
+	var selectedComponents map[themes.ComponentType]bool
 
-	// Different export logic based on component type
-	if componentType == app.ComponentTypeFullTheme {
-		if app.GetExportAllComponents() {
-			logging.LogDebug("Exporting all components to theme")
-			// Call themes.ExportTheme(exportName) or similar
-		} else {
-			logging.LogDebug("Exporting selected components to theme")
-			// Call themes.ExportThemeComponents(exportName, selectedComponents) or similar
-		}
+	if app.GetExportAllComponents() || componentType != themes.ComponentTypeFullTheme {
+		// For full themes with all components, or for non-theme components, use an empty map
+		selectedComponents = make(map[themes.ComponentType]bool)
 	} else {
-		// Component-specific exports
-		switch componentType {
-		case app.ComponentTypeAccent:
-			logging.LogDebug("Exporting accent pack")
-			// Call themes.ExportAccentPack(exportName) or similar
-		case app.ComponentTypeLED:
-			logging.LogDebug("Exporting LED pack")
-			// Call themes.ExportLEDPack(exportName) or similar
-		case app.ComponentTypeWallpaper:
-			logging.LogDebug("Exporting wallpaper pack")
-			// Call themes.ExportWallpaperPack(exportName) or similar
-		case app.ComponentTypeIcon:
-			logging.LogDebug("Exporting icon pack")
-			// Call themes.ExportIconPack(exportName) or similar
-		case app.ComponentTypeFont:
-			logging.LogDebug("Exporting font pack")
-			// Call themes.ExportFontPack(exportName) or similar
+		// Convert app component types to themes component types
+		selectedComponents = make(map[themes.ComponentType]bool)
+		for compType := range app.GetSelectedExportComponents() {
+			selectedComponents[themes.ComponentType(compType)] = true
 		}
 	}
 
-	// Placeholder - actual implementation would return any errors from the export
-	return nil
+	logging.LogDebug("Export parameters: Type=%d, Name=%s, AllComponents=%v",
+		componentType, exportName, app.GetExportAllComponents())
+
+	// Execute the export operation in the themes package
+	return themes.PerformExport(componentType, exportName, selectedComponents)
 }

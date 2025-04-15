@@ -5,13 +5,12 @@ package app
 
 import (
 	"os"
-	"path/filepath"
 
 	"nextui-themes/internal/accents"
 	"nextui-themes/internal/icons"
 	"nextui-themes/internal/leds"
 	"nextui-themes/internal/logging"
-	"nextui-themes/internal/themes" // Added this import
+	"nextui-themes/internal/themes"
 )
 
 // Initialize sets up the application
@@ -40,29 +39,22 @@ func Initialize() error {
 
 	_ = os.Setenv("LD_LIBRARY_PATH", "/mnt/SDCARD/.system/tg5040/lib:/usr/trimui/lib")
 
-	// Create new directory structure
+	// Create directory structure
 	logging.LogDebug("Creating theme directories")
 
-	// Create new Wallpapers directory structure
-	err = os.MkdirAll(filepath.Join(cwd, "Wallpapers"), 0755)
-	if err != nil {
-		logging.LogDebug("Error creating Wallpapers directory: %v", err)
+	// Create theme directory structure
+	if err := themes.EnsureThemeDirectoryStructure(); err != nil {
+		logging.LogDebug("Warning: Could not create theme directories: %v", err)
 	}
 
-	err = os.MkdirAll(filepath.Join(cwd, "Wallpapers", "Default"), 0755)
-	if err != nil {
-		logging.LogDebug("Error creating Wallpapers/Default directory: %v", err)
+	// Create placeholder files
+	if err := themes.CreatePlaceholderFiles(); err != nil {
+		logging.LogDebug("Warning: Could not create placeholder files: %v", err)
 	}
 
-	// Create new Themes directory structure
-	err = os.MkdirAll(filepath.Join(cwd, "Themes", "Imports"), 0755)
-	if err != nil {
-		logging.LogDebug("Error creating Themes/Imports directory: %v", err)
-	}
-
-	err = os.MkdirAll(filepath.Join(cwd, "Themes", "Exports"), 0755)
-	if err != nil {
-		logging.LogDebug("Error creating Themes/Exports directory: %v", err)
+	// Initialize new component system
+	if err := themes.InitComponentSystem(); err != nil {
+		logging.LogDebug("Warning: Could not initialize component system: %v", err)
 	}
 
 	// Create Icons directory and placeholder
@@ -80,17 +72,8 @@ func Initialize() error {
 		logging.LogDebug("Error initializing LED settings: %v", err)
 	}
 
-	// Explicitly initialize theme directories after logging is set up
-	if err := themes.EnsureThemeDirectoryStructure(); err != nil {
-		logging.LogDebug("Warning: Could not create theme directories: %v", err)
-	}
-
-	if err := themes.CreatePlaceholderFiles(); err != nil {
-		logging.LogDebug("Warning: Could not create placeholder files: %v", err)
-	}
-
-    // Log about theme functionality
-    logging.LogDebug("Theme import/export functionality initialized")
+	// Reset component state to defaults
+	ResetComponentState()
 
 	logging.LogDebug("Initialization complete")
 	return nil

@@ -6,7 +6,6 @@ package themes
 // Add at the top of import.go, after existing imports
 import (
 	"fmt"
-	"log"
 	"nextui-themes/internal/icons"  // Add this for icons package
 	"nextui-themes/internal/system" // Add this for system paths
 	"nextui-themes/internal/ui"
@@ -524,7 +523,7 @@ func ImportTheme(themeName string) error {
 	defer logFile.Close()
 
 	// Create logger
-	logger := &Logger{log.New(logFile, "", log.LstdFlags)}
+	logger := &Logger{File: logFile}
 	logger.Printf("Starting theme import for: %s", themeName)
 
 	// Full path to theme - look in Imports directory

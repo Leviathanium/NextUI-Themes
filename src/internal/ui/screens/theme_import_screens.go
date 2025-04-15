@@ -11,6 +11,7 @@ import (
 
 	"nextui-themes/internal/app"
 	"nextui-themes/internal/logging"
+	"nextui-themes/internal/themes"
 	"nextui-themes/internal/ui"
 )
 
@@ -412,44 +413,27 @@ func HandleThemeImportConfirm(selection string, exitCode int) app.Screen {
 
 // performImport executes the actual import operation based on current settings
 func performImport() error {
-	// This is a placeholder - actual implementation will depend on the backend
-	// The real implementation would call the appropriate functions in the themes package
-
-	componentType := app.GetImportComponentType()
+	// Get import parameters from app state
+	componentType := themes.ComponentType(app.GetImportComponentType())
 	itemName := app.GetSelectedImportItem()
 
-	logging.LogDebug("Performing import of %s, type: %d", itemName, componentType)
+	// Check if we're importing selected components or all components
+	var selectedComponents map[themes.ComponentType]bool
 
-	// Different import logic based on component type
-	if componentType == app.ComponentTypeFullTheme {
-		if app.GetImportAllComponents() {
-			logging.LogDebug("Importing all components from theme")
-			// Call themes.ImportTheme(itemName) or similar
-		} else {
-			logging.LogDebug("Importing selected components from theme")
-			// Call themes.ImportThemeComponents(itemName, selectedComponents) or similar
-		}
+	if app.GetImportAllComponents() || componentType != themes.ComponentTypeFullTheme {
+		// For full themes with all components, or for non-theme components, use an empty map
+		selectedComponents = make(map[themes.ComponentType]bool)
 	} else {
-		// Component-specific imports
-		switch componentType {
-		case app.ComponentTypeAccent:
-			logging.LogDebug("Importing accent pack")
-			// Call themes.ImportAccentPack(itemName) or similar
-		case app.ComponentTypeLED:
-			logging.LogDebug("Importing LED pack")
-			// Call themes.ImportLEDPack(itemName) or similar
-		case app.ComponentTypeWallpaper:
-			logging.LogDebug("Importing wallpaper pack")
-			// Call themes.ImportWallpaperPack(itemName) or similar
-		case app.ComponentTypeIcon:
-			logging.LogDebug("Importing icon pack")
-			// Call themes.ImportIconPack(itemName) or similar
-		case app.ComponentTypeFont:
-			logging.LogDebug("Importing font pack")
-			// Call themes.ImportFontPack(itemName) or similar
+		// Convert app component types to themes component types
+		selectedComponents = make(map[themes.ComponentType]bool)
+		for compType := range app.GetSelectedImportComponents() {
+			selectedComponents[themes.ComponentType(compType)] = true
 		}
 	}
 
-	// Placeholder - actual implementation would return any errors from the import
-	return nil
+	logging.LogDebug("Import parameters: Type=%d, Item=%s, AllComponents=%v",
+		componentType, itemName, app.GetImportAllComponents())
+
+	// Execute the import operation in the themes package
+	return themes.PerformImport(componentType, itemName, selectedComponents)
 }

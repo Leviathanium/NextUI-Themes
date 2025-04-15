@@ -11,6 +11,7 @@ import (
 
 	"nextui-themes/internal/app"
 	"nextui-themes/internal/logging"
+	"nextui-themes/internal/themes"
 	"nextui-themes/internal/ui"
 )
 
@@ -219,18 +220,23 @@ func HandleThemeConvertConfirm(selection string, exitCode int) app.Screen {
 
 // performThemeConversion executes the actual theme conversion based on settings
 func performThemeConversion() error {
-	// This is a placeholder - actual implementation will depend on the backend
-	// The real implementation would call the appropriate functions in the themes package
-
+	// Get conversion parameters from app state
 	themeName := app.GetSelectedConvertTheme()
-	components := app.GetSelectedConvertComponents()
+	convertAllComponents := app.GetConvertAllComponents()
 
-	logging.LogDebug("Performing conversion of theme: %s with %d components", themeName, len(components))
+	// Convert selected components
+	var selectedComponents []themes.ComponentType
+	if !convertAllComponents {
+		// Get selected components from app state
+		appComponents := app.GetSelectedConvertComponents()
+		for _, compType := range appComponents {
+			selectedComponents = append(selectedComponents, themes.ComponentType(compType))
+		}
+	}
 
-	// Call themes.DeconstructTheme(themeName, components) or similar function
+	logging.LogDebug("Conversion parameters: Theme=%s, AllComponents=%v, SelectedCount=%d",
+		themeName, convertAllComponents, len(selectedComponents))
 
-	// Generate success message with details of what was extracted
-	// This would be based on actual results from the backend
-
-	return nil
+	// Execute the theme conversion operation in the themes package
+	return themes.PerformThemeConversion(themeName, convertAllComponents, selectedComponents)
 }
