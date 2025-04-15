@@ -16,8 +16,8 @@ import (
 func MainMenuScreen() (string, int) {
 	// Menu items without numbers
 	menu := []string{
-		"Theme Management", // New consolidated option
-		"Customization",
+		"Themes",     // Theme management
+		"Components", // Component management
 		"Reset",
 	}
 
@@ -32,13 +32,13 @@ func HandleMainMenu(selection string, exitCode int) app.Screen {
 	case 0:
 		// User selected an option
 		switch selection {
-		case "Theme Management":
-			logging.LogDebug("Selected Theme Management")
-			return app.Screens.ThemeManagementMenu // New screen
+		case "Themes":
+			logging.LogDebug("Selected Themes")
+			return app.Screens.ThemesMenu
 
-		case "Customization":
-			logging.LogDebug("Selected Customization")
-			return app.Screens.CustomizationMenu
+		case "Components":
+			logging.LogDebug("Selected Components")
+			return app.Screens.ComponentsMenu
 
 		case "Reset":
 			logging.LogDebug("Selected Reset")

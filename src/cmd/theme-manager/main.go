@@ -72,8 +72,6 @@ func main() {
 
 	logging.LogDebug("Starting main loop")
 
-	// Update the switch statement in main.go to include all screen cases
-
 	// Main application loop
 	for {
 		var selection string
@@ -99,11 +97,42 @@ func main() {
 			nextScreen = screens.HandleMainMenu(selection, exitCode)
 			logging.LogDebug("Main menu returned next screen: %d", nextScreen)
 
+		// New screens for streamlined UI
+		case app.Screens.ThemesMenu:
+			logging.LogDebug("Showing themes menu")
+			selection, exitCode = screens.ThemesMenuScreen()
+			nextScreen = screens.HandleThemesMenu(selection, exitCode)
+			logging.LogDebug("Themes menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ComponentsMenu:
+			logging.LogDebug("Showing components menu")
+			selection, exitCode = screens.ComponentsMenuScreen()
+			nextScreen = screens.HandleComponentsMenu(selection, exitCode)
+			logging.LogDebug("Components menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ThemeApplyMenu:
+			logging.LogDebug("Showing theme apply menu")
+			selection, exitCode = screens.ThemeApplyMenuScreen()
+			nextScreen = screens.HandleThemeApplyMenu(selection, exitCode)
+			logging.LogDebug("Theme apply menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ThemeExtractMenu:
+			logging.LogDebug("Showing theme extract menu")
+			selection, exitCode = screens.ThemeExtractMenuScreen()
+			nextScreen = screens.HandleThemeExtractMenu(selection, exitCode)
+			logging.LogDebug("Theme extract menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ComponentApplyMenu:
+			logging.LogDebug("Showing component apply menu")
+			selection, exitCode = screens.ComponentApplyMenuScreen()
+			nextScreen = screens.HandleComponentApplyMenu(selection, exitCode)
+			logging.LogDebug("Component apply menu returned next screen: %d", nextScreen)
+
+		// For backward compatibility - redirect to new Components menu
 		case app.Screens.CustomizationMenu:
-			logging.LogDebug("Showing customization menu")
-			selection, exitCode = screens.CustomizationMenuScreen()
-			nextScreen = screens.HandleCustomizationMenu(selection, exitCode)
-			logging.LogDebug("Customization menu returned next screen: %d", nextScreen)
+			logging.LogDebug("Redirecting from old customization menu to new Components menu")
+			app.SetCurrentScreen(app.Screens.ComponentsMenu)
+			continue
 
 		// Add GlobalOptionsMenu case
 		case app.Screens.GlobalOptionsMenu:
@@ -272,12 +301,11 @@ func main() {
 			nextScreen = screens.HandleResetMenu(selection, exitCode)
 			logging.LogDebug("Reset menu returned next screen: %d", nextScreen)
 
-		// Add theme management related screens
+		// For backward compatibility - redirect to new Themes menu
 		case app.Screens.ThemeManagementMenu:
-			logging.LogDebug("Showing theme management menu")
-			selection, exitCode = screens.ThemeManagementMenuScreen()
-			nextScreen = screens.HandleThemeManagementMenu(selection, exitCode)
-			logging.LogDebug("Theme management menu returned next screen: %d", nextScreen)
+			logging.LogDebug("Redirecting from old theme management menu to new Themes menu")
+			app.SetCurrentScreen(app.Screens.ThemesMenu)
+			continue
 
 		// Import screens
 		case app.Screens.ThemeImportTypeMenu:
@@ -336,10 +364,10 @@ func main() {
 			logging.LogDebug("Theme export component selection returned next screen: %d", nextScreen)
 
 		case app.Screens.ThemeExportConfirm:
-			logging.LogDebug("Showing theme export confirmation")
-			selection, exitCode = screens.ThemeExportConfirmScreen()
-			nextScreen = screens.HandleThemeExportConfirm(selection, exitCode)
-			logging.LogDebug("Theme export confirmation returned next screen: %d", nextScreen)
+			logging.LogDebug("Showing theme export confirm screen")
+			selection, exitCode = screens.ExportCurrentThemeScreen()
+			nextScreen = screens.HandleExportCurrentTheme(selection, exitCode)
+			logging.LogDebug("Theme export confirm returned next screen: %d", nextScreen)
 
 		// Convert screens
 		case app.Screens.ThemeConvertSelection:

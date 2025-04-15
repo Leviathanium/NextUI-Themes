@@ -33,6 +33,13 @@ const (
 	// Main screens
 	MainMenu Screen = 1
 
+	// New screens for streamlined UI
+	ThemesMenu         Screen = 5
+	ComponentsMenu     Screen = 6
+	ThemeApplyMenu     Screen = 7
+	ThemeExtractMenu   Screen = 8
+	ComponentApplyMenu Screen = 9
+
 	// Theme management screens
 	ThemeManagementMenu            Screen = 10
 	ThemeImportTypeMenu            Screen = 11
@@ -92,6 +99,13 @@ const (
 type ScreenEnum struct {
 	// Main screens
 	MainMenu Screen
+
+	// New screens for streamlined UI
+	ThemesMenu         Screen
+	ComponentsMenu     Screen
+	ThemeApplyMenu     Screen
+	ThemeExtractMenu   Screen
+	ComponentApplyMenu Screen
 
 	// Theme management screens
 	ThemeManagementMenu            Screen
@@ -177,6 +191,13 @@ var (
 	Screens = ScreenEnum{
 		// Main screens
 		MainMenu: MainMenu,
+
+		// New screens for streamlined UI
+		ThemesMenu:         ThemesMenu,
+		ComponentsMenu:     ComponentsMenu,
+		ThemeApplyMenu:     ThemeApplyMenu,
+		ThemeExtractMenu:   ThemeExtractMenu,
+		ComponentApplyMenu: ComponentApplyMenu,
 
 		// Theme management screens
 		ThemeManagementMenu:            ThemeManagementMenu,

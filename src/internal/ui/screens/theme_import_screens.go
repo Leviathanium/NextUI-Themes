@@ -68,7 +68,7 @@ func HandleThemeImportTypeMenu(selection string, exitCode int) app.Screen {
 
 	case 1, 2:
 		// User pressed cancel or back
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 	}
 
 	return app.Screens.ThemeImportTypeMenu
@@ -398,7 +398,7 @@ func HandleThemeImportConfirm(selection string, exitCode int) app.Screen {
 				ui.ShowMessage("Import completed successfully", "3")
 			}
 		}
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 
 	case 1, 2:
 		// User pressed cancel or back

@@ -68,7 +68,7 @@ func HandleThemeExportTypeMenu(selection string, exitCode int) app.Screen {
 
 	case 1, 2:
 		// User pressed cancel or back
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 	}
 
 	return app.Screens.ThemeExportTypeMenu
@@ -405,7 +405,7 @@ func HandleThemeExportConfirm(selection string, exitCode int) app.Screen {
 				ui.ShowMessage("Export completed successfully", "3")
 			}
 		}
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 
 	case 1, 2:
 		// User pressed cancel or back

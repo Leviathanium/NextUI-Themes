@@ -11,22 +11,22 @@ import (
 
 	"nextui-themes/internal/app"
 	"nextui-themes/internal/logging"
-	"nextui-themes/internal/themes"
 	"nextui-themes/internal/ui"
 )
 
-// ThemesMenuScreen displays the main themes menu
+// ThemesMenuScreen displays the streamlined themes menu
 func ThemesMenuScreen() (string, int) {
 	// Menu items
 	menu := []string{
-		"Import Theme",
-		"Export Current Settings",
+		"Apply Theme",
+		"Extract Theme Components",
+		"Export Current Theme",
 	}
 
 	return ui.DisplayMinUiList(strings.Join(menu, "\n"), "text", "Themes")
 }
 
-// Replace the HandleThemesMenu function with this:
+// HandleThemesMenu processes the user's selection from the themes menu
 func HandleThemesMenu(selection string, exitCode int) app.Screen {
 	logging.LogDebug("HandleThemesMenu called with selection: '%s', exitCode: %d", selection, exitCode)
 
@@ -36,17 +36,21 @@ func HandleThemesMenu(selection string, exitCode int) app.Screen {
 	case 0:
 		// User selected an option
 		switch selection {
-		case "Import Theme":
-			logging.LogDebug("Selected Import Theme")
-			nextScreen = app.Screens.ThemeImportTypeMenu
+		case "Apply Theme":
+			logging.LogDebug("Selected Apply Theme")
+			nextScreen = app.Screens.ThemeApplyMenu
 
-		case "Export Current Settings":
-			logging.LogDebug("Selected Export Current Settings")
-			nextScreen = app.Screens.ThemeExportTypeMenu
+		case "Extract Theme Components":
+			logging.LogDebug("Selected Extract Theme Components")
+			nextScreen = app.Screens.ThemeExtractMenu
+
+		case "Export Current Theme":
+			logging.LogDebug("Selected Export Current Theme")
+			nextScreen = app.Screens.ThemeExportConfirm
 
 		default:
 			logging.LogDebug("Unknown selection: %s", selection)
-			nextScreen = app.Screens.ThemeManagementMenu
+			nextScreen = app.Screens.ThemesMenu
 		}
 
 	case 1, 2:
@@ -54,15 +58,15 @@ func HandleThemesMenu(selection string, exitCode int) app.Screen {
 		nextScreen = app.Screens.MainMenu
 	default:
 		// Default case
-		nextScreen = app.Screens.ThemeManagementMenu
+		nextScreen = app.Screens.ThemesMenu
 	}
 
 	logging.LogDebug("HandleThemesMenu returning screen: %d", nextScreen)
 	return nextScreen
 }
 
-// ThemeImportScreen displays available themes from the Imports directory
-func ThemeImportScreen() (string, int) {
+// ThemeApplyMenuScreen displays the theme selection for applying themes
+func ThemeApplyMenuScreen() (string, int) {
 	// Get the current directory
 	cwd, err := os.Getwd()
 	if err != nil {
@@ -104,29 +108,59 @@ func ThemeImportScreen() (string, int) {
 	}
 
 	logging.LogDebug("Found %d themes", len(themesList))
-	return ui.DisplayMinUiList(strings.Join(themesList, "\n"), "text", "Select Theme to Import")
+	return ui.DisplayMinUiList(strings.Join(themesList, "\n"), "text", "Select Theme to Apply")
 }
 
-// HandleThemeImport processes the user's theme selection
-func HandleThemeImport(selection string, exitCode int) app.Screen {
-	logging.LogDebug("HandleThemeImport called with selection: '%s', exitCode: %d", selection, exitCode)
+// HandleThemeApplyMenu processes the user's theme selection for applying
+func HandleThemeApplyMenu(selection string, exitCode int) app.Screen {
+	logging.LogDebug("HandleThemeApplyMenu called with selection: '%s', exitCode: %d", selection, exitCode)
 
 	switch exitCode {
 	case 0:
 		// User selected a theme
 		app.SetSelectedTheme(selection)
+		app.SetSelectedThemeType(app.GlobalTheme)
+
+		// Set all components to be imported
+		app.SetImportAllComponents(true)
+
+		// Prepare for confirmation
 		return app.Screens.ThemeImportConfirm
 
 	case 1, 2:
 		// User pressed cancel or back
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 	}
 
-	return app.Screens.ThemeImportSelection
+	return app.Screens.ThemeApplyMenu
 }
 
-// ThemeExportScreen displays the theme export confirmation
-func ThemeExportScreen() (string, int) {
+// ThemeExtractMenuScreen displays available themes for component extraction
+func ThemeExtractMenuScreen() (string, int) {
+	// Re-use the same theme listing logic from ThemeApplyMenuScreen
+	return ThemeApplyMenuScreen()
+}
+
+// HandleThemeExtractMenu processes the user's theme selection for extraction
+func HandleThemeExtractMenu(selection string, exitCode int) app.Screen {
+	logging.LogDebug("HandleThemeExtractMenu called with selection: '%s', exitCode: %d", selection, exitCode)
+
+	switch exitCode {
+	case 0:
+		// User selected a theme
+		app.SetSelectedTheme(selection)
+		return app.Screens.ThemeConvertComponentSelection
+
+	case 1, 2:
+		// User pressed cancel or back
+		return app.Screens.ThemesMenu
+	}
+
+	return app.Screens.ThemeExtractMenu
+}
+
+// ExportCurrentThemeScreen displays the theme export confirmation for current theme
+func ExportCurrentThemeScreen() (string, int) {
 	// Simple confirmation message
 	message := "Export current theme settings?\nThis will create a theme package in Themes/Exports."
 	options := []string{
@@ -137,26 +171,26 @@ func ThemeExportScreen() (string, int) {
 	return ui.DisplayMinUiList(strings.Join(options, "\n"), "text", message)
 }
 
-// HandleThemeExport processes the user's choice to export a theme
-func HandleThemeExport(selection string, exitCode int) app.Screen {
-	logging.LogDebug("HandleThemeExport called with selection: '%s', exitCode: %d", selection, exitCode)
+// HandleExportCurrentTheme processes the user's choice to export current theme
+func HandleExportCurrentTheme(selection string, exitCode int) app.Screen {
+	logging.LogDebug("HandleExportCurrentTheme called with selection: '%s', exitCode: %d", selection, exitCode)
 
 	switch exitCode {
 	case 0:
 		if selection == "Yes" {
-			// Perform theme export
-			if err := themes.ExportTheme(); err != nil {
-				logging.LogDebug("Error exporting theme: %v", err)
-				ui.ShowMessage(fmt.Sprintf("Error: %s", err), "3")
-			}
+			// Set component type to full theme for export
+			app.SetExportComponentType(app.ComponentTypeFullTheme)
+
+			// Prompt for theme name
+			return app.Screens.ThemeExportName
 		}
 		// Return to themes menu
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 
 	case 1, 2:
 		// User pressed cancel or back
-		return app.Screens.ThemeManagementMenu
+		return app.Screens.ThemesMenu
 	}
 
-	return app.Screens.ThemeExportTypeMenu
+	return app.Screens.ThemeExportConfirm
 }
