@@ -22,21 +22,25 @@ const (
 // Component state variables
 type componentState struct {
 	// Import state
-	ImportComponentType       ComponentType
-	SelectedImportItem        string
-	ImportAllComponents       bool
-	SelectedImportComponents  map[ComponentType]bool
+	ImportComponentType      ComponentType
+	SelectedImportItem       string
+	ImportAllComponents      bool
+	SelectedImportComponents map[ComponentType]bool
 
 	// Export state
-	ExportComponentType       ComponentType
-	ExportName                string
-	ExportAllComponents       bool
-	SelectedExportComponents  map[ComponentType]bool
+	ExportComponentType      ComponentType
+	ExportName               string
+	ExportAllComponents      bool
+	SelectedExportComponents map[ComponentType]bool
 
 	// Convert/deconstruct state
 	SelectedConvertTheme      string
 	ConvertAllComponents      bool
 	SelectedConvertComponents map[ComponentType]bool
+
+	// Added for new UI structure
+	ComponentContext ComponentType
+	SelectedItem     string
 }
 
 // Global component state
@@ -252,4 +256,28 @@ func ResetComponentState() {
 	compState.SelectedConvertTheme = ""
 	compState.ConvertAllComponents = true
 	compState.SelectedConvertComponents = make(map[ComponentType]bool)
+}
+
+// ComponentContext state functions
+
+// SetComponentContext sets the current component type being worked on
+func SetComponentContext(componentType ComponentType) {
+	logging.LogDebug("Setting component context: %d", componentType)
+	compState.ComponentContext = componentType
+}
+
+// GetComponentContext returns the current component type being worked on
+func GetComponentContext() ComponentType {
+	return compState.ComponentContext
+}
+
+// SetSelectedItem sets a generic selected item for various operations
+func SetSelectedItem(item string) {
+	logging.LogDebug("Setting selected item: %s", item)
+	compState.SelectedItem = item
+}
+
+// GetSelectedItem returns the generic selected item
+func GetSelectedItem() string {
+	return compState.SelectedItem
 }

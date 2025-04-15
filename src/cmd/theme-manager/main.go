@@ -82,8 +82,8 @@ func main() {
 		currentScreen := app.GetCurrentScreen()
 		logging.LogDebug("Current screen: %d", currentScreen)
 
-		// Ensure screen value is valid - use the last screen in the enum
-		if currentScreen < app.Screens.MainMenu || currentScreen > app.Screens.ResetMenu {
+		// Ensure screen value is valid - update the upper bound to include all new screens
+		if currentScreen < app.Screens.MainMenu || currentScreen > app.Screens.ComponentExportMenu {
 			logging.LogDebug("CRITICAL ERROR: Invalid screen value: %d, resetting to MainMenu", currentScreen)
 			app.SetCurrentScreen(app.Screens.MainMenu)
 			continue
@@ -110,11 +110,101 @@ func main() {
 			nextScreen = screens.HandleComponentsMenu(selection, exitCode)
 			logging.LogDebug("Components menu returned next screen: %d", nextScreen)
 
+		// Theme browse/download screens
+		case app.Screens.ThemeBrowseMenu:
+			logging.LogDebug("Showing theme browse menu")
+			selection, exitCode = screens.ThemeBrowseMenuScreen()
+			nextScreen = screens.HandleThemeBrowseMenu(selection, exitCode)
+			logging.LogDebug("Theme browse menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ThemeDownloadMenu:
+			logging.LogDebug("Showing theme download menu")
+			selection, exitCode = screens.ThemeDownloadMenuScreen()
+			nextScreen = screens.HandleThemeDownloadMenu(selection, exitCode)
+			logging.LogDebug("Theme download menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ThemeDownloadConfirm:
+			logging.LogDebug("Processing theme download")
+			selection, exitCode = screens.ThemeDownloadConfirmScreen()
+			// Always return to Themes Menu after download
+			nextScreen = app.Screens.ThemesMenu
+			logging.LogDebug("Theme download confirmation completed")
+
+		// Component type screens
+		case app.Screens.WallpapersMenu:
+			logging.LogDebug("Showing wallpapers menu")
+			selection, exitCode = screens.WallpapersMenuScreen()
+			nextScreen = screens.HandleWallpapersMenu(selection, exitCode)
+			logging.LogDebug("Wallpapers menu returned next screen: %d", nextScreen)
+
+		case app.Screens.IconsMenuNew:
+			logging.LogDebug("Showing icons menu")
+			selection, exitCode = screens.IconsMenuNew()
+			nextScreen = screens.HandleIconsMenuNew(selection, exitCode)
+			logging.LogDebug("Icons menu returned next screen: %d", nextScreen)
+
+		case app.Screens.AccentsMenu:
+			logging.LogDebug("Showing accents menu")
+			selection, exitCode = screens.AccentsMenuScreen()
+			nextScreen = screens.HandleAccentsMenu(selection, exitCode)
+			logging.LogDebug("Accents menu returned next screen: %d", nextScreen)
+
+		case app.Screens.LEDsMenu:
+			logging.LogDebug("Showing LEDs menu")
+			selection, exitCode = screens.LEDsMenuScreen()
+			nextScreen = screens.HandleLEDsMenu(selection, exitCode)
+			logging.LogDebug("LEDs menu returned next screen: %d", nextScreen)
+
+		case app.Screens.FontsMenu:
+			logging.LogDebug("Showing fonts menu")
+			selection, exitCode = screens.FontsMenuScreen()
+			nextScreen = screens.HandleFontsMenu(selection, exitCode)
+			logging.LogDebug("Fonts menu returned next screen: %d", nextScreen)
+
+		// Component options screens
+		case app.Screens.ComponentBrowseMenu:
+			logging.LogDebug("Showing component browse menu")
+			selection, exitCode = screens.ComponentBrowseMenuScreen()
+			nextScreen = screens.HandleComponentBrowseMenu(selection, exitCode)
+			logging.LogDebug("Component browse menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ComponentDownloadMenu:
+			logging.LogDebug("Showing component download menu")
+			selection, exitCode = screens.ComponentDownloadMenuScreen()
+			nextScreen = screens.HandleComponentDownloadMenu(selection, exitCode)
+			logging.LogDebug("Component download menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ComponentDownloadConfirm:
+			logging.LogDebug("Processing component download")
+			selection, exitCode = screens.ComponentDownloadConfirmScreen()
+			// Return to component context menu after confirmation
+			componentType := app.GetComponentContext()
+			if componentType == app.ComponentTypeWallpaper {
+				nextScreen = app.Screens.WallpapersMenu
+			} else if componentType == app.ComponentTypeIcon {
+				nextScreen = app.Screens.IconsMenuNew
+			} else if componentType == app.ComponentTypeAccent {
+				nextScreen = app.Screens.AccentsMenu
+			} else if componentType == app.ComponentTypeLED {
+				nextScreen = app.Screens.LEDsMenu
+			} else if componentType == app.ComponentTypeFont {
+				nextScreen = app.Screens.FontsMenu
+			} else {
+				nextScreen = app.Screens.ComponentsMenu
+			}
+			logging.LogDebug("Component download confirmation completed")
+
+		case app.Screens.ComponentExportMenu:
+			logging.LogDebug("Showing component export menu")
+			selection, exitCode = screens.ComponentExportMenuScreen()
+			nextScreen = screens.HandleComponentExportMenu(selection, exitCode)
+			logging.LogDebug("Component export menu returned next screen: %d", nextScreen)
+
+		// Replace the old ThemeApplyMenu with a redirect to ThemeBrowseMenu
 		case app.Screens.ThemeApplyMenu:
-			logging.LogDebug("Showing theme apply menu")
-			selection, exitCode = screens.ThemeApplyMenuScreen()
-			nextScreen = screens.HandleThemeApplyMenu(selection, exitCode)
-			logging.LogDebug("Theme apply menu returned next screen: %d", nextScreen)
+			logging.LogDebug("Redirecting from old theme apply menu to new theme browse menu")
+			app.SetCurrentScreen(app.Screens.ThemeBrowseMenu)
+			continue
 
 		case app.Screens.ThemeExtractMenu:
 			logging.LogDebug("Showing theme extract menu")
@@ -123,10 +213,13 @@ func main() {
 			logging.LogDebug("Theme extract menu returned next screen: %d", nextScreen)
 
 		case app.Screens.ComponentApplyMenu:
-			logging.LogDebug("Showing component apply menu")
-			selection, exitCode = screens.ComponentApplyMenuScreen()
-			nextScreen = screens.HandleComponentApplyMenu(selection, exitCode)
-			logging.LogDebug("Component apply menu returned next screen: %d", nextScreen)
+			logging.LogDebug("Redirecting from old component apply menu to component browse menu")
+			// Set a default component type if none is set
+			if app.GetComponentContext() == 0 {
+				app.SetComponentContext(app.ComponentTypeWallpaper)
+			}
+			app.SetCurrentScreen(app.Screens.ComponentBrowseMenu)
+			continue
 
 		// For backward compatibility - redirect to new Components menu
 		case app.Screens.CustomizationMenu:
@@ -231,13 +324,6 @@ func main() {
 			selection, exitCode = screens.LEDExportScreen()
 			nextScreen = screens.HandleLEDExport(selection, exitCode)
 			logging.LogDebug("LED export returned next screen: %d", nextScreen)
-
-		// Add IconsMenu case
-		case app.Screens.IconsMenu:
-			logging.LogDebug("Showing icons menu")
-			selection, exitCode = screens.IconsMenuScreen()
-			nextScreen = screens.HandleIconsMenu(selection, exitCode)
-			logging.LogDebug("Icons menu returned next screen: %d", nextScreen)
 
 		// Add IconSelection case
 		case app.Screens.IconSelection:
@@ -365,8 +451,8 @@ func main() {
 
 		case app.Screens.ThemeExportConfirm:
 			logging.LogDebug("Showing theme export confirm screen")
-			selection, exitCode = screens.ExportCurrentThemeScreen()
-			nextScreen = screens.HandleExportCurrentTheme(selection, exitCode)
+			selection, exitCode = screens.ThemeExportScreen()
+			nextScreen = screens.HandleThemeExport(selection, exitCode)
 			logging.LogDebug("Theme export confirm returned next screen: %d", nextScreen)
 
 		// Convert screens

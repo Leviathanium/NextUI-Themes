@@ -42,15 +42,15 @@ func HandleIconsMenu(selection string, exitCode int) app.Screen {
 
 		default:
 			logging.LogDebug("Unknown selection: %s", selection)
-			return app.Screens.IconsMenu
+			return app.Screens.IconsMenuNew
 		}
 
 	case 1, 2:
 		// User pressed cancel or back
-		return app.Screens.CustomizationMenu
+		return app.Screens.ComponentsMenu
 	}
 
-	return app.Screens.IconsMenu
+	return app.Screens.IconsMenuNew
 }
 
 // ClearIconsConfirmScreen displays a confirmation prompt for clearing icons

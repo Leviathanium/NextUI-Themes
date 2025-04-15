@@ -40,6 +40,25 @@ const (
 	ThemeExtractMenu   Screen = 8
 	ComponentApplyMenu Screen = 9
 
+	// Additional screens for new UI structure
+	ThemeBrowseMenu      Screen = 90
+	ThemeDownloadMenu    Screen = 91
+	ThemeDownloadConfirm Screen = 92
+
+	// Component type screens
+	WallpapersMenu Screen = 93
+	IconsMenuNew   Screen = 94 // New menu for Icons component type
+	AccentsMenu    Screen = 95
+	LEDsMenu       Screen = 96
+	FontsMenu      Screen = 97
+
+	// Component options screens
+	ComponentOptionsMenu     Screen = 98
+	ComponentBrowseMenu      Screen = 99
+	ComponentDownloadMenu    Screen = 100
+	ComponentDownloadConfirm Screen = 101
+	ComponentExportMenu      Screen = 102
+
 	// Theme management screens
 	ThemeManagementMenu            Screen = 10
 	ThemeImportTypeMenu            Screen = 11
@@ -81,7 +100,6 @@ const (
 	LEDExport    Screen = 62
 
 	// Icon screens
-	IconsMenu           Screen = 70
 	IconSelection       Screen = 71
 	IconConfirm         Screen = 72
 	ClearIconsConfirm   Screen = 73
@@ -106,6 +124,25 @@ type ScreenEnum struct {
 	ThemeApplyMenu     Screen
 	ThemeExtractMenu   Screen
 	ComponentApplyMenu Screen
+
+	// Additional screens for new UI structure
+	ThemeBrowseMenu      Screen
+	ThemeDownloadMenu    Screen
+	ThemeDownloadConfirm Screen
+
+	// Component type screens
+	WallpapersMenu Screen
+	IconsMenuNew   Screen // New menu for Icons component type
+	AccentsMenu    Screen
+	LEDsMenu       Screen
+	FontsMenu      Screen
+
+	// Component options screens
+	ComponentOptionsMenu     Screen
+	ComponentBrowseMenu      Screen
+	ComponentDownloadMenu    Screen
+	ComponentDownloadConfirm Screen
+	ComponentExportMenu      Screen
 
 	// Theme management screens
 	ThemeManagementMenu            Screen
@@ -148,7 +185,6 @@ type ScreenEnum struct {
 	LEDExport    Screen
 
 	// Icon screens
-	IconsMenu           Screen
 	IconSelection       Screen
 	IconConfirm         Screen
 	ClearIconsConfirm   Screen
@@ -199,6 +235,25 @@ var (
 		ThemeExtractMenu:   ThemeExtractMenu,
 		ComponentApplyMenu: ComponentApplyMenu,
 
+		// Additional screens for new UI structure
+		ThemeBrowseMenu:      ThemeBrowseMenu,
+		ThemeDownloadMenu:    ThemeDownloadMenu,
+		ThemeDownloadConfirm: ThemeDownloadConfirm,
+
+		// Component type screens
+		WallpapersMenu: WallpapersMenu,
+		IconsMenuNew:   IconsMenuNew, // New menu for Icons component type
+		AccentsMenu:    AccentsMenu,
+		LEDsMenu:       LEDsMenu,
+		FontsMenu:      FontsMenu,
+
+		// Component options screens
+		ComponentOptionsMenu:     ComponentOptionsMenu,
+		ComponentBrowseMenu:      ComponentBrowseMenu,
+		ComponentDownloadMenu:    ComponentDownloadMenu,
+		ComponentDownloadConfirm: ComponentDownloadConfirm,
+		ComponentExportMenu:      ComponentExportMenu,
+
 		// Theme management screens
 		ThemeManagementMenu:            ThemeManagementMenu,
 		ThemeImportTypeMenu:            ThemeImportTypeMenu,
@@ -240,7 +295,6 @@ var (
 		LEDExport:    LEDExport,
 
 		// Icon screens
-		IconsMenu:           IconsMenu,
 		IconSelection:       IconSelection,
 		IconConfirm:         IconConfirm,
 		ClearIconsConfirm:   ClearIconsConfirm,

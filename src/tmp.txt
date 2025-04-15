@@ -1,0 +1,182 @@
+[2025-04-15 14:41:34] === Theme Manager Started ===
+[2025-04-15 14:41:34] Current directory: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak
+[2025-04-15 14:41:34] Application started
+[2025-04-15 14:41:34] Setting environment variables
+[2025-04-15 14:41:34] Updated PATH: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak:/mnt/SDCARD/.system/tg5040/bin:/usr/trimui/bin:/usr/sbin:/usr/bin:/sbin:/bin
+[2025-04-15 14:41:34] Creating theme directories
+[2025-04-15 14:41:34] Theme directory structure created
+[2025-04-15 14:41:34] Component directory structure created
+[2025-04-15 14:41:34] Component system initialized successfully
+[2025-04-15 14:41:34] Initializing accent colors
+[2025-04-15 14:41:34] Reading current accent colors from: /mnt/SDCARD/.userdata/shared/minuisettings.txt
+[2025-04-15 14:41:34] Loading preset accent themes from: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak/Accents/Presets
+[2025-04-15 14:41:34] Loading custom accent themes from: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak/Accents/Custom
+[2025-04-15 14:41:34] Loaded 8 preset and 0 custom accent themes
+[2025-04-15 14:41:34] Current accent colors initialized: {Name:Current Color1:#FFFFFF Color2:#9B2257 Color3:#1E2329 Color4:#FFFFFF Color5:#000000 Color6:#FFFFFF}
+[2025-04-15 14:41:34] Initializing LED settings
+[2025-04-15 14:41:34] Reading LED settings from: /mnt/SDCARD/.userdata/shared/ledsettings_brick.txt
+[2025-04-15 14:41:34] Loading preset LED themes from: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak/LEDs/Presets
+[2025-04-15 14:41:34] Loading custom LED themes from: /mnt/SDCARD/Tools/tg5040/Theme-Manager.pak/LEDs/Custom
+[2025-04-15 14:41:34] Loaded 8 preset and 0 custom LED themes
+[2025-04-15 14:41:34] LED settings initialized with theme: Custom
+[2025-04-15 14:41:34] Initialization complete
+[2025-04-15 14:41:34] Starting main loop
+[2025-04-15 14:41:34] Current screen: 1
+[2025-04-15 14:41:34] Showing main menu
+[2025-04-15 14:41:34] Displaying minui-list with title: NextUI Theme Selector
+[2025-04-15 14:41:34] minui-list content: Themes
+Components
+Reset
+[2025-04-15 14:41:34] minui-list args: [--format text --title NextUI Theme Selector --file /tmp/minui-list-input-3075735331 --write-location /tmp/minui-list-output-957048769 --cancel-text QUIT]
+[2025-04-15 14:41:37] Selection read from file: 'Themes'
+[2025-04-15 14:41:37] minui-list output: 'Themes', exit code: 0
+[2025-04-15 14:41:37] handleMainMenu called with selection: 'Themes', exitCode: 0
+[2025-04-15 14:41:37] Selected Themes
+[2025-04-15 14:41:37] Main menu returned next screen: 5
+[2025-04-15 14:41:37] Current screen: 1, Next screen: 5
+[2025-04-15 14:41:37] Setting next screen to: 5
+[2025-04-15 14:41:37] Setting current screen from 1 to 5
+[2025-04-15 14:41:37] Current screen is now: 5
+[2025-04-15 14:41:37] Screen set to: 5
+[2025-04-15 14:41:37] Current screen: 5
+[2025-04-15 14:41:37] Showing themes menu
+[2025-04-15 14:41:37] Displaying minui-list with title: Themes
+[2025-04-15 14:41:37] minui-list content: Browse Themes
+Download Themes
+Extract Components
+Export Theme
+[2025-04-15 14:41:37] minui-list args: [--format text --title Themes --file /tmp/minui-list-input-3334852112 --write-location /tmp/minui-list-output-1932250537]
+[2025-04-15 14:41:40] Selection read from file: 'Browse Themes'
+[2025-04-15 14:41:40] minui-list output: 'Browse Themes', exit code: 0
+[2025-04-15 14:41:40] HandleThemesMenu called with selection: 'Browse Themes', exitCode: 0
+[2025-04-15 14:41:40] Selected Browse Themes
+[2025-04-15 14:41:40] HandleThemesMenu returning screen: 90
+[2025-04-15 14:41:40] Themes menu returned next screen: 90
+[2025-04-15 14:41:40] Current screen: 5, Next screen: 90
+[2025-04-15 14:41:40] ERROR: Invalid next screen value: 90, defaulting to MainMenu
+[2025-04-15 14:41:40] Setting next screen to: 1
+[2025-04-15 14:41:40] Setting current screen from 5 to 1
+[2025-04-15 14:41:40] Current screen is now: 1
+[2025-04-15 14:41:40] Screen set to: 1
+[2025-04-15 14:41:40] Current screen: 1
+[2025-04-15 14:41:40] Showing main menu
+[2025-04-15 14:41:40] Displaying minui-list with title: NextUI Theme Selector
+[2025-04-15 14:41:40] minui-list content: Themes
+Components
+Reset
+[2025-04-15 14:41:40] minui-list args: [--format text --title NextUI Theme Selector --file /tmp/minui-list-input-2442025198 --write-location /tmp/minui-list-output-2365299126 --cancel-text QUIT]
+[2025-04-15 14:42:16] Selection read from file: 'Themes'
+[2025-04-15 14:42:16] minui-list output: 'Themes', exit code: 0
+[2025-04-15 14:42:16] handleMainMenu called with selection: 'Themes', exitCode: 0
+[2025-04-15 14:42:16] Selected Themes
+[2025-04-15 14:42:16] Main menu returned next screen: 5
+[2025-04-15 14:42:16] Current screen: 1, Next screen: 5
+[2025-04-15 14:42:16] Setting next screen to: 5
+[2025-04-15 14:42:16] Setting current screen from 1 to 5
+[2025-04-15 14:42:16] Current screen is now: 5
+[2025-04-15 14:42:16] Screen set to: 5
+[2025-04-15 14:42:16] Current screen: 5
+[2025-04-15 14:42:16] Showing themes menu
+[2025-04-15 14:42:16] Displaying minui-list with title: Themes
+[2025-04-15 14:42:16] minui-list content: Browse Themes
+Download Themes
+Extract Components
+Export Theme
+[2025-04-15 14:42:16] minui-list args: [--format text --title Themes --file /tmp/minui-list-input-1836854033 --write-location /tmp/minui-list-output-2595976676]
+[2025-04-15 14:42:18] Selection read from file: 'Download Themes'
+[2025-04-15 14:42:18] minui-list output: 'Download Themes', exit code: 0
+[2025-04-15 14:42:18] HandleThemesMenu called with selection: 'Download Themes', exitCode: 0
+[2025-04-15 14:42:18] Selected Download Themes
+[2025-04-15 14:42:18] HandleThemesMenu returning screen: 91
+[2025-04-15 14:42:18] Themes menu returned next screen: 91
+[2025-04-15 14:42:18] Current screen: 5, Next screen: 91
+[2025-04-15 14:42:18] ERROR: Invalid next screen value: 91, defaulting to MainMenu
+[2025-04-15 14:42:18] Setting next screen to: 1
+[2025-04-15 14:42:18] Setting current screen from 5 to 1
+[2025-04-15 14:42:18] Current screen is now: 1
+[2025-04-15 14:42:18] Screen set to: 1
+[2025-04-15 14:42:18] Current screen: 1
+[2025-04-15 14:42:18] Showing main menu
+[2025-04-15 14:42:18] Displaying minui-list with title: NextUI Theme Selector
+[2025-04-15 14:42:18] minui-list content: Themes
+Components
+Reset
+[2025-04-15 14:42:18] minui-list args: [--format text --title NextUI Theme Selector --file /tmp/minui-list-input-2297550084 --write-location /tmp/minui-list-output-3698679344 --cancel-text QUIT]
+[2025-04-15 14:42:21] Selection read from file: 'Components'
+[2025-04-15 14:42:21] minui-list output: 'Components', exit code: 0
+[2025-04-15 14:42:21] handleMainMenu called with selection: 'Components', exitCode: 0
+[2025-04-15 14:42:21] Selected Components
+[2025-04-15 14:42:21] Main menu returned next screen: 6
+[2025-04-15 14:42:21] Current screen: 1, Next screen: 6
+[2025-04-15 14:42:21] Setting next screen to: 6
+[2025-04-15 14:42:21] Setting current screen from 1 to 6
+[2025-04-15 14:42:21] Current screen is now: 6
+[2025-04-15 14:42:21] Screen set to: 6
+[2025-04-15 14:42:21] Current screen: 6
+[2025-04-15 14:42:21] Showing components menu
+[2025-04-15 14:42:21] Displaying minui-list with title: Components
+[2025-04-15 14:42:21] minui-list content: Wallpapers
+Icons
+Accents
+LEDs
+Fonts
+[2025-04-15 14:42:21] minui-list args: [--format text --title Components --file /tmp/minui-list-input-3230253579 --write-location /tmp/minui-list-output-698871516]
+[2025-04-15 14:42:23] Selection read from file: 'Wallpapers'
+[2025-04-15 14:42:23] minui-list output: 'Wallpapers', exit code: 0
+[2025-04-15 14:42:23] HandleComponentsMenu called with selection: 'Wallpapers', exitCode: 0
+[2025-04-15 14:42:23] Setting component context: 4
+[2025-04-15 14:42:23] Components menu returned next screen: 93
+[2025-04-15 14:42:23] Current screen: 6, Next screen: 93
+[2025-04-15 14:42:23] ERROR: Invalid next screen value: 93, defaulting to MainMenu
+[2025-04-15 14:42:23] Setting next screen to: 1
+[2025-04-15 14:42:23] Setting current screen from 6 to 1
+[2025-04-15 14:42:23] Current screen is now: 1
+[2025-04-15 14:42:23] Screen set to: 1
+[2025-04-15 14:42:23] Current screen: 1
+[2025-04-15 14:42:23] Showing main menu
+[2025-04-15 14:42:23] Displaying minui-list with title: NextUI Theme Selector
+[2025-04-15 14:42:23] minui-list content: Themes
+Components
+Reset
+[2025-04-15 14:42:23] minui-list args: [--format text --title NextUI Theme Selector --file /tmp/minui-list-input-2367079694 --write-location /tmp/minui-list-output-1047458215 --cancel-text QUIT]
+[2025-04-15 14:42:29] Selection read from file: 'Themes'
+[2025-04-15 14:42:29] minui-list output: 'Themes', exit code: 0
+[2025-04-15 14:42:29] handleMainMenu called with selection: 'Themes', exitCode: 0
+[2025-04-15 14:42:29] Selected Themes
+[2025-04-15 14:42:29] Main menu returned next screen: 5
+[2025-04-15 14:42:29] Current screen: 1, Next screen: 5
+[2025-04-15 14:42:29] Setting next screen to: 5
+[2025-04-15 14:42:29] Setting current screen from 1 to 5
+[2025-04-15 14:42:29] Current screen is now: 5
+[2025-04-15 14:42:29] Screen set to: 5
+[2025-04-15 14:42:29] Current screen: 5
+[2025-04-15 14:42:29] Showing themes menu
+[2025-04-15 14:42:29] Displaying minui-list with title: Themes
+[2025-04-15 14:42:29] minui-list content: Browse Themes
+Download Themes
+Extract Components
+Export Theme
+[2025-04-15 14:42:29] minui-list args: [--format text --title Themes --file /tmp/minui-list-input-1976743358 --write-location /tmp/minui-list-output-2658644503]
+[2025-04-15 14:42:34] Selection read from file: 'Download Themes'
+[2025-04-15 14:42:34] minui-list output: 'Download Themes', exit code: 0
+[2025-04-15 14:42:34] HandleThemesMenu called with selection: 'Download Themes', exitCode: 0
+[2025-04-15 14:42:34] Selected Download Themes
+[2025-04-15 14:42:34] HandleThemesMenu returning screen: 91
+[2025-04-15 14:42:34] Themes menu returned next screen: 91
+[2025-04-15 14:42:34] Current screen: 5, Next screen: 91
+[2025-04-15 14:42:34] ERROR: Invalid next screen value: 91, defaulting to MainMenu
+[2025-04-15 14:42:34] Setting next screen to: 1
+[2025-04-15 14:42:34] Setting current screen from 5 to 1
+[2025-04-15 14:42:34] Current screen is now: 1
+[2025-04-15 14:42:34] Screen set to: 1
+[2025-04-15 14:42:34] Current screen: 1
+[2025-04-15 14:42:34] Showing main menu
+[2025-04-15 14:42:34] Displaying minui-list with title: NextUI Theme Selector
+[2025-04-15 14:42:34] minui-list content: Themes
+Components
+Reset
+[2025-04-15 14:42:34] minui-list args: [--format text --title NextUI Theme Selector --file /tmp/minui-list-input-1132058700 --write-location /tmp/minui-list-output-1011045055 --cancel-text QUIT]
+[2025-04-15 14:42:36] minui-list error: exit status 2
+[2025-04-15 14:42:36] minui-list output: '', exit code: 2
+[2025-04-15 14:42:36] handleMainMenu called with selection: '', exitCode: 2
+[2025-04-15 14:42:36] User cancelled/exited

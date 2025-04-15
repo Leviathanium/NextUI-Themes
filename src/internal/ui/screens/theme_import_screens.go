@@ -398,10 +398,48 @@ func HandleThemeImportConfirm(selection string, exitCode int) app.Screen {
 				ui.ShowMessage("Import completed successfully", "3")
 			}
 		}
+
+		// Check if we're coming from ComponentBrowseMenu by checking component context
+		if app.GetComponentContext() != 0 {
+			// Return to the appropriate component type menu
+			componentType := app.GetComponentContext()
+			if componentType == app.ComponentTypeWallpaper {
+				return app.Screens.WallpapersMenu
+			} else if componentType == app.ComponentTypeIcon {
+				return app.Screens.IconsMenuNew
+			} else if componentType == app.ComponentTypeAccent {
+				return app.Screens.AccentsMenu
+			} else if componentType == app.ComponentTypeLED {
+				return app.Screens.LEDsMenu
+			} else if componentType == app.ComponentTypeFont {
+				return app.Screens.FontsMenu
+			}
+		}
+
+		// Default return path for theme imports
 		return app.Screens.ThemesMenu
 
 	case 1, 2:
 		// User pressed cancel or back
+
+		// Check if we're coming from ComponentBrowseMenu
+		if app.GetComponentContext() != 0 {
+			// Return to the appropriate component type menu
+			componentType := app.GetComponentContext()
+			if componentType == app.ComponentTypeWallpaper {
+				return app.Screens.WallpapersMenu
+			} else if componentType == app.ComponentTypeIcon {
+				return app.Screens.IconsMenuNew
+			} else if componentType == app.ComponentTypeAccent {
+				return app.Screens.AccentsMenu
+			} else if componentType == app.ComponentTypeLED {
+				return app.Screens.LEDsMenu
+			} else if componentType == app.ComponentTypeFont {
+				return app.Screens.FontsMenu
+			}
+		}
+
+		// Regular theme import flow
 		if app.GetImportComponentType() == app.ComponentTypeFullTheme && !app.GetImportAllComponents() {
 			return app.Screens.ThemeImportComponentSelection
 		}
