@@ -82,8 +82,8 @@ func main() {
 		currentScreen := app.GetCurrentScreen()
 		logging.LogDebug("Current screen: %d", currentScreen)
 
-		// Ensure screen value is valid
-		if currentScreen < app.Screens.MainMenu || currentScreen > app.Screens.ThemeConvertConfirm {
+		// Ensure screen value is valid - use the last screen in the enum
+		if currentScreen < app.Screens.MainMenu || currentScreen > app.Screens.ResetMenu {
 			logging.LogDebug("CRITICAL ERROR: Invalid screen value: %d, resetting to MainMenu", currentScreen)
 			app.SetCurrentScreen(app.Screens.MainMenu)
 			continue
@@ -96,6 +96,18 @@ func main() {
 			selection, exitCode = screens.MainMenuScreen()
 			nextScreen = screens.HandleMainMenu(selection, exitCode)
 			logging.LogDebug("Main menu returned next screen: %d", nextScreen)
+
+		case app.Screens.CustomizationMenu:
+			logging.LogDebug("Showing customization menu")
+			selection, exitCode = screens.CustomizationMenuScreen()
+			nextScreen = screens.HandleCustomizationMenu(selection, exitCode)
+			logging.LogDebug("Customization menu returned next screen: %d", nextScreen)
+
+		case app.Screens.ResetMenu:
+			logging.LogDebug("Showing reset menu")
+			selection, exitCode = screens.ResetMenuScreen()
+			nextScreen = screens.HandleResetMenu(selection, exitCode)
+			logging.LogDebug("Reset menu returned next screen: %d", nextScreen)
 
 		// New theme management screens
 		case app.Screens.ThemeManagementMenu:
@@ -201,7 +213,7 @@ func main() {
 		logging.LogDebug("Current screen: %d, Next screen: %d", currentScreen, nextScreen)
 
 		// Updated range check for valid screen values
-		if nextScreen < app.Screens.MainMenu || nextScreen > app.Screens.ThemeConvertConfirm {
+		if nextScreen < app.Screens.MainMenu || nextScreen > app.Screens.ResetMenu {
 			logging.LogDebug("ERROR: Invalid next screen value: %d, defaulting to MainMenu", nextScreen)
 			nextScreen = app.Screens.MainMenu
 		}

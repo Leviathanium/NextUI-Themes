@@ -4,9 +4,7 @@
 package app
 
 import (
-
 	"nextui-themes/internal/logging"
-
 )
 
 // ThemeType represents the type of theme operation
@@ -30,114 +28,124 @@ const (
 // Screen represents the different UI screens
 type Screen int
 
-// The Screen constants should be defined like this:
+// Screen constants with explicit values
 const (
-    MainMenu Screen = iota + 1
+	// Main screens
+	MainMenu Screen = 1
 
-    // Original screens (maintained for compatibility)
-    ThemeSelection
-    DefaultThemeOptions
-    ConfirmScreen
-    FontSelection
-    FontList
-    FontPreview
-    AccentMenu
-    AccentSelection
-    AccentExport
-    LEDMenu
-    LEDSelection
-    LEDExport
-    CustomizationMenu
-    IconsMenu
-    IconSelection
-    IconConfirm
-    ClearIconsConfirm
-    GlobalOptionsMenu
-    SystemOptionsMenu
-    SystemOptionsForSelectedSystem
-    SystemIconSelection
-    SystemIconConfirm
-    ResetMenu
-    WallpaperSelection
-    WallpaperConfirm
+	// Theme management screens
+	ThemeManagementMenu            Screen = 10
+	ThemeImportTypeMenu            Screen = 11
+	ThemeImportSelection           Screen = 12
+	ThemeImportOptions             Screen = 13
+	ThemeImportComponentSelection  Screen = 14
+	ThemeImportConfirm             Screen = 15
+	ThemeExportTypeMenu            Screen = 16
+	ThemeExportName                Screen = 17
+	ThemeExportOptions             Screen = 18
+	ThemeExportComponentSelection  Screen = 19
+	ThemeExportConfirm             Screen = 20
+	ThemeConvertSelection          Screen = 21
+	ThemeConvertOptions            Screen = 22
+	ThemeConvertComponentSelection Screen = 23
+	ThemeConvertConfirm            Screen = 24
 
-    // New theme management screens
-    ThemeManagementMenu           // Main theme management screen
+	// Customization screens
+	CustomizationMenu              Screen = 30
+	GlobalOptionsMenu              Screen = 31
+	SystemOptionsMenu              Screen = 32
+	SystemOptionsForSelectedSystem Screen = 33
+	WallpaperSelection             Screen = 34
+	WallpaperConfirm               Screen = 35
 
-    // Import screens
-    ThemeImportTypeMenu           // Select type of component to import
-    ThemeImportSelection          // Select specific item to import
-    ThemeImportOptions            // Import options for full themes
-    ThemeImportComponentSelection // Select components to import for full themes
-    ThemeImportConfirm            // Confirm import
+	// Font screens
+	FontSelection Screen = 40
+	FontList      Screen = 41
+	FontPreview   Screen = 42
 
-    // Export screens
-    ThemeExportTypeMenu           // Select type of component to export
-    ThemeExportName               // Name the export
-    ThemeExportOptions            // Export options for full themes
-    ThemeExportComponentSelection // Select components to export for full themes
-    ThemeExportConfirm            // Confirm export
+	// Accent screens
+	AccentMenu      Screen = 50
+	AccentSelection Screen = 51
+	AccentExport    Screen = 52
 
-    // Convert/deconstruct screens
-    ThemeConvertSelection         // Select theme to convert/deconstruct
-    ThemeConvertOptions           // Options for theme conversion
-    ThemeConvertComponentSelection // Select components to extract
-    ThemeConvertConfirm           // Confirm conversion
+	// LED screens
+	LEDMenu      Screen = 60
+	LEDSelection Screen = 61
+	LEDExport    Screen = 62
+
+	// Icon screens
+	IconsMenu           Screen = 70
+	IconSelection       Screen = 71
+	IconConfirm         Screen = 72
+	ClearIconsConfirm   Screen = 73
+	SystemIconSelection Screen = 74
+	SystemIconConfirm   Screen = 75
+
+	// Other screens
+	ThemeSelection      Screen = 80
+	DefaultThemeOptions Screen = 81
+	ConfirmScreen       Screen = 82
+	ResetMenu           Screen = 83
 )
 
 // ScreenEnum holds all available screens
 type ScreenEnum struct {
-    MainMenu           Screen
+	// Main screens
+	MainMenu Screen
 
-    // Original screens (maintained for compatibility)
-    ThemeSelection     Screen
-    DefaultThemeOptions Screen
-    ConfirmScreen      Screen
-    FontSelection      Screen
-    FontList           Screen
-    FontPreview        Screen
-    AccentMenu         Screen
-    AccentSelection    Screen
-    AccentExport       Screen
-    LEDMenu            Screen
-    LEDSelection       Screen
-    LEDExport          Screen
-    CustomizationMenu  Screen
-    IconsMenu          Screen
-    IconSelection      Screen
-    IconConfirm        Screen
-    ClearIconsConfirm  Screen
-    GlobalOptionsMenu  Screen
-    SystemOptionsMenu  Screen
-    SystemOptionsForSelectedSystem Screen
-    SystemIconSelection Screen
-    SystemIconConfirm   Screen
-    ResetMenu          Screen
-    WallpaperSelection Screen
-    WallpaperConfirm   Screen
+	// Theme management screens
+	ThemeManagementMenu            Screen
+	ThemeImportTypeMenu            Screen
+	ThemeImportSelection           Screen
+	ThemeImportOptions             Screen
+	ThemeImportComponentSelection  Screen
+	ThemeImportConfirm             Screen
+	ThemeExportTypeMenu            Screen
+	ThemeExportName                Screen
+	ThemeExportOptions             Screen
+	ThemeExportComponentSelection  Screen
+	ThemeExportConfirm             Screen
+	ThemeConvertSelection          Screen
+	ThemeConvertOptions            Screen
+	ThemeConvertComponentSelection Screen
+	ThemeConvertConfirm            Screen
 
-    // New theme management screens
-    ThemeManagementMenu Screen
+	// Customization screens
+	CustomizationMenu              Screen
+	GlobalOptionsMenu              Screen
+	SystemOptionsMenu              Screen
+	SystemOptionsForSelectedSystem Screen
+	WallpaperSelection             Screen
+	WallpaperConfirm               Screen
 
-    // Import screens
-    ThemeImportTypeMenu Screen
-    ThemeImportSelection Screen
-    ThemeImportOptions Screen
-    ThemeImportComponentSelection Screen
-    ThemeImportConfirm Screen
+	// Font screens
+	FontSelection Screen
+	FontList      Screen
+	FontPreview   Screen
 
-    // Export screens
-    ThemeExportTypeMenu Screen
-    ThemeExportName Screen
-    ThemeExportOptions Screen
-    ThemeExportComponentSelection Screen
-    ThemeExportConfirm Screen
+	// Accent screens
+	AccentMenu      Screen
+	AccentSelection Screen
+	AccentExport    Screen
 
-    // Convert/deconstruct screens
-    ThemeConvertSelection Screen
-    ThemeConvertOptions Screen
-    ThemeConvertComponentSelection Screen
-    ThemeConvertConfirm Screen
+	// LED screens
+	LEDMenu      Screen
+	LEDSelection Screen
+	LEDExport    Screen
+
+	// Icon screens
+	IconsMenu           Screen
+	IconSelection       Screen
+	IconConfirm         Screen
+	ClearIconsConfirm   Screen
+	SystemIconSelection Screen
+	SystemIconConfirm   Screen
+
+	// Other screens
+	ThemeSelection      Screen
+	DefaultThemeOptions Screen
+	ConfirmScreen       Screen
+	ResetMenu           Screen
 }
 
 // DefaultThemeAction represents the action to take for default themes
@@ -150,75 +158,79 @@ const (
 
 // AppState holds the current state of the application
 type appState struct {
-	CurrentScreen           Screen
-	SelectedThemeType       ThemeType
-	SelectedTheme           string
-	DefaultAction           DefaultThemeAction
-	SelectedFont            string
-	SelectedFontSlot        string // Which font slot to modify (OG, Next, Legacy)
-	SelectedAccentTheme     string
-	SelectedLEDTheme        string
+	CurrentScreen             Screen
+	SelectedThemeType         ThemeType
+	SelectedTheme             string
+	DefaultAction             DefaultThemeAction
+	SelectedFont              string
+	SelectedFontSlot          string // Which font slot to modify (OG, Next, Legacy)
+	SelectedAccentTheme       string
+	SelectedLEDTheme          string
 	SelectedAccentThemeSource ThemeSource
 	SelectedLEDThemeSource    ThemeSource
-	SelectedIconPack        string
-	SelectedSystem          string // For system-specific options
+	SelectedIconPack          string
+	SelectedSystem            string // For system-specific options
 }
 
 // Global variables
 var (
-    Screens  = ScreenEnum{
-        MainMenu:           MainMenu,
+	Screens = ScreenEnum{
+		// Main screens
+		MainMenu: MainMenu,
 
-        // Original screens
-        ThemeSelection:     ThemeSelection,
-        DefaultThemeOptions: DefaultThemeOptions,
-        ConfirmScreen:      ConfirmScreen,
-        FontSelection:      FontSelection,
-        FontList:           FontList,
-        FontPreview:        FontPreview,
-        AccentMenu:         AccentMenu,
-        AccentSelection:    AccentSelection,
-        AccentExport:       AccentExport,
-        LEDMenu:            LEDMenu,
-        LEDSelection:       LEDSelection,
-        LEDExport:          LEDExport,
-        CustomizationMenu:  CustomizationMenu,
-        IconsMenu:          IconsMenu,
-        IconSelection:      IconSelection,
-        IconConfirm:        IconConfirm,
-        ClearIconsConfirm:  ClearIconsConfirm,
-        GlobalOptionsMenu:  GlobalOptionsMenu,
-        SystemOptionsMenu:  SystemOptionsMenu,
-        SystemOptionsForSelectedSystem: SystemOptionsForSelectedSystem,
-        SystemIconSelection: SystemIconSelection,
-        SystemIconConfirm:   SystemIconConfirm,
-        ResetMenu:          ResetMenu,
-        WallpaperSelection: WallpaperSelection,
-        WallpaperConfirm:   WallpaperConfirm,
+		// Theme management screens
+		ThemeManagementMenu:            ThemeManagementMenu,
+		ThemeImportTypeMenu:            ThemeImportTypeMenu,
+		ThemeImportSelection:           ThemeImportSelection,
+		ThemeImportOptions:             ThemeImportOptions,
+		ThemeImportComponentSelection:  ThemeImportComponentSelection,
+		ThemeImportConfirm:             ThemeImportConfirm,
+		ThemeExportTypeMenu:            ThemeExportTypeMenu,
+		ThemeExportName:                ThemeExportName,
+		ThemeExportOptions:             ThemeExportOptions,
+		ThemeExportComponentSelection:  ThemeExportComponentSelection,
+		ThemeExportConfirm:             ThemeExportConfirm,
+		ThemeConvertSelection:          ThemeConvertSelection,
+		ThemeConvertOptions:            ThemeConvertOptions,
+		ThemeConvertComponentSelection: ThemeConvertComponentSelection,
+		ThemeConvertConfirm:            ThemeConvertConfirm,
 
-        // New theme management screens
-        ThemeManagementMenu: ThemeManagementMenu,
+		// Customization screens
+		CustomizationMenu:              CustomizationMenu,
+		GlobalOptionsMenu:              GlobalOptionsMenu,
+		SystemOptionsMenu:              SystemOptionsMenu,
+		SystemOptionsForSelectedSystem: SystemOptionsForSelectedSystem,
+		WallpaperSelection:             WallpaperSelection,
+		WallpaperConfirm:               WallpaperConfirm,
 
-        // Import screens
-        ThemeImportTypeMenu: ThemeImportTypeMenu,
-        ThemeImportSelection: ThemeImportSelection,
-        ThemeImportOptions: ThemeImportOptions,
-        ThemeImportComponentSelection: ThemeImportComponentSelection,
-        ThemeImportConfirm: ThemeImportConfirm,
+		// Font screens
+		FontSelection: FontSelection,
+		FontList:      FontList,
+		FontPreview:   FontPreview,
 
-        // Export screens
-        ThemeExportTypeMenu: ThemeExportTypeMenu,
-        ThemeExportName: ThemeExportName,
-        ThemeExportOptions: ThemeExportOptions,
-        ThemeExportComponentSelection: ThemeExportComponentSelection,
-        ThemeExportConfirm: ThemeExportConfirm,
+		// Accent screens
+		AccentMenu:      AccentMenu,
+		AccentSelection: AccentSelection,
+		AccentExport:    AccentExport,
 
-        // Convert/deconstruct screens
-        ThemeConvertSelection: ThemeConvertSelection,
-        ThemeConvertOptions: ThemeConvertOptions,
-        ThemeConvertComponentSelection: ThemeConvertComponentSelection,
-        ThemeConvertConfirm: ThemeConvertConfirm,
+		// LED screens
+		LEDMenu:      LEDMenu,
+		LEDSelection: LEDSelection,
+		LEDExport:    LEDExport,
 
+		// Icon screens
+		IconsMenu:           IconsMenu,
+		IconSelection:       IconSelection,
+		IconConfirm:         IconConfirm,
+		ClearIconsConfirm:   ClearIconsConfirm,
+		SystemIconSelection: SystemIconSelection,
+		SystemIconConfirm:   SystemIconConfirm,
+
+		// Other screens
+		ThemeSelection:      ThemeSelection,
+		DefaultThemeOptions: DefaultThemeOptions,
+		ConfirmScreen:       ConfirmScreen,
+		ResetMenu:           ResetMenu,
 	}
 
 	state appState
@@ -226,30 +238,30 @@ var (
 
 // GetCurrentScreen returns the current screen
 func GetCurrentScreen() Screen {
-    // Ensure we never return an invalid screen value
-    if state.CurrentScreen < MainMenu || state.CurrentScreen > ThemeConvertConfirm {
-        logging.LogDebug("WARNING: Invalid current screen value: %d, defaulting to MainMenu", state.CurrentScreen)
-        state.CurrentScreen = MainMenu
-    }
-    return state.CurrentScreen
+	// Ensure we never return an invalid screen value
+	if state.CurrentScreen < MainMenu || state.CurrentScreen > ResetMenu {
+		logging.LogDebug("WARNING: Invalid current screen value: %d, defaulting to MainMenu", state.CurrentScreen)
+		state.CurrentScreen = MainMenu
+	}
+	return state.CurrentScreen
 }
 
 // SetCurrentScreen sets the current screen
 func SetCurrentScreen(screen Screen) {
-    // Validate screen value before setting
-    if screen < MainMenu || screen > ThemeConvertConfirm {
-        logging.LogDebug("WARNING: Attempted to set invalid screen value: %d, using MainMenu instead", screen)
-        screen = MainMenu
-    }
+	// Validate screen value before setting
+	if screen < MainMenu || screen > ResetMenu {
+		logging.LogDebug("WARNING: Attempted to set invalid screen value: %d, using MainMenu instead", screen)
+		screen = MainMenu
+	}
 
-    // Add explicit debug logging
-    logging.LogDebug("Setting current screen from %d to %d", state.CurrentScreen, screen)
+	// Add explicit debug logging
+	logging.LogDebug("Setting current screen from %d to %d", state.CurrentScreen, screen)
 
-    // Set the screen
-    state.CurrentScreen = screen
+	// Set the screen
+	state.CurrentScreen = screen
 
-    // Verify the screen was set correctly
-    logging.LogDebug("Current screen is now: %d", state.CurrentScreen)
+	// Verify the screen was set correctly
+	logging.LogDebug("Current screen is now: %d", state.CurrentScreen)
 }
 
 // GetSelectedThemeType returns the selected theme type
