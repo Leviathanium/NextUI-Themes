@@ -33,6 +33,8 @@ type Screen int
 // The Screen constants should be defined like this:
 const (
     MainMenu Screen = iota + 1
+
+    // Original screens (maintained for compatibility)
     ThemeSelection
     DefaultThemeOptions
     ConfirmScreen
@@ -58,46 +60,84 @@ const (
     ResetMenu
     WallpaperSelection
     WallpaperConfirm
-    // New screens for theme management
-    ThemesMenu          // This should be 27
-    ThemeImport         // This should be 28
-    ThemeImportConfirm  // This should be 29
-    ThemeExport         // This should be 30
+
+    // New theme management screens
+    ThemeManagementMenu           // Main theme management screen
+
+    // Import screens
+    ThemeImportTypeMenu           // Select type of component to import
+    ThemeImportSelection          // Select specific item to import
+    ThemeImportOptions            // Import options for full themes
+    ThemeImportComponentSelection // Select components to import for full themes
+    ThemeImportConfirm            // Confirm import
+
+    // Export screens
+    ThemeExportTypeMenu           // Select type of component to export
+    ThemeExportName               // Name the export
+    ThemeExportOptions            // Export options for full themes
+    ThemeExportComponentSelection // Select components to export for full themes
+    ThemeExportConfirm            // Confirm export
+
+    // Convert/deconstruct screens
+    ThemeConvertSelection         // Select theme to convert/deconstruct
+    ThemeConvertOptions           // Options for theme conversion
+    ThemeConvertComponentSelection // Select components to extract
+    ThemeConvertConfirm           // Confirm conversion
 )
 
 // ScreenEnum holds all available screens
 type ScreenEnum struct {
-	MainMenu           Screen
-	ThemeSelection     Screen
-	DefaultThemeOptions Screen
-	ConfirmScreen      Screen
-	FontSelection      Screen
-	FontList           Screen
-	FontPreview        Screen
-	AccentMenu         Screen
-	AccentSelection    Screen
-	AccentExport       Screen
-	LEDMenu            Screen
-	LEDSelection       Screen
-	LEDExport          Screen
-	CustomizationMenu  Screen
-	IconsMenu          Screen
-	IconSelection      Screen
-	IconConfirm        Screen
-	ClearIconsConfirm  Screen
-	GlobalOptionsMenu  Screen
-	SystemOptionsMenu  Screen
-	SystemOptionsForSelectedSystem Screen
-	SystemIconSelection Screen
-	SystemIconConfirm   Screen
-	ResetMenu          Screen
-	WallpaperSelection Screen
-	WallpaperConfirm   Screen
-	// New screen fields for theme management
-	ThemesMenu         Screen
-	ThemeImport        Screen
-	ThemeImportConfirm Screen
-	ThemeExport        Screen
+    MainMenu           Screen
+
+    // Original screens (maintained for compatibility)
+    ThemeSelection     Screen
+    DefaultThemeOptions Screen
+    ConfirmScreen      Screen
+    FontSelection      Screen
+    FontList           Screen
+    FontPreview        Screen
+    AccentMenu         Screen
+    AccentSelection    Screen
+    AccentExport       Screen
+    LEDMenu            Screen
+    LEDSelection       Screen
+    LEDExport          Screen
+    CustomizationMenu  Screen
+    IconsMenu          Screen
+    IconSelection      Screen
+    IconConfirm        Screen
+    ClearIconsConfirm  Screen
+    GlobalOptionsMenu  Screen
+    SystemOptionsMenu  Screen
+    SystemOptionsForSelectedSystem Screen
+    SystemIconSelection Screen
+    SystemIconConfirm   Screen
+    ResetMenu          Screen
+    WallpaperSelection Screen
+    WallpaperConfirm   Screen
+
+    // New theme management screens
+    ThemeManagementMenu Screen
+
+    // Import screens
+    ThemeImportTypeMenu Screen
+    ThemeImportSelection Screen
+    ThemeImportOptions Screen
+    ThemeImportComponentSelection Screen
+    ThemeImportConfirm Screen
+
+    // Export screens
+    ThemeExportTypeMenu Screen
+    ThemeExportName Screen
+    ThemeExportOptions Screen
+    ThemeExportComponentSelection Screen
+    ThemeExportConfirm Screen
+
+    // Convert/deconstruct screens
+    ThemeConvertSelection Screen
+    ThemeConvertOptions Screen
+    ThemeConvertComponentSelection Screen
+    ThemeConvertConfirm Screen
 }
 
 // DefaultThemeAction represents the action to take for default themes
@@ -127,36 +167,58 @@ type appState struct {
 // Global variables
 var (
     Screens  = ScreenEnum{
-		MainMenu:           MainMenu,
-		ThemeSelection:     ThemeSelection,
-		DefaultThemeOptions: DefaultThemeOptions,
-		ConfirmScreen:      ConfirmScreen,
-		FontSelection:      FontSelection,
-		FontList:           FontList,
-		FontPreview:        FontPreview,
-		AccentMenu:         AccentMenu,
-		AccentSelection:    AccentSelection,
-		AccentExport:       AccentExport,
-		LEDMenu:            LEDMenu,
-		LEDSelection:       LEDSelection,
-		LEDExport:          LEDExport,
-		CustomizationMenu:  CustomizationMenu,
-		IconsMenu:          IconsMenu,
-		IconSelection:      IconSelection,
-		IconConfirm:        IconConfirm,
-		ClearIconsConfirm:  ClearIconsConfirm,
-		GlobalOptionsMenu:  GlobalOptionsMenu,
-		SystemOptionsMenu:  SystemOptionsMenu,
-		SystemOptionsForSelectedSystem: SystemOptionsForSelectedSystem,
-		SystemIconSelection: SystemIconSelection,
-		SystemIconConfirm:   SystemIconConfirm,
-		ResetMenu:          ResetMenu,
-		WallpaperSelection: WallpaperSelection,
-		WallpaperConfirm:   WallpaperConfirm,
-        ThemesMenu:         ThemesMenu,
-        ThemeImport:        ThemeImport,
+        MainMenu:           MainMenu,
+
+        // Original screens
+        ThemeSelection:     ThemeSelection,
+        DefaultThemeOptions: DefaultThemeOptions,
+        ConfirmScreen:      ConfirmScreen,
+        FontSelection:      FontSelection,
+        FontList:           FontList,
+        FontPreview:        FontPreview,
+        AccentMenu:         AccentMenu,
+        AccentSelection:    AccentSelection,
+        AccentExport:       AccentExport,
+        LEDMenu:            LEDMenu,
+        LEDSelection:       LEDSelection,
+        LEDExport:          LEDExport,
+        CustomizationMenu:  CustomizationMenu,
+        IconsMenu:          IconsMenu,
+        IconSelection:      IconSelection,
+        IconConfirm:        IconConfirm,
+        ClearIconsConfirm:  ClearIconsConfirm,
+        GlobalOptionsMenu:  GlobalOptionsMenu,
+        SystemOptionsMenu:  SystemOptionsMenu,
+        SystemOptionsForSelectedSystem: SystemOptionsForSelectedSystem,
+        SystemIconSelection: SystemIconSelection,
+        SystemIconConfirm:   SystemIconConfirm,
+        ResetMenu:          ResetMenu,
+        WallpaperSelection: WallpaperSelection,
+        WallpaperConfirm:   WallpaperConfirm,
+
+        // New theme management screens
+        ThemeManagementMenu: ThemeManagementMenu,
+
+        // Import screens
+        ThemeImportTypeMenu: ThemeImportTypeMenu,
+        ThemeImportSelection: ThemeImportSelection,
+        ThemeImportOptions: ThemeImportOptions,
+        ThemeImportComponentSelection: ThemeImportComponentSelection,
         ThemeImportConfirm: ThemeImportConfirm,
-        ThemeExport:        ThemeExport,
+
+        // Export screens
+        ThemeExportTypeMenu: ThemeExportTypeMenu,
+        ThemeExportName: ThemeExportName,
+        ThemeExportOptions: ThemeExportOptions,
+        ThemeExportComponentSelection: ThemeExportComponentSelection,
+        ThemeExportConfirm: ThemeExportConfirm,
+
+        // Convert/deconstruct screens
+        ThemeConvertSelection: ThemeConvertSelection,
+        ThemeConvertOptions: ThemeConvertOptions,
+        ThemeConvertComponentSelection: ThemeConvertComponentSelection,
+        ThemeConvertConfirm: ThemeConvertConfirm,
+
 	}
 
 	state appState
@@ -165,7 +227,7 @@ var (
 // GetCurrentScreen returns the current screen
 func GetCurrentScreen() Screen {
     // Ensure we never return an invalid screen value
-    if state.CurrentScreen < MainMenu || state.CurrentScreen > ThemeExport {
+    if state.CurrentScreen < MainMenu || state.CurrentScreen > ThemeConvertConfirm {
         logging.LogDebug("WARNING: Invalid current screen value: %d, defaulting to MainMenu", state.CurrentScreen)
         state.CurrentScreen = MainMenu
     }
@@ -175,7 +237,7 @@ func GetCurrentScreen() Screen {
 // SetCurrentScreen sets the current screen
 func SetCurrentScreen(screen Screen) {
     // Validate screen value before setting
-    if screen < MainMenu || screen > ThemeExport {
+    if screen < MainMenu || screen > ThemeConvertConfirm {
         logging.LogDebug("WARNING: Attempted to set invalid screen value: %d, using MainMenu instead", screen)
         screen = MainMenu
     }

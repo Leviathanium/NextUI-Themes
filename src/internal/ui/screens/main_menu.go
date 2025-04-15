@@ -12,11 +12,11 @@ import (
 	"nextui-themes/internal/ui"
 )
 
-// Update the MainMenuScreen function to include "Themes" as an option
+// MainMenuScreen displays the main menu options
 func MainMenuScreen() (string, int) {
 	// Menu items without numbers
 	menu := []string{
-		"Themes",           // Keep this first
+		"Theme Management", // New consolidated option
 		"Customization",
 		"Reset",
 	}
@@ -24,7 +24,7 @@ func MainMenuScreen() (string, int) {
 	return ui.DisplayMinUiList(strings.Join(menu, "\n"), "text", "NextUI Theme Selector", "--cancel-text", "QUIT")
 }
 
-// Update the HandleMainMenu function to handle the "Themes" selection
+// HandleMainMenu processes the user's selection from the main menu
 func HandleMainMenu(selection string, exitCode int) app.Screen {
 	logging.LogDebug("handleMainMenu called with selection: '%s', exitCode: %d", selection, exitCode)
 
@@ -32,9 +32,9 @@ func HandleMainMenu(selection string, exitCode int) app.Screen {
 	case 0:
 		// User selected an option
 		switch selection {
-		case "Themes":
-			logging.LogDebug("Selected Themes")
-			return app.Screens.ThemesMenu
+		case "Theme Management":
+			logging.LogDebug("Selected Theme Management")
+			return app.Screens.ThemeManagementMenu // New screen
 
 		case "Customization":
 			logging.LogDebug("Selected Customization")
