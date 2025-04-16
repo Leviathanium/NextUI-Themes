@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
+	"nextui-themes/internal/accents"
 	"nextui-themes/internal/ui"
 )
 
@@ -131,6 +133,12 @@ func ConvertWallpapers(themePath string, manifest *ThemeManifest, baseName strin
 		return fmt.Errorf("error creating export directory: %w", err)
 	}
 
+	// Create a new manifest for the wallpaper pack
+	wallpaperManifest := &ThemeManifest{}
+	wallpaperManifest.ComponentType = "Wallpapers"
+	wallpaperManifest.Content.Wallpapers.Present = true
+	wallpaperManifest.PathMappings.Wallpapers = []PathMapping{}
+
 	// Copy wallpapers from theme to wallpaper pack
 	for _, mapping := range manifest.PathMappings.Wallpapers {
 		srcPath := filepath.Join(themePath, mapping.ThemePath)
@@ -155,6 +163,7 @@ func ConvertWallpapers(themePath string, manifest *ThemeManifest, baseName strin
 		// Extract filename from the source path
 		fileName := filepath.Base(srcPath)
 		dstPath := filepath.Join(exportPath, dstDir, fileName)
+		relativePath := filepath.Join(dstDir, fileName)
 
 		// Check if source file exists
 		if _, err := os.Stat(srcPath); os.IsNotExist(err) {
@@ -174,7 +183,26 @@ func ConvertWallpapers(themePath string, manifest *ThemeManifest, baseName strin
 			logger.Printf("Warning: Could not copy wallpaper: %v", err)
 		} else {
 			logger.Printf("Copied wallpaper: %s -> %s", srcPath, dstPath)
+
+			// Add to the manifest
+			newMapping := PathMapping{
+				ThemePath:  relativePath,
+				SystemPath: mapping.SystemPath,
+				Metadata:   mapping.Metadata,
+			}
+			wallpaperManifest.PathMappings.Wallpapers = append(wallpaperManifest.PathMappings.Wallpapers, newMapping)
 		}
+	}
+
+	// Create preview by copying a suitable wallpaper
+	if err := createWallpaperPreviewForConversion(exportPath, wallpaperManifest); err != nil {
+		logger.Printf("Warning: Could not create preview image: %v", err)
+	}
+
+	// Write the manifest
+	if err := WriteComponentManifest(exportPath, wallpaperManifest); err != nil {
+		logger.Printf("Error writing manifest: %v", err)
+		return fmt.Errorf("error writing manifest: %w", err)
 	}
 
 	logger.Printf("Wallpapers converted successfully: %s", exportPath)
@@ -193,6 +221,12 @@ func ConvertIcons(themePath string, manifest *ThemeManifest, baseName string, lo
 	if err != nil {
 		return fmt.Errorf("error creating export directory: %w", err)
 	}
+
+	// Create a new manifest for the icon pack
+	iconManifest := &ThemeManifest{}
+	iconManifest.ComponentType = "Icons"
+	iconManifest.Content.Icons.Present = true
+	iconManifest.PathMappings.Icons = []PathMapping{}
 
 	// Copy icons from theme to icon pack
 	for _, mapping := range manifest.PathMappings.Icons {
@@ -220,6 +254,7 @@ func ConvertIcons(themePath string, manifest *ThemeManifest, baseName string, lo
 		// Extract filename from the source path
 		fileName := filepath.Base(srcPath)
 		dstPath := filepath.Join(exportPath, dstDir, fileName)
+		relativePath := filepath.Join(dstDir, fileName)
 
 		// Check if source file exists
 		if _, err := os.Stat(srcPath); os.IsNotExist(err) {
@@ -239,7 +274,21 @@ func ConvertIcons(themePath string, manifest *ThemeManifest, baseName string, lo
 			logger.Printf("Warning: Could not copy icon: %v", err)
 		} else {
 			logger.Printf("Copied icon: %s -> %s", srcPath, dstPath)
+
+			// Add to the manifest
+			newMapping := PathMapping{
+				ThemePath:  relativePath,
+				SystemPath: mapping.SystemPath,
+				Metadata:   mapping.Metadata,
+			}
+			iconManifest.PathMappings.Icons = append(iconManifest.PathMappings.Icons, newMapping)
 		}
+	}
+
+	// Write the manifest
+	if err := WriteComponentManifest(exportPath, iconManifest); err != nil {
+		logger.Printf("Error writing manifest: %v", err)
+		return fmt.Errorf("error writing manifest: %w", err)
 	}
 
 	logger.Printf("Icons converted successfully: %s", exportPath)
@@ -259,6 +308,12 @@ func ConvertFonts(themePath string, manifest *ThemeManifest, baseName string, lo
 		return fmt.Errorf("error creating export directory: %w", err)
 	}
 
+	// Create a new manifest for the font pack
+	fontManifest := &ThemeManifest{}
+	fontManifest.ComponentType = "Fonts"
+	fontManifest.Content.Fonts.Present = true
+	fontManifest.PathMappings.Fonts = make(map[string]PathMapping)
+
 	// Copy fonts from theme to font pack
 	for fontType, mapping := range manifest.PathMappings.Fonts {
 		srcPath := filepath.Join(themePath, mapping.ThemePath)
@@ -268,10 +323,12 @@ func ConvertFonts(themePath string, manifest *ThemeManifest, baseName string, lo
 		switch fontType {
 		case "og_font":
 			dstFileName = "OG.ttf"
+			fontManifest.Content.Fonts.OGReplaced = true
 		case "og_backup":
 			dstFileName = "OG.backup.ttf"
 		case "next_font":
 			dstFileName = "Next.ttf"
+			fontManifest.Content.Fonts.NextReplaced = true
 		case "next_backup":
 			dstFileName = "Next.backup.ttf"
 		default:
@@ -292,7 +349,19 @@ func ConvertFonts(themePath string, manifest *ThemeManifest, baseName string, lo
 			logger.Printf("Warning: Could not copy font: %v", err)
 		} else {
 			logger.Printf("Copied font: %s -> %s", srcPath, dstPath)
+
+			// Add to the manifest
+			fontManifest.PathMappings.Fonts[fontType] = PathMapping{
+				ThemePath:  dstFileName,
+				SystemPath: mapping.SystemPath,
+			}
 		}
+	}
+
+	// Write the manifest
+	if err := WriteComponentManifest(exportPath, fontManifest); err != nil {
+		logger.Printf("Error writing manifest: %v", err)
+		return fmt.Errorf("error writing manifest: %w", err)
 	}
 
 	logger.Printf("Fonts converted successfully: %s", exportPath)
@@ -312,25 +381,47 @@ func ConvertAccents(themePath string, manifest *ThemeManifest, baseName string, 
 		return fmt.Errorf("error creating export directory: %w", err)
 	}
 
-	// Check if the theme has accent settings
-	srcPath := filepath.Join(themePath, "Settings", "minuisettings.txt")
-	dstPath := filepath.Join(exportPath, "minuisettings.txt")
+	// Create a new manifest for the accent pack
+	accentManifest := &ThemeManifest{}
+	accentManifest.ComponentType = "Accents"
+	accentManifest.Content.Settings.AccentsIncluded = true
 
-	// Check if source file exists
-	if _, err := os.Stat(srcPath); os.IsNotExist(err) {
-		logger.Printf("Warning: Source accent settings file not found: %s", srcPath)
-		return fmt.Errorf("accent settings file not found: %s", srcPath)
+	// Check if we already have accent colors in the manifest
+	if manifest.AccentColors != nil && len(manifest.AccentColors) > 0 {
+		// Copy accent colors from the theme manifest
+		accentManifest.AccentColors = make(map[string]string)
+		for key, value := range manifest.AccentColors {
+			accentManifest.AccentColors[key] = value
+		}
+		logger.Printf("Copied accent colors from theme manifest")
+	} else {
+		// Legacy approach - extract from file
+		srcPath := filepath.Join(themePath, "Settings", "minuisettings.txt")
+
+		// Check if source file exists
+		if _, err := os.Stat(srcPath); os.IsNotExist(err) {
+			logger.Printf("Warning: Source accent settings file not found: %s", srcPath)
+			return fmt.Errorf("accent settings file not found: %s", srcPath)
+		}
+
+		// Parse accent colors from file
+		accentColors, err := accents.ParseAccentColors(srcPath)
+		if err != nil {
+			logger.Printf("Warning: Could not parse accent colors: %v", err)
+			return fmt.Errorf("failed to parse accent colors: %w", err)
+		}
+
+		accentManifest.AccentColors = accentColors
+		logger.Printf("Extracted accent colors from settings file")
 	}
 
-	// Copy the file
-	if err := CopyFile(srcPath, dstPath); err != nil {
-		logger.Printf("Warning: Could not copy accent settings: %v", err)
-		return fmt.Errorf("failed to copy accent settings: %w", err)
+	// Write the manifest
+	if err := WriteComponentManifest(exportPath, accentManifest); err != nil {
+		logger.Printf("Error writing manifest: %v", err)
+		return fmt.Errorf("error writing manifest: %w", err)
 	}
 
-	logger.Printf("Copied accent settings: %s -> %s", srcPath, dstPath)
 	logger.Printf("Accent settings converted successfully: %s", exportPath)
-
 	return nil
 }
 
@@ -347,25 +438,52 @@ func ConvertLEDs(themePath string, manifest *ThemeManifest, baseName string, log
 		return fmt.Errorf("error creating export directory: %w", err)
 	}
 
-	// Check if the theme has LED settings
-	srcPath := filepath.Join(themePath, "Settings", "ledsettings_brick.txt")
-	dstPath := filepath.Join(exportPath, "ledsettings_brick.txt")
+	// Create a new manifest for the LED pack
+	ledManifest := &ThemeManifest{}
+	ledManifest.ComponentType = "LEDs"
+	ledManifest.Content.Settings.LEDsIncluded = true
 
-	// Check if source file exists
-	if _, err := os.Stat(srcPath); os.IsNotExist(err) {
-		logger.Printf("Warning: Source LED settings file not found: %s", srcPath)
-		return fmt.Errorf("LED settings file not found: %s", srcPath)
+	// Check if we already have LED settings in the manifest
+	if manifest.LEDSettings != nil && len(manifest.LEDSettings) > 0 {
+		// Copy LED settings from the theme manifest
+		ledManifest.LEDSettings = make(map[string]map[string]interface{})
+		for section, settings := range manifest.LEDSettings {
+			ledManifest.LEDSettings[section] = make(map[string]interface{})
+			for key, value := range settings {
+				ledManifest.LEDSettings[section][key] = value
+			}
+		}
+		logger.Printf("Copied LED settings from theme manifest")
+	} else {
+		// Legacy approach - extract from file
+		srcPath := filepath.Join(themePath, "Settings", "ledsettings_brick.txt")
+
+		// Check if source file exists
+		if _, err := os.Stat(srcPath); os.IsNotExist(err) {
+			logger.Printf("Warning: Source LED settings file not found: %s", srcPath)
+			return fmt.Errorf("LED settings file not found: %s", srcPath)
+		}
+
+		// Read the settings file
+		data, err := os.ReadFile(srcPath)
+		if err != nil {
+			logger.Printf("Warning: Could not read LED settings file: %v", err)
+			return fmt.Errorf("failed to read LED settings file: %w", err)
+		}
+
+		// Parse LED settings
+		ledSettings := parseLEDSettingsForConversion(string(data))
+		ledManifest.LEDSettings = ledSettings
+		logger.Printf("Extracted LED settings from settings file")
 	}
 
-	// Copy the file
-	if err := CopyFile(srcPath, dstPath); err != nil {
-		logger.Printf("Warning: Could not copy LED settings: %v", err)
-		return fmt.Errorf("failed to copy LED settings: %w", err)
+	// Write the manifest
+	if err := WriteComponentManifest(exportPath, ledManifest); err != nil {
+		logger.Printf("Error writing manifest: %v", err)
+		return fmt.Errorf("error writing manifest: %w", err)
 	}
 
-	logger.Printf("Copied LED settings: %s -> %s", srcPath, dstPath)
 	logger.Printf("LED settings converted successfully: %s", exportPath)
-
 	return nil
 }
 
@@ -377,37 +495,33 @@ func generateUniqueComponentName(baseName string, componentType ComponentType) s
 		return "default_1"
 	}
 
-	// Determine directory and prefix based on component type
-	var exportDir string
+	// Determine prefix and file extension based on component type
 	var prefix string
 	var fileExt string
 
 	switch componentType {
 	case ComponentTypeWallpaper:
-		exportDir = filepath.Join(cwd, "Wallpapers", "Exports")
 		prefix = "wallpaper"
 		fileExt = ".bg"
 	case ComponentTypeIcon:
-		exportDir = filepath.Join(cwd, "Icons", "Exports")
 		prefix = "icon"
 		fileExt = ".icon"
 	case ComponentTypeFont:
-		exportDir = filepath.Join(cwd, "Fonts", "Exports")
 		prefix = "font"
 		fileExt = ".font"
 	case ComponentTypeAccent:
-		exportDir = filepath.Join(cwd, "Accents", "Exports")
 		prefix = "accent"
 		fileExt = ".acc"
 	case ComponentTypeLED:
-		exportDir = filepath.Join(cwd, "LEDs", "Exports")
 		prefix = "led"
 		fileExt = ".led"
 	default:
-		exportDir = filepath.Join(cwd, "Exports")
 		prefix = "component"
 		fileExt = ""
 	}
+
+	// Use a single exports directory
+	exportDir := filepath.Join(cwd, "Theme-Manager.pak", "Exports")
 
 	// Generate a base name using the theme name
 	baseName = strings.ReplaceAll(baseName, " ", "_")
@@ -434,4 +548,105 @@ func generateUniqueComponentName(baseName string, componentType ComponentType) s
 // Connect the UI's performThemeConversion function to our backend implementation
 func PerformThemeConversion(themeName string, convertAllComponents bool, selectedComponents []ComponentType) error {
 	return ConvertTheme(themeName, convertAllComponents, selectedComponents)
+}
+
+// parseLEDSettingsForConversion parses LED settings from a string
+// This is a duplicate of the function in manifest_updater.go with a different name to avoid conflicts
+func parseLEDSettingsForConversion(data string) map[string]map[string]interface{} {
+	// Simple implementation to parse LED settings
+	result := make(map[string]map[string]interface{})
+
+	// Example parsing - would be replaced by actual parsing logic
+	sections := strings.Split(data, "[")
+	for _, section := range sections {
+		if len(section) == 0 {
+			continue
+		}
+
+		lines := strings.Split(section, "\n")
+		if len(lines) < 2 {
+			continue
+		}
+
+		// Extract section name
+		sectionName := strings.TrimRight(lines[0], "]")
+		result[sectionName] = make(map[string]interface{})
+
+		// Extract key-value pairs
+		for i := 1; i < len(lines); i++ {
+			line := strings.TrimSpace(lines[i])
+			if line == "" {
+				continue
+			}
+
+			parts := strings.SplitN(line, "=", 2)
+			if len(parts) != 2 {
+				continue
+			}
+
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+
+			// Try to convert numeric values
+			if strings.HasPrefix(value, "#") {
+				// Color value
+				result[sectionName][key] = value
+			} else if intVal, err := strconv.Atoi(value); err == nil {
+				result[sectionName][key] = intVal
+			} else {
+				result[sectionName][key] = value
+			}
+		}
+	}
+
+	return result
+}
+
+// createWallpaperPreviewForConversion creates a preview image for a wallpaper pack during conversion
+func createWallpaperPreviewForConversion(themePath string, manifest *ThemeManifest) error {
+	previewPath := filepath.Join(themePath, "preview.png")
+
+	// If preview already exists, update manifest and skip
+	if _, err := os.Stat(previewPath); err == nil {
+		manifest.PreviewImage = "preview.png"
+		return nil
+	}
+
+	// Look for Recently Played wallpaper
+	var sourcePath string
+	for _, mapping := range manifest.PathMappings.Wallpapers {
+		if mapping.Metadata != nil {
+			if name, ok := mapping.Metadata["SystemName"]; ok && name == "Recently Played" {
+				sourcePath = filepath.Join(themePath, mapping.ThemePath)
+				break
+			}
+		}
+	}
+
+	// If not found, try to find Root wallpaper
+	if sourcePath == "" {
+		for _, mapping := range manifest.PathMappings.Wallpapers {
+			if mapping.Metadata != nil {
+				if name, ok := mapping.Metadata["SystemName"]; ok && name == "Root" {
+					sourcePath = filepath.Join(themePath, mapping.ThemePath)
+					break
+				}
+			}
+		}
+	}
+
+	// If still not found, use the first wallpaper
+	if sourcePath == "" && len(manifest.PathMappings.Wallpapers) > 0 {
+		sourcePath = filepath.Join(themePath, manifest.PathMappings.Wallpapers[0].ThemePath)
+	}
+
+	// If we have a source path, copy it as preview
+	if sourcePath != "" {
+		if err := CopyFile(sourcePath, previewPath); err != nil {
+			return err
+		}
+		manifest.PreviewImage = "preview.png"
+	}
+
+	return nil
 }

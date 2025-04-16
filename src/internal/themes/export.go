@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	// Removed unused import: "nextui-themes/internal/logging"
@@ -857,7 +858,7 @@ func ExtractAccentColors(settingsPath string, manifest *ThemeManifest) error {
 // ExtractLEDSettings extracts LED settings from the LED settings file
 func ExtractLEDSettings(settingsPath string, manifest *ThemeManifest) error {
 	// Initialize LED settings map
-	manifest.LEDSettings = make(map[string]map[string]string)
+	manifest.LEDSettings = make(map[string]map[string]interface{})
 
 	// Read the settings file
 	file, err := os.Open(settingsPath)
@@ -884,7 +885,7 @@ func ExtractLEDSettings(settingsPath string, manifest *ThemeManifest) error {
 			// Extract section name (LED name)
 			currentSection = line[1 : len(line)-1]
 			// Initialize the map for this section
-			manifest.LEDSettings[currentSection] = make(map[string]string)
+			manifest.LEDSettings[currentSection] = make(map[string]interface{})
 			continue
 		}
 
@@ -900,8 +901,14 @@ func ExtractLEDSettings(settingsPath string, manifest *ThemeManifest) error {
 					value = "#" + value[2:]
 				}
 
-				// Add to the current section's map
-				manifest.LEDSettings[currentSection][key] = value
+				// Try to convert numeric values to int
+				if intVal, err := strconv.Atoi(value); err == nil {
+					// Add to the current section's map as int
+					manifest.LEDSettings[currentSection][key] = intVal
+				} else {
+					// Add to the current section's map as string
+					manifest.LEDSettings[currentSection][key] = value
+				}
 			}
 		}
 	}

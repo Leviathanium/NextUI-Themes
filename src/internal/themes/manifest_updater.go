@@ -6,9 +6,11 @@ package themes
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -78,7 +80,8 @@ func UpdateThemeManifest(themePath string) error {
 
 	// Extract theme name from directory name
 	themeName := filepath.Base(themePath)
-	manifest.ThemeInfo.Name = strings.TrimSuffix(themeName, ".theme")
+	manifest.ThemeInfo.Name = strings.TrimSuffix(themeName, filepath.Ext(themeName))
+	manifest.ComponentType = "Theme" // Set component type for full themes
 
 	// Update each component type
 	if err := updateWallpapersInManifest(themePath, &manifest); err != nil {
@@ -109,6 +112,255 @@ func UpdateThemeManifest(themePath string) error {
 
 	logging.LogDebug("Writing updated manifest to: %s", manifestPath)
 	return os.WriteFile(manifestPath, manifestJSON, 0644)
+}
+
+// EnhanceManifestUpdater updates a manifest based on directory contents
+func EnhanceManifestUpdater(themePath string) error {
+	// First check if a manifest exists
+	manifestPath := filepath.Join(themePath, "manifest.json")
+
+	var manifest ThemeManifest
+
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest exists, create a new one
+		manifest = createEmptyManifest()
+	} else {
+		// Read existing manifest
+		data, err := os.ReadFile(manifestPath)
+		if err != nil {
+			return fmt.Errorf("error reading manifest: %w", err)
+		}
+
+		if err := json.Unmarshal(data, &manifest); err != nil {
+			// Invalid manifest, create a new one
+			manifest = createEmptyManifest()
+		}
+	}
+
+	// Determine component type from directory extension if not set
+	if manifest.ComponentType == "" {
+		manifest.ComponentType = DetermineComponentType(themePath)
+	}
+
+	// Update manifest based on component type and directory contents
+	switch manifest.ComponentType {
+	case "Wallpapers":
+		updateWallpapersInManifest(themePath, &manifest)
+		// Check/create preview.png from Recently Played if needed
+		createWallpaperPreview(themePath, &manifest)
+	case "Icons":
+		updateIconsInManifest(themePath, &manifest)
+	case "LEDs":
+		updateComponentLEDsFromSettingsFile(themePath, &manifest)
+	case "Accents":
+		updateComponentAccentsFromSettingsFile(themePath, &manifest)
+	case "Fonts":
+		updateFontsInManifest(themePath, &manifest)
+	case "Theme":
+		// Full theme - update all components
+		updateWallpapersInManifest(themePath, &manifest)
+		updateIconsInManifest(themePath, &manifest)
+		updateOverlaysInManifest(themePath, &manifest)
+		updateFontsInManifest(themePath, &manifest)
+		updateSettingsInManifest(themePath, &manifest)
+	}
+
+	// Write updated manifest
+	return WriteComponentManifest(themePath, &manifest)
+}
+
+// createWallpaperPreview creates a preview image for a wallpaper pack
+func createWallpaperPreview(themePath string, manifest *ThemeManifest) error {
+	previewPath := filepath.Join(themePath, "preview.png")
+
+	// If preview already exists, update manifest and skip
+	if _, err := os.Stat(previewPath); err == nil {
+		manifest.PreviewImage = "preview.png"
+		return nil
+	}
+
+	// Look for Recently Played wallpaper
+	rpPath := filepath.Join(themePath, "SystemWallpapers", "Recently Played.png")
+	if _, err := os.Stat(rpPath); err == nil {
+		// Copy as preview
+		if err := copyComponentFile(rpPath, previewPath); err != nil {
+			return err
+		}
+		manifest.PreviewImage = "preview.png"
+		return nil
+	}
+
+	// If not found, try Root.png
+	rootPath := filepath.Join(themePath, "SystemWallpapers", "Root.png")
+	if _, err := os.Stat(rootPath); err == nil {
+		if err := copyComponentFile(rootPath, previewPath); err != nil {
+			return err
+		}
+		manifest.PreviewImage = "preview.png"
+		return nil
+	}
+
+	// No suitable image found
+	return nil
+}
+
+// updateComponentLEDsFromSettingsFile extracts LED settings from settings file
+func updateComponentLEDsFromSettingsFile(themePath string, manifest *ThemeManifest) error {
+	// Look for LED settings file
+	ledSettingsPath := filepath.Join(themePath, "ledsettings_brick.txt")
+	if _, err := os.Stat(ledSettingsPath); os.IsNotExist(err) {
+		// No LED settings file, check if we already have settings in manifest
+		if manifest.LEDSettings == nil || len(manifest.LEDSettings) == 0 {
+			// No settings in manifest either
+			manifest.Content.Settings.LEDsIncluded = false
+			return nil
+		}
+		// We have settings in the manifest but no file, which is fine
+	} else {
+		// Read the LED settings file
+		data, err := os.ReadFile(ledSettingsPath)
+		if err != nil {
+			return fmt.Errorf("error reading LED settings file: %w", err)
+		}
+
+		// Parse the settings file (simplified as the actual parser would be in leds package)
+		settingsMap := parseLEDSettingsForComponent(string(data))
+
+		// Store in manifest
+		manifest.LEDSettings = settingsMap
+	}
+
+	// Update content section
+	manifest.Content.Settings.LEDsIncluded = true
+	return nil
+}
+
+// updateComponentAccentsFromSettingsFile extracts accent settings from settings file
+func updateComponentAccentsFromSettingsFile(themePath string, manifest *ThemeManifest) error {
+	// Look for accent settings file
+	accentSettingsPath := filepath.Join(themePath, "minuisettings.txt")
+	if _, err := os.Stat(accentSettingsPath); os.IsNotExist(err) {
+		// No accent settings file, check if we already have settings in manifest
+		if manifest.AccentColors == nil || len(manifest.AccentColors) == 0 {
+			// No settings in manifest either
+			manifest.Content.Settings.AccentsIncluded = false
+			return nil
+		}
+		// We have settings in the manifest but no file, which is fine
+	} else {
+		// Read the accent settings file
+		data, err := os.ReadFile(accentSettingsPath)
+		if err != nil {
+			return fmt.Errorf("error reading accent settings file: %w", err)
+		}
+
+		// Parse the settings file (simplified as the actual parser would be in accents package)
+		colorMap := parseAccentColorsForComponent(string(data))
+
+		// Store in manifest
+		manifest.AccentColors = colorMap
+	}
+
+	// Update content section
+	manifest.Content.Settings.AccentsIncluded = true
+	return nil
+}
+
+// copyComponentFile copies a file from src to dst - named to avoid conflicts
+func copyComponentFile(src, dst string) error {
+	// Read source file
+	data, err := ioutil.ReadFile(src)
+	if err != nil {
+		return fmt.Errorf("error reading source file: %w", err)
+	}
+
+	// Write to destination
+	return ioutil.WriteFile(dst, data, 0644)
+}
+
+// parseLEDSettingsForComponent parses LED settings from a string
+// This is a simplified version as the actual implementation would use the leds package
+func parseLEDSettingsForComponent(data string) map[string]map[string]interface{} {
+	// Simple implementation to parse LED settings
+	// In a real implementation, this would use the proper parser from the leds package
+	result := make(map[string]map[string]interface{})
+
+	// Example parsing - would be replaced by actual parsing logic
+	sections := strings.Split(data, "[")
+	for _, section := range sections {
+		if len(section) == 0 {
+			continue
+		}
+
+		lines := strings.Split(section, "\n")
+		if len(lines) < 2 {
+			continue
+		}
+
+		// Extract section name
+		sectionName := strings.TrimRight(lines[0], "]")
+		result[sectionName] = make(map[string]interface{})
+
+		// Extract key-value pairs
+		for i := 1; i < len(lines); i++ {
+			line := strings.TrimSpace(lines[i])
+			if line == "" {
+				continue
+			}
+
+			parts := strings.SplitN(line, "=", 2)
+			if len(parts) != 2 {
+				continue
+			}
+
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+
+			// Try to convert numeric values
+			if strings.HasPrefix(value, "#") {
+				// Color value
+				result[sectionName][key] = value
+			} else if intVal, err := strconv.Atoi(value); err == nil {
+				result[sectionName][key] = intVal
+			} else {
+				result[sectionName][key] = value
+			}
+		}
+	}
+
+	return result
+}
+
+// parseAccentColorsForComponent parses accent colors from a string
+// This is a simplified version as the actual implementation would use the accents package
+func parseAccentColorsForComponent(data string) map[string]string {
+	// Simple implementation to parse accent colors
+	// In a real implementation, this would use the proper parser from the accents package
+	result := make(map[string]string)
+
+	// Example parsing - would be replaced by actual parsing logic
+	lines := strings.Split(data, "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" || !strings.Contains(line, "=") {
+			continue
+		}
+
+		parts := strings.SplitN(line, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+
+		key := strings.TrimSpace(parts[0])
+		value := strings.TrimSpace(parts[1])
+
+		// Only process color settings
+		if strings.HasPrefix(key, "color") {
+			result[key] = value
+		}
+	}
+
+	return result
 }
 
 // updateWallpapersInManifest updates the wallpapers section of the manifest

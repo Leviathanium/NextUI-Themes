@@ -7,11 +7,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"nextui-themes/internal/accents"
-	"nextui-themes/internal/fonts"
-	"nextui-themes/internal/system"
 	"nextui-themes/internal/ui"
 )
 
@@ -180,29 +177,60 @@ func ImportAccentPack(packName string, logger *Logger) error {
 		return fmt.Errorf("accent pack not found: %s", packPath)
 	}
 
-	// Find settings file in the pack - should be minuisettings.txt
-	settingsPath := filepath.Join(packPath, "minuisettings.txt")
-	if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
-		return fmt.Errorf("settings file not found in accent pack: %s", settingsPath)
+	// Check for manifest.json
+	manifestPath := filepath.Join(packPath, "manifest.json")
+	var manifest *ThemeManifest
+
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest, use legacy approach to find settings file
+		settingsPath := filepath.Join(packPath, "minuisettings.txt")
+		if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
+			return fmt.Errorf("settings file not found in accent pack: %s", settingsPath)
+		}
+
+		// Copy settings file to system location
+		systemSettingsPath := accents.SettingsPath
+		if err := copyComponentFile(settingsPath, systemSettingsPath); err != nil {
+			return fmt.Errorf("failed to copy accent settings: %w", err)
+		}
+	} else {
+		// Load manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating manifest: %v", err)
+
+			// Try to update the manifest if it's invalid
+			logger.Printf("Attempting to update manifest...")
+			if err := EnhanceManifestUpdater(packPath); err != nil {
+				logger.Printf("Error updating manifest: %v", err)
+				return fmt.Errorf("error updating manifest: %w", err)
+			}
+
+			// Load updated manifest
+			manifest, err = ValidateTheme(packPath, logger)
+			if err != nil {
+				logger.Printf("Error validating updated manifest: %v", err)
+				return fmt.Errorf("error validating updated manifest: %w", err)
+			}
+		}
+
+		// Apply accent colors from manifest
+		if manifest.Content.Settings.AccentsIncluded && manifest.AccentColors != nil {
+			logger.Printf("Applying accent colors from manifest")
+
+			// Update the system settings file with the accent colors
+			if err := accents.ApplyAccentColors(manifest.AccentColors); err != nil {
+				logger.Printf("Error applying accent colors: %v", err)
+				return fmt.Errorf("error applying accent colors: %w", err)
+			}
+		} else {
+			logger.Printf("No accent colors found in manifest")
+			return fmt.Errorf("no accent colors found in manifest")
+		}
 	}
 
-	// Copy settings file to system location
-	systemSettingsPath := accents.SettingsPath
-
-	// Create system settings directory if it doesn't exist
-	systemSettingsDir := filepath.Dir(systemSettingsPath)
-	if err := os.MkdirAll(systemSettingsDir, 0755); err != nil {
-		return fmt.Errorf("failed to create system settings directory: %w", err)
-	}
-
-	// Copy settings file
-	if err := CopyFile(settingsPath, systemSettingsPath); err != nil {
-		return fmt.Errorf("failed to copy accent settings: %w", err)
-	}
-
-	logger.Printf("Successfully imported accent pack: %s", packName)
+	logger.Printf("Accent pack imported successfully")
 	ui.ShowMessage(fmt.Sprintf("Accent pack '%s' imported successfully", packName), "3")
-
 	return nil
 }
 
@@ -225,29 +253,60 @@ func ImportLEDPack(packName string, logger *Logger) error {
 		return fmt.Errorf("LED pack not found: %s", packPath)
 	}
 
-	// Find settings file in the pack - should be ledsettings_brick.txt
-	settingsPath := filepath.Join(packPath, "ledsettings_brick.txt")
-	if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
-		return fmt.Errorf("settings file not found in LED pack: %s", settingsPath)
+	// Check for manifest.json
+	manifestPath := filepath.Join(packPath, "manifest.json")
+	var manifest *ThemeManifest
+
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest, use legacy approach to find settings file
+		settingsPath := filepath.Join(packPath, "ledsettings_brick.txt")
+		if _, err := os.Stat(settingsPath); os.IsNotExist(err) {
+			return fmt.Errorf("settings file not found in LED pack: %s", settingsPath)
+		}
+
+		// Copy settings file to system location
+		systemSettingsPath := "/mnt/SDCARD/.userdata/shared/ledsettings_brick.txt"
+		if err := copyComponentFile(settingsPath, systemSettingsPath); err != nil {
+			return fmt.Errorf("failed to copy LED settings: %w", err)
+		}
+	} else {
+		// Load manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating manifest: %v", err)
+
+			// Try to update the manifest if it's invalid
+			logger.Printf("Attempting to update manifest...")
+			if err := EnhanceManifestUpdater(packPath); err != nil {
+				logger.Printf("Error updating manifest: %v", err)
+				return fmt.Errorf("error updating manifest: %w", err)
+			}
+
+			// Load updated manifest
+			manifest, err = ValidateTheme(packPath, logger)
+			if err != nil {
+				logger.Printf("Error validating updated manifest: %v", err)
+				return fmt.Errorf("error validating updated manifest: %w", err)
+			}
+		}
+
+		// Apply LED settings from manifest
+		if manifest.Content.Settings.LEDsIncluded && manifest.LEDSettings != nil {
+			logger.Printf("Applying LED settings from manifest")
+
+			// Generate settings file from manifest data
+			if err := ApplyLEDSettings(manifest.LEDSettings); err != nil {
+				logger.Printf("Error applying LED settings: %v", err)
+				return fmt.Errorf("error applying LED settings: %w", err)
+			}
+		} else {
+			logger.Printf("No LED settings found in manifest")
+			return fmt.Errorf("no LED settings found in manifest")
+		}
 	}
 
-	// Copy settings file to system location
-	systemSettingsPath := "/mnt/SDCARD/.userdata/shared/ledsettings_brick.txt"
-
-	// Create system settings directory if it doesn't exist
-	systemSettingsDir := filepath.Dir(systemSettingsPath)
-	if err := os.MkdirAll(systemSettingsDir, 0755); err != nil {
-		return fmt.Errorf("failed to create system settings directory: %w", err)
-	}
-
-	// Copy settings file
-	if err := CopyFile(settingsPath, systemSettingsPath); err != nil {
-		return fmt.Errorf("failed to copy LED settings: %w", err)
-	}
-
-	logger.Printf("Successfully imported LED pack: %s", packName)
+	logger.Printf("LED pack imported successfully")
 	ui.ShowMessage(fmt.Sprintf("LED pack '%s' imported successfully", packName), "3")
-
 	return nil
 }
 
@@ -270,114 +329,60 @@ func ImportWallpaperPack(packName string, logger *Logger) error {
 		return fmt.Errorf("wallpaper pack not found: %s", packPath)
 	}
 
-	// Get system paths
-	systemPaths, err := system.GetSystemPaths()
-	if err != nil {
-		return fmt.Errorf("error getting system paths: %w", err)
-	}
+	// Check for manifest.json
+	manifestPath := filepath.Join(packPath, "manifest.json")
+	var manifest *ThemeManifest
 
-	// Create a minimal manifest for wallpaper import
-	manifest := &ThemeManifest{}
-	manifest.Content.Wallpapers.Present = true
-	manifest.PathMappings.Wallpapers = []PathMapping{}
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest, create one
+		logger.Printf("No manifest found in wallpaper pack, creating one...")
 
-	// First check SystemWallpapers directory
-	sysWallDir := filepath.Join(packPath, "SystemWallpapers")
-	if entries, err := os.ReadDir(sysWallDir); err == nil {
-		for _, entry := range entries {
-			if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".png") {
-				// Add to manifest
-				baseName := strings.TrimSuffix(entry.Name(), filepath.Ext(entry.Name()))
+		// Initialize empty manifest
+		manifest = &ThemeManifest{}
+		manifest.ComponentType = "Wallpapers"
 
-				// Try to match to system path based on name
-				var dstPath string
-				var metadata map[string]string
+		// Update the manifest based on directory contents
+		if err := EnhanceManifestUpdater(packPath); err != nil {
+			logger.Printf("Error creating manifest: %v", err)
+			return fmt.Errorf("error creating manifest: %w", err)
+		}
 
-				if baseName == "Root" {
-					dstPath = filepath.Join(systemPaths.Root, "bg.png")
-					metadata = map[string]string{
-						"SystemName":    "Root",
-						"WallpaperType": "Main",
-					}
-				} else if baseName == "Root-Media" {
-					dstPath = filepath.Join(systemPaths.Root, ".media", "bg.png")
-					metadata = map[string]string{
-						"SystemName":    "Root",
-						"WallpaperType": "Media",
-					}
-				} else if baseName == "Recently Played" {
-					dstPath = filepath.Join(systemPaths.RecentlyPlayed, ".media", "bg.png")
-					metadata = map[string]string{
-						"SystemName":    "Recently Played",
-						"WallpaperType": "Media",
-					}
-				} else if baseName == "Tools" {
-					dstPath = filepath.Join(systemPaths.Tools, ".media", "bg.png")
-					metadata = map[string]string{
-						"SystemName":    "Tools",
-						"WallpaperType": "Media",
-					}
-				} else if baseName == "Collections" {
-					dstPath = filepath.Join(systemPaths.Root, "Collections", ".media", "bg.png")
-					metadata = map[string]string{
-						"SystemName":    "Collections",
-						"WallpaperType": "Media",
-					}
-				} else {
-					// Try to match by system tag
-					for _, sys := range systemPaths.Systems {
-						if strings.Contains(baseName, fmt.Sprintf("(%s)", sys.Tag)) {
-							dstPath = filepath.Join(sys.MediaPath, "bg.png")
-							metadata = map[string]string{
-								"SystemName":    sys.Name,
-								"SystemTag":     sys.Tag,
-								"WallpaperType": "System",
-							}
-							break
-						}
-					}
-				}
+		// Load the newly created manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating new manifest: %v", err)
+			return fmt.Errorf("error validating new manifest: %w", err)
+		}
+	} else {
+		// Load manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating manifest: %v", err)
 
-				if dstPath != "" {
-					manifest.PathMappings.Wallpapers = append(manifest.PathMappings.Wallpapers, PathMapping{
-						ThemePath:  filepath.Join("SystemWallpapers", entry.Name()),
-						SystemPath: dstPath,
-						Metadata:   metadata,
-					})
-				}
+			// Try to update the manifest if it's invalid
+			logger.Printf("Attempting to update manifest...")
+			if err := EnhanceManifestUpdater(packPath); err != nil {
+				logger.Printf("Error updating manifest: %v", err)
+				return fmt.Errorf("error updating manifest: %w", err)
+			}
+
+			// Load updated manifest
+			manifest, err = ValidateTheme(packPath, logger)
+			if err != nil {
+				logger.Printf("Error validating updated manifest: %v", err)
+				return fmt.Errorf("error validating updated manifest: %w", err)
 			}
 		}
 	}
 
-	// Also check CollectionWallpapers directory
-	collWallDir := filepath.Join(packPath, "CollectionWallpapers")
-	if entries, err := os.ReadDir(collWallDir); err == nil {
-		for _, entry := range entries {
-			if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".png") {
-				// Add to manifest
-				baseName := strings.TrimSuffix(entry.Name(), filepath.Ext(entry.Name()))
-				dstPath := filepath.Join(systemPaths.Root, "Collections", baseName, ".media", "bg.png")
-
-				manifest.PathMappings.Wallpapers = append(manifest.PathMappings.Wallpapers, PathMapping{
-					ThemePath:  filepath.Join("CollectionWallpapers", entry.Name()),
-					SystemPath: dstPath,
-					Metadata: map[string]string{
-						"CollectionName": baseName,
-						"WallpaperType":  "Collection",
-					},
-				})
-			}
-		}
-	}
-
-	// Now import the wallpapers
+	// Import wallpapers from manifest
 	if err := ImportWallpapers(packPath, manifest, logger); err != nil {
+		logger.Printf("Error importing wallpapers: %v", err)
 		return fmt.Errorf("error importing wallpapers: %w", err)
 	}
 
-	logger.Printf("Successfully imported wallpaper pack: %s", packName)
+	logger.Printf("Wallpaper pack imported successfully")
 	ui.ShowMessage(fmt.Sprintf("Wallpaper pack '%s' imported successfully", packName), "3")
-
 	return nil
 }
 
@@ -400,124 +405,60 @@ func ImportIconPack(packName string, logger *Logger) error {
 		return fmt.Errorf("icon pack not found: %s", packPath)
 	}
 
-	// Create a minimal manifest for icon import
-	manifest := &ThemeManifest{}
-	manifest.Content.Icons.Present = true
-	manifest.PathMappings.Icons = []PathMapping{}
+	// Check for manifest.json
+	manifestPath := filepath.Join(packPath, "manifest.json")
+	var manifest *ThemeManifest
 
-	// Get system paths
-	systemPaths, err := system.GetSystemPaths()
-	if err != nil {
-		return fmt.Errorf("error getting system paths: %w", err)
-	}
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest, create one
+		logger.Printf("No manifest found in icon pack, creating one...")
 
-	// Check SystemIcons directory
-	sysIconsDir := filepath.Join(packPath, "SystemIcons")
-	if entries, err := os.ReadDir(sysIconsDir); err == nil {
-		for _, entry := range entries {
-			if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".png") {
-				// Add to manifest
-				baseName := strings.TrimSuffix(entry.Name(), filepath.Ext(entry.Name()))
+		// Initialize empty manifest
+		manifest = &ThemeManifest{}
+		manifest.ComponentType = "Icons"
 
-				// Try to match to system path based on name
-				var dstPath string
-				var metadata map[string]string
+		// Update the manifest based on directory contents
+		if err := EnhanceManifestUpdater(packPath); err != nil {
+			logger.Printf("Error creating manifest: %v", err)
+			return fmt.Errorf("error creating manifest: %w", err)
+		}
 
-				if baseName == "Collections" {
-					dstPath = filepath.Join(systemPaths.Root, ".media", "Collections.png")
-					metadata = map[string]string{
-						"SystemName": "Collections",
-						"IconType":   "Special",
-					}
-				} else if baseName == "Recently Played" {
-					dstPath = filepath.Join(systemPaths.Root, ".media", "Recently Played.png")
-					metadata = map[string]string{
-						"SystemName": "Recently Played",
-						"IconType":   "Special",
-					}
-				} else if baseName == "Tools" {
-					toolsBaseDir := filepath.Dir(systemPaths.Tools)
-					dstPath = filepath.Join(toolsBaseDir, ".media", "tg5040.png")
-					metadata = map[string]string{
-						"SystemName": "Tools",
-						"IconType":   "Special",
-					}
-				} else {
-					// Try to match by system tag
-					for _, sys := range systemPaths.Systems {
-						if strings.Contains(baseName, fmt.Sprintf("(%s)", sys.Tag)) {
-							dstPath = filepath.Join(systemPaths.Roms, ".media", fmt.Sprintf("%s.png", sys.Name))
-							metadata = map[string]string{
-								"SystemName": sys.Name,
-								"SystemTag":  sys.Tag,
-								"IconType":   "System",
-							}
-							break
-						}
-					}
-				}
+		// Load the newly created manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating new manifest: %v", err)
+			return fmt.Errorf("error validating new manifest: %w", err)
+		}
+	} else {
+		// Load manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating manifest: %v", err)
 
-				if dstPath != "" {
-					manifest.PathMappings.Icons = append(manifest.PathMappings.Icons, PathMapping{
-						ThemePath:  filepath.Join("SystemIcons", entry.Name()),
-						SystemPath: dstPath,
-						Metadata:   metadata,
-					})
-				}
+			// Try to update the manifest if it's invalid
+			logger.Printf("Attempting to update manifest...")
+			if err := EnhanceManifestUpdater(packPath); err != nil {
+				logger.Printf("Error updating manifest: %v", err)
+				return fmt.Errorf("error updating manifest: %w", err)
+			}
+
+			// Load updated manifest
+			manifest, err = ValidateTheme(packPath, logger)
+			if err != nil {
+				logger.Printf("Error validating updated manifest: %v", err)
+				return fmt.Errorf("error validating updated manifest: %w", err)
 			}
 		}
 	}
 
-	// Check ToolIcons directory
-	toolIconsDir := filepath.Join(packPath, "ToolIcons")
-	if entries, err := os.ReadDir(toolIconsDir); err == nil {
-		for _, entry := range entries {
-			if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".png") {
-				// Tool icons go in the Tools/.media directory
-				dstPath := filepath.Join(systemPaths.Tools, ".media", entry.Name())
-				baseName := strings.TrimSuffix(entry.Name(), filepath.Ext(entry.Name()))
-
-				manifest.PathMappings.Icons = append(manifest.PathMappings.Icons, PathMapping{
-					ThemePath:  filepath.Join("ToolIcons", entry.Name()),
-					SystemPath: dstPath,
-					Metadata: map[string]string{
-						"ToolName": baseName,
-						"IconType": "Tool",
-					},
-				})
-			}
-		}
-	}
-
-	// Check CollectionIcons directory
-	collIconsDir := filepath.Join(packPath, "CollectionIcons")
-	if entries, err := os.ReadDir(collIconsDir); err == nil {
-		for _, entry := range entries {
-			if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".png") {
-				// Collection icons go in the Collections/.media directory
-				dstPath := filepath.Join(systemPaths.Root, "Collections", ".media", entry.Name())
-				baseName := strings.TrimSuffix(entry.Name(), filepath.Ext(entry.Name()))
-
-				manifest.PathMappings.Icons = append(manifest.PathMappings.Icons, PathMapping{
-					ThemePath:  filepath.Join("CollectionIcons", entry.Name()),
-					SystemPath: dstPath,
-					Metadata: map[string]string{
-						"CollectionName": baseName,
-						"IconType":       "Collection",
-					},
-				})
-			}
-		}
-	}
-
-	// Now import the icons
+	// Import icons from manifest
 	if err := ImportIcons(packPath, manifest, logger); err != nil {
+		logger.Printf("Error importing icons: %v", err)
 		return fmt.Errorf("error importing icons: %w", err)
 	}
 
-	logger.Printf("Successfully imported icon pack: %s", packName)
+	logger.Printf("Icon pack imported successfully")
 	ui.ShowMessage(fmt.Sprintf("Icon pack '%s' imported successfully", packName), "3")
-
 	return nil
 }
 
@@ -540,61 +481,86 @@ func ImportFontPack(packName string, logger *Logger) error {
 		return fmt.Errorf("font pack not found: %s", packPath)
 	}
 
-	// Create a minimal manifest for font import
-	manifest := &ThemeManifest{}
-	manifest.Content.Fonts.Present = true
-	manifest.PathMappings.Fonts = make(map[string]PathMapping)
+	// Check for manifest.json
+	manifestPath := filepath.Join(packPath, "manifest.json")
+	var manifest *ThemeManifest
 
-	// Check for OG font
-	ogFontPath := filepath.Join(packPath, "OG.ttf")
-	if _, err := os.Stat(ogFontPath); err == nil {
-		manifest.PathMappings.Fonts["og_font"] = PathMapping{
-			ThemePath:  "OG.ttf",
-			SystemPath: fonts.OGFontPath,
+	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+		// No manifest, create one
+		logger.Printf("No manifest found in font pack, creating one...")
+
+		// Initialize empty manifest
+		manifest = &ThemeManifest{}
+		manifest.ComponentType = "Fonts"
+
+		// Update the manifest based on directory contents
+		if err := EnhanceManifestUpdater(packPath); err != nil {
+			logger.Printf("Error creating manifest: %v", err)
+			return fmt.Errorf("error creating manifest: %w", err)
+		}
+
+		// Load the newly created manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating new manifest: %v", err)
+			return fmt.Errorf("error validating new manifest: %w", err)
+		}
+	} else {
+		// Load manifest
+		manifest, err = ValidateTheme(packPath, logger)
+		if err != nil {
+			logger.Printf("Error validating manifest: %v", err)
+
+			// Try to update the manifest if it's invalid
+			logger.Printf("Attempting to update manifest...")
+			if err := EnhanceManifestUpdater(packPath); err != nil {
+				logger.Printf("Error updating manifest: %v", err)
+				return fmt.Errorf("error updating manifest: %w", err)
+			}
+
+			// Load updated manifest
+			manifest, err = ValidateTheme(packPath, logger)
+			if err != nil {
+				logger.Printf("Error validating updated manifest: %v", err)
+				return fmt.Errorf("error validating updated manifest: %w", err)
+			}
 		}
 	}
 
-	// Check for OG font backup
-	ogBackupPath := filepath.Join(packPath, "OG.backup.ttf")
-	if _, err := os.Stat(ogBackupPath); err == nil {
-		manifest.PathMappings.Fonts["og_backup"] = PathMapping{
-			ThemePath:  "OG.backup.ttf",
-			SystemPath: filepath.Join(filepath.Dir(fonts.OGFontPath), fonts.OGFontBackupName),
-		}
-		manifest.Content.Fonts.OGReplaced = true
-	}
-
-	// Check for Next font
-	nextFontPath := filepath.Join(packPath, "Next.ttf")
-	if _, err := os.Stat(nextFontPath); err == nil {
-		manifest.PathMappings.Fonts["next_font"] = PathMapping{
-			ThemePath:  "Next.ttf",
-			SystemPath: fonts.NextFontPath,
-		}
-	}
-
-	// Check for Next font backup
-	nextBackupPath := filepath.Join(packPath, "Next.backup.ttf")
-	if _, err := os.Stat(nextBackupPath); err == nil {
-		manifest.PathMappings.Fonts["next_backup"] = PathMapping{
-			ThemePath:  "Next.backup.ttf",
-			SystemPath: filepath.Join(filepath.Dir(fonts.NextFontPath), fonts.NextFontBackupName),
-		}
-		manifest.Content.Fonts.NextReplaced = true
-	}
-
-	// Now import the fonts
+	// Import fonts from manifest
 	if err := ImportFonts(packPath, manifest, logger); err != nil {
+		logger.Printf("Error importing fonts: %v", err)
 		return fmt.Errorf("error importing fonts: %w", err)
 	}
 
-	logger.Printf("Successfully imported font pack: %s", packName)
+	logger.Printf("Font pack imported successfully")
 	ui.ShowMessage(fmt.Sprintf("Font pack '%s' imported successfully", packName), "3")
-
 	return nil
 }
 
-// Connect the UI's performImport function to our backend implementation
+// ApplyLEDSettings applies LED settings from a map to the system
+func ApplyLEDSettings(ledSettings map[string]map[string]interface{}) error {
+	// Path to LED settings
+	ledSettingsPath := "/mnt/SDCARD/.userdata/shared/ledsettings_brick.txt"
+
+	// Convert LED settings to a string
+	var settingsContent string
+
+	for sectionName, settings := range ledSettings {
+		settingsContent += "[" + sectionName + "]\n"
+
+		for key, value := range settings {
+			settingsContent += fmt.Sprintf("%s=%v\n", key, value)
+		}
+
+		settingsContent += "\n"
+	}
+
+	// Write settings to file
+	return os.WriteFile(ledSettingsPath, []byte(settingsContent), 0644)
+}
+
+// PerformImport is the entry point for imports from the UI
 func PerformImport(componentType ComponentType, itemName string, selectedComponents map[ComponentType]bool) error {
 	return ImportComponent(componentType, itemName, selectedComponents)
 }

@@ -7,8 +7,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"path/filepath"
+	"strings"
 
 	"nextui-themes/internal/logging"
 )
@@ -563,4 +563,99 @@ func CreatePlaceholderFiles() error {
 	}
 
 	return nil
+}
+
+// GetCurrentAccentColors retrieves the current accent colors as a map
+func GetCurrentAccentColors() (map[string]string, error) {
+	// Get current colors as a ThemeColor struct
+	colors, err := GetCurrentColors()
+	if err != nil {
+		return nil, err
+	}
+
+	// Convert to a map with storage format (0xRRGGBB)
+	colorMap := map[string]string{
+		"color1": convertHexFormat(colors.Color1, true),
+		"color2": convertHexFormat(colors.Color2, true),
+		"color3": convertHexFormat(colors.Color3, true),
+		"color4": convertHexFormat(colors.Color4, true),
+		"color5": convertHexFormat(colors.Color5, true),
+		"color6": convertHexFormat(colors.Color6, true),
+	}
+
+	return colorMap, nil
+}
+
+// ApplyAccentColors applies accent colors from a map to the system
+func ApplyAccentColors(colorMap map[string]string) error {
+	// Convert to a ThemeColor struct
+	theme := &ThemeColor{
+		Name: "ImportedTheme",
+	}
+
+	// Set colors, converting from storage format to display format
+	if color, ok := colorMap["color1"]; ok {
+		theme.Color1 = convertHexFormat(color, false)
+	}
+	if color, ok := colorMap["color2"]; ok {
+		theme.Color2 = convertHexFormat(color, false)
+	}
+	if color, ok := colorMap["color3"]; ok {
+		theme.Color3 = convertHexFormat(color, false)
+	}
+	if color, ok := colorMap["color4"]; ok {
+		theme.Color4 = convertHexFormat(color, false)
+	}
+	if color, ok := colorMap["color5"]; ok {
+		theme.Color5 = convertHexFormat(color, false)
+	}
+	if color, ok := colorMap["color6"]; ok {
+		theme.Color6 = convertHexFormat(color, false)
+	}
+
+	// Apply the theme
+	return ApplyThemeColors(theme)
+}
+
+// ParseAccentColors parses accent colors from a settings file
+func ParseAccentColors(filePath string) (map[string]string, error) {
+	// Open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open accent settings file: %w", err)
+	}
+	defer file.Close()
+
+	// Read and parse the file
+	colorMap := make(map[string]string)
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		// Skip empty lines
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+
+		// Parse key=value pairs
+		parts := strings.SplitN(line, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+
+		key := strings.TrimSpace(parts[0])
+		value := strings.TrimSpace(parts[1])
+
+		// Only process color settings
+		if strings.HasPrefix(key, "color") {
+			colorMap[key] = value
+		}
+	}
+
+	if scanner.Err() != nil {
+		return nil, fmt.Errorf("error reading accent settings file: %w", scanner.Err())
+	}
+
+	return colorMap, nil
 }
