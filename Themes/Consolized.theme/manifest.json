@@ -59,9 +59,9 @@
     "settings": {}
   },
   "accent_colors": {
-    "color1": "0xFFFFFF",
-    "color2": "0x9B2257",
-    "color3": "0x1E2329",
+    "color1": "0x66FF66",
+    "color2": "0x006600",
+    "color3": "0x000022",
     "color4": "0xFFFFFF",
     "color5": "0x000000",
     "color6": "0xFFFFFF"
