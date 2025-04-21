@@ -1,0 +1,36 @@
+name: Process Theme Zip Files
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Uploads/**/*.zip'
+  workflow_dispatch:
+
+jobs:
+  process-zips:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Process Theme Zip Files
+        run: python .github/scripts/process_zips.py
+      
+      - name: Update Catalog
+        run: python .github/scripts/build_catalog.py
+      
+      - name: Commit Changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add Themes/ Components/ catalog/ 
+          git add -u Uploads/  # Add deletions of processed zips
+          git commit -m "Process theme zip files and update catalog" || echo "No changes to commit"
+          git push
