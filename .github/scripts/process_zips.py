@@ -13,8 +13,9 @@ from pathlib import Path
 # Base paths
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 UPLOADS_DIR = REPO_ROOT / "Uploads"
-THEMES_DIR = REPO_ROOT / "Themes"
-COMPONENTS_DIR = REPO_ROOT / "Components"
+CATALOG_DIR = REPO_ROOT / "Catalog"  # Changed from "catalog" to "Catalog"
+THEMES_DIR = CATALOG_DIR / "Themes"  # Moved into Catalog
+COMPONENTS_DIR = CATALOG_DIR / "Components"  # Moved into Catalog
 
 # Component type to directory mapping
 COMPONENT_DIRS = {
@@ -86,6 +87,46 @@ def extract_without_nested_dirs(zip_path, dest_path):
             with zip_ref.open(item) as source_file, open(target_path, 'wb') as target_file:
                 shutil.copyfileobj(source_file, target_file)
 
+def copy_preview_and_manifest(src_path, component_type=None, is_theme=False):
+    """Copy preview.png and manifest.json to their respective directories"""
+    if not os.path.exists(src_path):
+        return False
+
+    # Get base name of the component or theme
+    name = os.path.basename(src_path)
+
+    # Determine destination paths
+    if is_theme:
+        preview_dest = THEMES_DIR / "previews" / f"{name}.png"
+        manifest_dest = THEMES_DIR / "manifests" / f"{name}.json"
+    else:
+        preview_dest = COMPONENTS_DIR / component_type / "previews" / f"{name}.png"
+        manifest_dest = COMPONENTS_DIR / component_type / "manifests" / f"{name}.json"
+
+    # Make sure destination directories exist
+    os.makedirs(os.path.dirname(preview_dest), exist_ok=True)
+    os.makedirs(os.path.dirname(manifest_dest), exist_ok=True)
+
+    # Copy files
+    preview_path = src_path / "preview.png"
+    manifest_path = src_path / "manifest.json"
+
+    success = True
+
+    if os.path.exists(preview_path):
+        shutil.copy2(preview_path, preview_dest)
+    else:
+        print(f"Warning: No preview.png found in {src_path}")
+        success = False
+
+    if os.path.exists(manifest_path):
+        shutil.copy2(manifest_path, manifest_dest)
+    else:
+        print(f"Warning: No manifest.json found in {src_path}")
+        success = False
+
+    return success
+
 def process_theme_zip(zip_path):
     """Process a theme zip file"""
     print(f"Processing theme zip: {zip_path}")
@@ -113,6 +154,9 @@ def process_theme_zip(zip_path):
     if os.path.exists(macosx_dir):
         shutil.rmtree(macosx_dir)
         print(f"Removed __MACOSX directory from {dest_path}")
+
+    # Copy preview and manifest to their dedicated directories
+    copy_preview_and_manifest(dest_path, is_theme=True)
 
     # Only remove the processed zip file if KEEP_ZIP_FILES is False
     if not KEEP_ZIP_FILES:
@@ -153,13 +197,36 @@ def process_component_zip(zip_path, component_type):
         shutil.rmtree(macosx_dir)
         print(f"Removed __MACOSX directory from {dest_path}")
 
+    # Copy preview and manifest to their dedicated directories
+    copy_preview_and_manifest(dest_path, component_dir)
+
     # Only remove the processed zip file if KEEP_ZIP_FILES is False
     if not KEEP_ZIP_FILES:
         os.remove(zip_path)
         print(f"Removed processed zip file: {zip_path}")
 
+def ensure_directory_structure():
+    """Ensure all required directories exist"""
+    # Main directories
+    os.makedirs(CATALOG_DIR, exist_ok=True)
+    os.makedirs(THEMES_DIR, exist_ok=True)
+    os.makedirs(COMPONENTS_DIR, exist_ok=True)
+
+    # Preview and manifest directories for themes
+    os.makedirs(THEMES_DIR / "previews", exist_ok=True)
+    os.makedirs(THEMES_DIR / "manifests", exist_ok=True)
+
+    # Component type directories with their preview and manifest subdirectories
+    for comp_dir in COMPONENT_DIRS.values():
+        os.makedirs(COMPONENTS_DIR / comp_dir, exist_ok=True)
+        os.makedirs(COMPONENTS_DIR / comp_dir / "previews", exist_ok=True)
+        os.makedirs(COMPONENTS_DIR / comp_dir / "manifests", exist_ok=True)
+
 def main():
     """Main function to process all zip files"""
+    # Ensure the directory structure exists
+    ensure_directory_structure()
+
     # Process theme zips
     theme_zip_pattern = UPLOADS_DIR / "Themes" / "*.theme.zip"
     for zip_path in glob.glob(str(theme_zip_pattern)):

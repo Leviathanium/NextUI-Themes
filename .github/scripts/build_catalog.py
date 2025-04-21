@@ -5,17 +5,14 @@ Script to build the NextUI-Themes catalog from extracted themes and components
 
 import os
 import json
-import shutil
 from datetime import datetime
 from pathlib import Path
 
 # Base paths
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-THEMES_DIR = REPO_ROOT / "Themes"
-COMPONENTS_DIR = REPO_ROOT / "Components"
-CATALOG_DIR = REPO_ROOT / "Catalog"
-PREVIEWS_DIR = CATALOG_DIR / "previews"
-MANIFESTS_DIR = CATALOG_DIR / "manifests"
+CATALOG_DIR = REPO_ROOT / "Catalog"  # Changed from "catalog" to "Catalog"
+THEMES_DIR = CATALOG_DIR / "Themes"  # Moved into Catalog
+COMPONENTS_DIR = CATALOG_DIR / "Components"  # Moved into Catalog
 
 # Component types mapping
 COMPONENT_TYPES = {
@@ -42,17 +39,37 @@ catalog = {
 }
 
 def extract_theme_info(theme_path):
-    """Extract theme information and copy preview/manifest"""
+    """Extract theme information from the theme directory and preview/manifest"""
     theme_name = os.path.basename(theme_path)
-    
-    # Check if this is a valid theme directory (has manifest.json and preview.png)
-    manifest_path = os.path.join(theme_path, "manifest.json")
-    preview_path = os.path.join(theme_path, "preview.png")
-    
-    if not os.path.exists(manifest_path) or not os.path.exists(preview_path):
-        print(f"Warning: {theme_path} is missing manifest.json or preview.png")
+
+    # Check for manifest in the theme directory
+    theme_manifest_path = os.path.join(theme_path, "manifest.json")
+    theme_preview_path = os.path.join(theme_path, "preview.png")
+
+    # Check for manifest in the manifests directory
+    manifests_dir_path = os.path.join(THEMES_DIR, "manifests", f"{theme_name}.json")
+
+    # Check for preview in the previews directory
+    previews_dir_path = os.path.join(THEMES_DIR, "previews", f"{theme_name}.png")
+
+    # Determine which manifest to use
+    if os.path.exists(theme_manifest_path):
+        manifest_path = theme_manifest_path
+    elif os.path.exists(manifests_dir_path):
+        manifest_path = manifests_dir_path
+    else:
+        print(f"Warning: No manifest found for theme {theme_name}")
         return None
-    
+
+    # Determine which preview to use
+    if os.path.exists(theme_preview_path):
+        preview_path = theme_preview_path
+    elif os.path.exists(previews_dir_path):
+        preview_path = previews_dir_path
+    else:
+        print(f"Warning: No preview found for theme {theme_name}")
+        return None
+
     # Read manifest file
     try:
         with open(manifest_path, 'r') as f:
@@ -60,27 +77,18 @@ def extract_theme_info(theme_path):
     except json.JSONDecodeError:
         print(f"Error: Invalid JSON in {manifest_path}")
         return None
-    
+    except Exception as e:
+        print(f"Error reading manifest {manifest_path}: {str(e)}")
+        return None
+
     # Extract author and description
     author = manifest_data.get("theme_info", {}).get("author", "Unknown")
     description = manifest_data.get("theme_info", {}).get("name", theme_name)
-    
-    # Create destination paths
-    preview_dest = PREVIEWS_DIR / "themes" / theme_name
-    manifest_dest = MANIFESTS_DIR / "themes" / theme_name
-    
-    # Create directories
-    os.makedirs(preview_dest, exist_ok=True)
-    os.makedirs(manifest_dest, exist_ok=True)
-    
-    # Copy files
-    shutil.copy2(preview_path, preview_dest / "preview.png")
-    shutil.copy2(manifest_path, manifest_dest / "manifest.json")
-    
+
     # Create relative paths for catalog
-    preview_rel_path = f"Catalog/previews/themes/{theme_name}/preview.png"
-    manifest_rel_path = f"Catalog/manifests/themes/{theme_name}/manifest.json"
-    
+    preview_rel_path = f"Catalog/Themes/previews/{theme_name}.png"
+    manifest_rel_path = f"Catalog/Themes/manifests/{theme_name}.json"
+
     # Return theme info
     theme_info = {
         "preview_path": preview_rel_path,
@@ -88,21 +96,41 @@ def extract_theme_info(theme_path):
         "author": author,
         "description": description
     }
-    
+
     return theme_info
 
 def extract_component_info(component_path, component_type):
-    """Extract component information and copy preview/manifest"""
+    """Extract component information from the component directory and preview/manifest"""
     component_name = os.path.basename(component_path)
-    
-    # Check if this is a valid component directory (has manifest.json and preview.png)
-    manifest_path = os.path.join(component_path, "manifest.json")
-    preview_path = os.path.join(component_path, "preview.png")
-    
-    if not os.path.exists(manifest_path) or not os.path.exists(preview_path):
-        print(f"Warning: {component_path} is missing manifest.json or preview.png")
+
+    # Check for manifest in the component directory
+    comp_manifest_path = os.path.join(component_path, "manifest.json")
+    comp_preview_path = os.path.join(component_path, "preview.png")
+
+    # Check for manifest in the manifests directory
+    manifests_dir_path = os.path.join(COMPONENTS_DIR, component_type, "manifests", f"{component_name}.json")
+
+    # Check for preview in the previews directory
+    previews_dir_path = os.path.join(COMPONENTS_DIR, component_type, "previews", f"{component_name}.png")
+
+    # Determine which manifest to use
+    if os.path.exists(comp_manifest_path):
+        manifest_path = comp_manifest_path
+    elif os.path.exists(manifests_dir_path):
+        manifest_path = manifests_dir_path
+    else:
+        print(f"Warning: No manifest found for component {component_name} of type {component_type}")
         return None
-    
+
+    # Determine which preview to use
+    if os.path.exists(comp_preview_path):
+        preview_path = comp_preview_path
+    elif os.path.exists(previews_dir_path):
+        preview_path = previews_dir_path
+    else:
+        print(f"Warning: No preview found for component {component_name} of type {component_type}")
+        return None
+
     # Read manifest file
     try:
         with open(manifest_path, 'r') as f:
@@ -110,27 +138,18 @@ def extract_component_info(component_path, component_type):
     except json.JSONDecodeError:
         print(f"Error: Invalid JSON in {manifest_path}")
         return None
-    
+    except Exception as e:
+        print(f"Error reading manifest {manifest_path}: {str(e)}")
+        return None
+
     # Extract author and description
     author = manifest_data.get("component_info", {}).get("author", "Unknown")
     description = manifest_data.get("component_info", {}).get("name", component_name)
-    
-    # Create destination paths
-    preview_dest = PREVIEWS_DIR / "components" / component_type / component_name
-    manifest_dest = MANIFESTS_DIR / "components" / component_type / component_name
-    
-    # Create directories
-    os.makedirs(preview_dest, exist_ok=True)
-    os.makedirs(manifest_dest, exist_ok=True)
-    
-    # Copy files
-    shutil.copy2(preview_path, preview_dest / "preview.png")
-    shutil.copy2(manifest_path, manifest_dest / "manifest.json")
-    
+
     # Create relative paths for catalog
-    preview_rel_path = f"Catalog/previews/components/{component_type}/{component_name}/preview.png"
-    manifest_rel_path = f"Catalog/manifests/components/{component_type}/{component_name}/manifest.json"
-    
+    preview_rel_path = f"Catalog/Components/{component_type}/previews/{component_name}.png"
+    manifest_rel_path = f"Catalog/Components/{component_type}/manifests/{component_name}.json"
+
     # Return component info
     component_info = {
         "preview_path": preview_rel_path,
@@ -138,34 +157,42 @@ def extract_component_info(component_path, component_type):
         "author": author,
         "description": description
     }
-    
+
     return component_info
 
 def main():
     """Main function to build the catalog"""
+    # Create necessary directories
+    os.makedirs(CATALOG_DIR, exist_ok=True)
+
     # Process themes
-    for theme_name in os.listdir(THEMES_DIR):
-        theme_path = THEMES_DIR / theme_name
-        if os.path.isdir(theme_path) and not theme_name.startswith('.'):
-            theme_info = extract_theme_info(theme_path)
-            if theme_info:
-                catalog["themes"][theme_name] = theme_info
-    
+    if os.path.exists(THEMES_DIR):
+        for theme_entry in os.listdir(THEMES_DIR):
+            theme_path = THEMES_DIR / theme_entry
+            if os.path.isdir(theme_path) and not theme_entry.startswith('.') and theme_entry not in ['previews', 'manifests']:
+                theme_info = extract_theme_info(theme_path)
+                if theme_info:
+                    catalog["themes"][theme_entry] = theme_info
+
     # Process components
-    for comp_dir, comp_type in COMPONENT_TYPES.items():
-        component_dir = COMPONENTS_DIR / comp_dir
-        if os.path.exists(component_dir):
-            for component_name in os.listdir(component_dir):
-                component_path = component_dir / component_name
-                if os.path.isdir(component_path) and not component_name.startswith('.'):
-                    component_info = extract_component_info(component_path, comp_type)
-                    if component_info:
-                        catalog["components"][comp_type][component_name] = component_info
-    
+    if os.path.exists(COMPONENTS_DIR):
+        for comp_type in COMPONENT_TYPES.keys():
+            component_dir = COMPONENTS_DIR / comp_type
+            comp_type_lower = COMPONENT_TYPES[comp_type]
+
+            if os.path.exists(component_dir):
+                for component_entry in os.listdir(component_dir):
+                    component_path = component_dir / component_entry
+                    if os.path.isdir(component_path) and not component_entry.startswith('.') and component_entry not in ['previews', 'manifests']:
+                        component_info = extract_component_info(component_path, comp_type)
+                        if component_info:
+                            catalog["components"][comp_type_lower][component_entry] = component_info
+
     # Write catalog.json
-    with open(CATALOG_DIR / "catalog.json", 'w') as f:
+    catalog_path = CATALOG_DIR / "catalog.json"
+    with open(catalog_path, 'w') as f:
         json.dump(catalog, f, indent=2)
-    
+
     print(f"Catalog updated successfully at {datetime.utcnow().isoformat()}Z")
 
 if __name__ == "__main__":
