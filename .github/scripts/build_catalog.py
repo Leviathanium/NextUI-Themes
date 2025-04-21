@@ -13,7 +13,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 THEMES_DIR = REPO_ROOT / "Themes"
 COMPONENTS_DIR = REPO_ROOT / "Components"
-CATALOG_DIR = REPO_ROOT / "catalog"
+CATALOG_DIR = REPO_ROOT / "Catalog"
 PREVIEWS_DIR = CATALOG_DIR / "previews"
 MANIFESTS_DIR = CATALOG_DIR / "manifests"
 
@@ -78,8 +78,8 @@ def extract_theme_info(theme_path):
     shutil.copy2(manifest_path, manifest_dest / "manifest.json")
     
     # Create relative paths for catalog
-    preview_rel_path = f"catalog/previews/themes/{theme_name}/preview.png"
-    manifest_rel_path = f"catalog/manifests/themes/{theme_name}/manifest.json"
+    preview_rel_path = f"Catalog/previews/themes/{theme_name}/preview.png"
+    manifest_rel_path = f"Catalog/manifests/themes/{theme_name}/manifest.json"
     
     # Return theme info
     theme_info = {
@@ -128,8 +128,8 @@ def extract_component_info(component_path, component_type):
     shutil.copy2(manifest_path, manifest_dest / "manifest.json")
     
     # Create relative paths for catalog
-    preview_rel_path = f"catalog/previews/components/{component_type}/{component_name}/preview.png"
-    manifest_rel_path = f"catalog/manifests/components/{component_type}/{component_name}/manifest.json"
+    preview_rel_path = f"Catalog/previews/components/{component_type}/{component_name}/preview.png"
+    manifest_rel_path = f"Catalog/manifests/components/{component_type}/{component_name}/manifest.json"
     
     # Return component info
     component_info = {
