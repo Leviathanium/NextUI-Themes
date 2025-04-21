@@ -222,6 +222,47 @@ def ensure_directory_structure():
         os.makedirs(COMPONENTS_DIR / comp_dir / "previews", exist_ok=True)
         os.makedirs(COMPONENTS_DIR / comp_dir / "manifests", exist_ok=True)
 
+    # Add .gitkeep files to all empty directories to ensure they're tracked by Git
+    add_gitkeep_files()
+
+def add_gitkeep_files():
+    """Add .gitkeep files to empty directories to ensure they're tracked by Git"""
+    # Get all directories in Catalog structure
+    all_dirs = []
+
+    # Add main directories
+    all_dirs.append(CATALOG_DIR)
+    all_dirs.append(THEMES_DIR)
+    all_dirs.append(THEMES_DIR / "previews")
+    all_dirs.append(THEMES_DIR / "manifests")
+    all_dirs.append(COMPONENTS_DIR)
+
+    # Add component type directories
+    for comp_dir in COMPONENT_DIRS.values():
+        all_dirs.append(COMPONENTS_DIR / comp_dir)
+        all_dirs.append(COMPONENTS_DIR / comp_dir / "previews")
+        all_dirs.append(COMPONENTS_DIR / comp_dir / "manifests")
+
+    # Add .gitkeep to empty directories
+    for directory in all_dirs:
+        # Check if directory exists
+        if not os.path.exists(directory):
+            continue
+
+        # Check if directory is empty (excluding .gitkeep)
+        has_content = False
+        for item in os.listdir(directory):
+            if item != ".gitkeep":
+                has_content = True
+                break
+
+        # If directory is empty, add .gitkeep file
+        if not has_content:
+            gitkeep_path = directory / ".gitkeep"
+            with open(gitkeep_path, 'w') as f:
+                f.write("# This file exists so that Git will track this empty directory\n")
+            print(f"Added .gitkeep to empty directory: {directory}")
+
 def main():
     """Main function to process all zip files"""
     # Ensure the directory structure exists
