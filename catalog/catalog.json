@@ -1,6 +1,13 @@
 {
-  "last_updated": "2025-04-21T20:48:20.754284Z",
-  "themes": {},
+  "last_updated": "2025-04-21T20:55:01.339121Z",
+  "themes": {
+    "Consolized.theme": {
+      "preview_path": "catalog/previews/themes/Consolized.theme/preview.png",
+      "manifest_path": "catalog/manifests/themes/Consolized.theme/manifest.json",
+      "author": "Gamnrd",
+      "description": "Consolized.theme"
+    }
+  },
   "components": {
     "accents": {},
     "leds": {},
