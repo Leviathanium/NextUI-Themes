@@ -88,6 +88,12 @@
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Default.bg.zip"
       }
     },
-    "overlays": {}
+    "overlays": {
+      "Vanilla.over": {
+        "author": "Shin",
+        "repository": "https://github.com/Leviathanium/Vanilla.over.git",
+        "commit": "cf09663122fe5e742987e2ed194a38f3a512e903"
+      }
+    }
   }
 }
