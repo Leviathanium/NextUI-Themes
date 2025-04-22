@@ -1,6 +1,14 @@
 {
-  "last_updated": "2025-04-22T18:29:49.347943Z",
-  "themes": {},
+  "last_updated": "2025-04-22T18:30:17.026686Z",
+  "themes": {
+    "Consolized.theme": {
+      "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Consolized.theme.json",
+      "author": "Gamnrd",
+      "description": "Consolized.theme",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
+    }
+  },
   "components": {
     "accents": {},
     "leds": {},
