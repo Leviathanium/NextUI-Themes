@@ -8,6 +8,11 @@
       "description": "Consolized.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
     },
+    "Pearly Gate.theme": {
+      "author": "Shin",
+      "repository": "https://github.com/Leviathanium/pearly-gate.theme.git",
+      "commit": "dca9bd95de648f8859e67bd07f0de0955ff142be"
+    },
     "Default.theme": {
       "preview_path": "Catalog/Themes/previews/Default.theme.png",
       "manifest_path": "Catalog/Themes/manifests/Default.theme.json",
