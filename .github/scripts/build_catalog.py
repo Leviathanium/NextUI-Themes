@@ -100,7 +100,7 @@ def extract_theme_info(theme_path):
     # Generate URL for the ZIP file
     url = f"{GITHUB_RAW_URL}/Themes/{zip_filename}"
 
-    # Return theme info
+    # Create theme info
     theme_info = {
         "preview_path": preview_rel_path,
         "manifest_path": manifest_rel_path,
@@ -108,6 +108,22 @@ def extract_theme_info(theme_path):
         "description": description,
         "URL": url  # Use "URL" property as requested
     }
+
+    # If this theme was in the old catalog and had repository info, preserve it
+    old_catalog_path = filepath.join(CATALOG_DIR, "catalog.json")
+    if os.path.exists(old_catalog_path):
+        try:
+            with open(old_catalog_path, 'r') as f:
+                old_catalog = json.load(f)
+
+            if theme_name in old_catalog.get("themes", {}):
+                old_theme_info = old_catalog["themes"][theme_name]
+                if "repository" in old_theme_info:
+                    theme_info["repository"] = old_theme_info["repository"]
+                if "commit" in old_theme_info:
+                    theme_info["commit"] = old_theme_info["commit"]
+        except:
+            pass  # If anything goes wrong, just continue without the repository info
 
     return theme_info
 
@@ -177,6 +193,23 @@ def extract_component_info(component_path, component_type):
         "description": description,
         "URL": url  # Use "URL" property as requested
     }
+
+    # If this component was in the old catalog and had repository info, preserve it
+    old_catalog_path = filepath.join(CATALOG_DIR, "catalog.json")
+    if os.path.exists(old_catalog_path):
+        try:
+            with open(old_catalog_path, 'r') as f:
+                old_catalog = json.load(f)
+
+            comp_type_lower = COMPONENT_TYPES[component_type]
+            if comp_name in old_catalog.get("components", {}).get(comp_type_lower, {}):
+                old_comp_info = old_catalog["components"][comp_type_lower][comp_name]
+                if "repository" in old_comp_info:
+                    component_info["repository"] = old_comp_info["repository"]
+                if "commit" in old_comp_info:
+                    component_info["commit"] = old_comp_info["commit"]
+        except:
+            pass  # If anything goes wrong, just continue without the repository info
 
     return component_info
 
