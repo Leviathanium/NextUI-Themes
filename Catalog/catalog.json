@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-22T18:30:17.026686Z",
+  "last_updated": "2025-04-22T19:18:43.628165Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -7,6 +7,13 @@
       "author": "Gamnrd",
       "description": "Consolized.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
+    },
+    "Default.theme": {
+      "preview_path": "Catalog/Themes/previews/Default.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Default.theme.json",
+      "author": "NextUI",
+      "description": "Default.theme",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip"
     }
   },
   "components": {
