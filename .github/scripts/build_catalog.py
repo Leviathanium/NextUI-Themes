@@ -13,6 +13,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 CATALOG_DIR = REPO_ROOT / "Catalog"  # Changed from "catalog" to "Catalog"
 THEMES_DIR = CATALOG_DIR / "Themes"  # Moved into Catalog
 COMPONENTS_DIR = CATALOG_DIR / "Components"  # Moved into Catalog
+UPLOADS_DIR = REPO_ROOT / "Uploads"  # Path to uploaded zips
+
+# GitHub raw content base URL
+GITHUB_RAW_URL = "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads"
 
 # Component types mapping
 COMPONENT_TYPES = {
@@ -89,12 +93,20 @@ def extract_theme_info(theme_path):
     preview_rel_path = f"Catalog/Themes/previews/{theme_name}.png"
     manifest_rel_path = f"Catalog/Themes/manifests/{theme_name}.json"
 
+    # Find corresponding ZIP file in Uploads directory
+    zip_filename = f"{theme_name}.zip"
+    zip_path = os.path.join(UPLOADS_DIR, "Themes", zip_filename)
+
+    # Generate URL for the ZIP file
+    url = f"{GITHUB_RAW_URL}/Themes/{zip_filename}"
+
     # Return theme info
     theme_info = {
         "preview_path": preview_rel_path,
         "manifest_path": manifest_rel_path,
         "author": author,
-        "description": description
+        "description": description,
+        "URL": url  # Use "URL" property as requested
     }
 
     return theme_info
@@ -150,12 +162,20 @@ def extract_component_info(component_path, component_type):
     preview_rel_path = f"Catalog/Components/{component_type}/previews/{component_name}.png"
     manifest_rel_path = f"Catalog/Components/{component_type}/manifests/{component_name}.json"
 
+    # Find corresponding ZIP file in Uploads directory
+    zip_filename = f"{component_name}.zip"
+    zip_path = os.path.join(UPLOADS_DIR, "Components", component_type, zip_filename)
+
+    # Generate URL for the ZIP file
+    url = f"{GITHUB_RAW_URL}/Components/{component_type}/{zip_filename}"
+
     # Return component info
     component_info = {
         "preview_path": preview_rel_path,
         "manifest_path": manifest_rel_path,
         "author": author,
-        "description": description
+        "description": description,
+        "URL": url  # Use "URL" property as requested
     }
 
     return component_info

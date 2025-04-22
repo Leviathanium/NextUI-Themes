@@ -28,7 +28,7 @@ COMPONENT_DIRS = {
 }
 
 # Flag to keep zip files after processing (set to True to keep them)
-KEEP_ZIP_FILES = True
+KEEP_ZIP_FILES = True  # Keep the zip files for download URLs
 
 def validate_zip_contents(zip_path):
     """Validate that the zip file contains required files"""
@@ -158,6 +158,15 @@ def process_theme_zip(zip_path):
     # Copy preview and manifest to their dedicated directories
     copy_preview_and_manifest(dest_path, is_theme=True)
 
+    # Ensure the zip file is in the proper upload directory
+    upload_dir = UPLOADS_DIR / "Themes"
+    os.makedirs(upload_dir, exist_ok=True)
+
+    # Copy the zip file to the uploads directory if it's not already there
+    if not os.path.exists(upload_dir / os.path.basename(zip_path)):
+        shutil.copy2(zip_path, upload_dir)
+        print(f"Copied zip file to upload directory: {upload_dir / os.path.basename(zip_path)}")
+
     # Only remove the processed zip file if KEEP_ZIP_FILES is False
     if not KEEP_ZIP_FILES:
         os.remove(zip_path)
@@ -200,6 +209,15 @@ def process_component_zip(zip_path, component_type):
     # Copy preview and manifest to their dedicated directories
     copy_preview_and_manifest(dest_path, component_dir)
 
+    # Ensure the zip file is in the proper upload directory
+    upload_dir = UPLOADS_DIR / "Components" / component_dir
+    os.makedirs(upload_dir, exist_ok=True)
+
+    # Copy the zip file to the uploads directory if it's not already there
+    if not os.path.exists(upload_dir / os.path.basename(zip_path)):
+        shutil.copy2(zip_path, upload_dir)
+        print(f"Copied zip file to upload directory: {upload_dir / os.path.basename(zip_path)}")
+
     # Only remove the processed zip file if KEEP_ZIP_FILES is False
     if not KEEP_ZIP_FILES:
         os.remove(zip_path)
@@ -211,6 +229,8 @@ def ensure_directory_structure():
     os.makedirs(CATALOG_DIR, exist_ok=True)
     os.makedirs(THEMES_DIR, exist_ok=True)
     os.makedirs(COMPONENTS_DIR, exist_ok=True)
+    os.makedirs(UPLOADS_DIR / "Themes", exist_ok=True)
+    os.makedirs(UPLOADS_DIR / "Components", exist_ok=True)
 
     # Preview and manifest directories for themes
     os.makedirs(THEMES_DIR / "previews", exist_ok=True)
@@ -221,6 +241,7 @@ def ensure_directory_structure():
         os.makedirs(COMPONENTS_DIR / comp_dir, exist_ok=True)
         os.makedirs(COMPONENTS_DIR / comp_dir / "previews", exist_ok=True)
         os.makedirs(COMPONENTS_DIR / comp_dir / "manifests", exist_ok=True)
+        os.makedirs(UPLOADS_DIR / "Components" / comp_dir, exist_ok=True)
 
     # Add .gitkeep files to all empty directories to ensure they're tracked by Git
     add_gitkeep_files()
@@ -236,12 +257,15 @@ def add_gitkeep_files():
     all_dirs.append(THEMES_DIR / "previews")
     all_dirs.append(THEMES_DIR / "manifests")
     all_dirs.append(COMPONENTS_DIR)
+    all_dirs.append(UPLOADS_DIR / "Themes")
+    all_dirs.append(UPLOADS_DIR / "Components")
 
     # Add component type directories
     for comp_dir in COMPONENT_DIRS.values():
         all_dirs.append(COMPONENTS_DIR / comp_dir)
         all_dirs.append(COMPONENTS_DIR / comp_dir / "previews")
         all_dirs.append(COMPONENTS_DIR / comp_dir / "manifests")
+        all_dirs.append(UPLOADS_DIR / "Components" / comp_dir)
 
     # Add .gitkeep to empty directories
     for directory in all_dirs:
