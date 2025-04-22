@@ -10,8 +10,6 @@
     },
     "Pearly Gate.theme": {
       "author": "Shin",
-      "repository": "https://github.com/Leviathanium/pearly-gate.theme.git",
-      "commit": "dca9bd95de648f8859e67bd07f0de0955ff142be",
       "preview_path": "Catalog/Themes/previews/Pearly Gate.theme.png",
       "manifest_path": "Catalog/Themes/manifests/Pearly Gate.theme.json",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly Gate.theme.zip",
@@ -91,8 +89,6 @@
     "overlays": {
       "Vanilla.over": {
         "author": "Shin",
-        "repository": "https://github.com/Leviathanium/Vanilla.over.git",
-        "commit": "cf09663122fe5e742987e2ed194a38f3a512e903",
         "preview_path": "Catalog/Components/Overlays/previews/Vanilla.over.png",
         "manifest_path": "Catalog/Components/Overlays/manifests/Vanilla.over.json",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip",
