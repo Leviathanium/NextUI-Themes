@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-22T19:22:21.861883Z",
+  "last_updated": "2025-04-22T23:04:47.188128Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -11,7 +11,11 @@
     "Pearly Gate.theme": {
       "author": "Shin",
       "repository": "https://github.com/Leviathanium/pearly-gate.theme.git",
-      "commit": "dca9bd95de648f8859e67bd07f0de0955ff142be"
+      "commit": "dca9bd95de648f8859e67bd07f0de0955ff142be",
+      "preview_path": "Catalog/Themes/previews/Pearly Gate.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Pearly Gate.theme.json",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly Gate.theme.zip",
+      "description": "Pearly Gate.theme"
     },
     "Default.theme": {
       "preview_path": "Catalog/Themes/previews/Default.theme.png",
