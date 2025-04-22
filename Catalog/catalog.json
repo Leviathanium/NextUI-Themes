@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-22T23:04:47.188128Z",
+  "last_updated": "2025-04-22T23:45:51.077083Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -92,7 +92,11 @@
       "Vanilla.over": {
         "author": "Shin",
         "repository": "https://github.com/Leviathanium/Vanilla.over.git",
-        "commit": "cf09663122fe5e742987e2ed194a38f3a512e903"
+        "commit": "cf09663122fe5e742987e2ed194a38f3a512e903",
+        "preview_path": "Catalog/Components/Overlays/previews/Vanilla.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/Vanilla.over.json",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip",
+        "description": "Vanilla.over"
       }
     }
   }
