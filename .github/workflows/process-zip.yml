@@ -6,6 +6,10 @@ on:
     paths:
       - 'Uploads/**/*.zip'
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Process Repository-based Themes"]
+    types:
+      - completed
 
 jobs:
   process-zips:
@@ -23,14 +27,11 @@ jobs:
       - name: Process Theme Zip Files
         run: python .github/scripts/process_zips.py
 
-      - name: Update Catalog
-        run: python .github/scripts/build_catalog.py
-
       - name: Commit Changes
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add Catalog/ 
+          git add Catalog/Themes/ Catalog/Components/
           git add -u Uploads/  # Add deletions of processed zips
-          git commit -m "Process theme zip files and update catalog" || echo "No changes to commit"
+          git commit -m "Process theme zip files" || echo "No changes to commit"
           git push
