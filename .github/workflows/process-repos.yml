@@ -32,6 +32,8 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add Catalog/ Uploads/
-          git commit -m "Process repository-based themes and update catalog" || echo "No changes to commit"
+          git add Catalog/Themes/previews/ Catalog/Themes/manifests/ 
+          git add Catalog/Components/*/previews/ Catalog/Components/*/manifests/
+          git add Uploads/Themes/ Uploads/Components/
+          git commit -m "Process repository-based themes" || echo "No changes to commit"
           git push
