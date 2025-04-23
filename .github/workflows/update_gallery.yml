@@ -1,18 +1,20 @@
 name: Update Theme Gallery
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'Catalog/catalog.json'
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Catalog"]
+    types:
+      - completed
 
 jobs:
   update-gallery:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        
+        with:
+          fetch-depth: 0
+          
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
