@@ -7,6 +7,7 @@ import os
 import json
 from datetime import datetime
 from pathlib import Path
+import traceback
 
 # Base paths
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -28,24 +29,45 @@ COMPONENT_TYPES = {
     "Overlays": "overlays"
 }
 
-# Initialize catalog structure
-catalog = {
-    "last_updated": datetime.utcnow().isoformat() + "Z",
-    "themes": {},
-    "components": {
-        "accents": {},
-        "leds": {},
-        "icons": {},
-        "fonts": {},
-        "wallpapers": {},
-        "overlays": {}
+def load_existing_catalog():
+    """Load the existing catalog.json file if it exists"""
+    catalog_path = CATALOG_DIR / "catalog.json"
+    if os.path.exists(catalog_path):
+        try:
+            with open(catalog_path, 'r') as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            print(f"Warning: Existing catalog.json is invalid, creating a new one")
+        except Exception as e:
+            print(f"Error reading existing catalog: {str(e)}")
+    
+    # Return default structure if no catalog exists or there was an error
+    return {
+        "last_updated": datetime.utcnow().isoformat() + "Z",
+        "themes": {},
+        "components": {
+            "accents": {},
+            "leds": {},
+            "icons": {},
+            "fonts": {},
+            "wallpapers": {},
+            "overlays": {}
+        }
     }
-}
 
-def extract_theme_info(theme_path):
+def extract_theme_info(theme_path, existing_info=None):
     """Extract theme information from the theme directory and preview/manifest"""
     theme_name = os.path.basename(theme_path)
-
+    
+    # Start with existing info if available
+    theme_info = {}
+    if existing_info:
+        theme_info = existing_info.copy()
+        # If this theme was previously marked as invalid but has been fixed,
+        # we'll want to remove the INVALID flag
+        if "INVALID" in theme_info:
+            del theme_info["INVALID"]
+    
     # Check for manifest in the theme directory
     theme_manifest_path = os.path.join(theme_path, "manifest.json")
     theme_preview_path = os.path.join(theme_path, "preview.png")
@@ -63,7 +85,9 @@ def extract_theme_info(theme_path):
         manifest_path = manifests_dir_path
     else:
         print(f"Warning: No manifest found for theme {theme_name}")
-        return None
+        if existing_info:
+            theme_info["INVALID"] = "No manifest.json file found"
+        return theme_info if existing_info else None
 
     # Determine which preview to use
     if os.path.exists(theme_preview_path):
@@ -72,18 +96,26 @@ def extract_theme_info(theme_path):
         preview_path = previews_dir_path
     else:
         print(f"Warning: No preview found for theme {theme_name}")
-        return None
+        if existing_info:
+            theme_info["INVALID"] = "No preview.png file found"
+        return theme_info if existing_info else None
 
     # Read manifest file
     try:
         with open(manifest_path, 'r') as f:
             manifest_data = json.load(f)
-    except json.JSONDecodeError:
-        print(f"Error: Invalid JSON in {manifest_path}")
-        return None
+    except json.JSONDecodeError as e:
+        error_msg = f"Invalid JSON in manifest: {str(e)}"
+        print(f"Error: {error_msg}")
+        if existing_info:
+            theme_info["INVALID"] = error_msg
+        return theme_info if existing_info else None
     except Exception as e:
-        print(f"Error reading manifest {manifest_path}: {str(e)}")
-        return None
+        error_msg = f"Error reading manifest: {str(e)}"
+        print(f"Error: {error_msg}")
+        if existing_info:
+            theme_info["INVALID"] = error_msg
+        return theme_info if existing_info else None
 
     # Extract author and description
     author = manifest_data.get("theme_info", {}).get("author", "Unknown")
@@ -100,37 +132,30 @@ def extract_theme_info(theme_path):
     # Generate URL for the ZIP file
     url = f"{GITHUB_RAW_URL}/Themes/{zip_filename}"
 
-    # Create theme info
-    theme_info = {
+    # Update theme info
+    theme_info.update({
         "preview_path": preview_rel_path,
         "manifest_path": manifest_rel_path,
         "author": author,
         "description": description,
         "URL": url  # Use "URL" property as requested
-    }
-
-    # If this theme was in the old catalog and had repository info, preserve it
-    old_catalog_path = os.path.join(CATALOG_DIR, "catalog.json")
-    if os.path.exists(old_catalog_path):
-        try:
-            with open(old_catalog_path, 'r') as f:
-                old_catalog = json.load(f)
-
-            if theme_name in old_catalog.get("themes", {}):
-                old_theme_info = old_catalog["themes"][theme_name]
-                if "repository" in old_theme_info:
-                    theme_info["repository"] = old_theme_info["repository"]
-                if "commit" in old_theme_info:
-                    theme_info["commit"] = old_theme_info["commit"]
-        except:
-            pass  # If anything goes wrong, just continue without the repository info
+    })
 
     return theme_info
 
-def extract_component_info(component_path, component_type):
+def extract_component_info(component_path, component_type, existing_info=None):
     """Extract component information from the component directory and preview/manifest"""
     component_name = os.path.basename(component_path)
-
+    
+    # Start with existing info if available
+    component_info = {}
+    if existing_info:
+        component_info = existing_info.copy()
+        # If this component was previously marked as invalid but has been fixed,
+        # we'll want to remove the INVALID flag
+        if "INVALID" in component_info:
+            del component_info["INVALID"]
+    
     # Check for manifest in the component directory
     comp_manifest_path = os.path.join(component_path, "manifest.json")
     comp_preview_path = os.path.join(component_path, "preview.png")
@@ -148,7 +173,9 @@ def extract_component_info(component_path, component_type):
         manifest_path = manifests_dir_path
     else:
         print(f"Warning: No manifest found for component {component_name} of type {component_type}")
-        return None
+        if existing_info:
+            component_info["INVALID"] = "No manifest.json file found"
+        return component_info if existing_info else None
 
     # Determine which preview to use
     if os.path.exists(comp_preview_path):
@@ -157,18 +184,26 @@ def extract_component_info(component_path, component_type):
         preview_path = previews_dir_path
     else:
         print(f"Warning: No preview found for component {component_name} of type {component_type}")
-        return None
+        if existing_info:
+            component_info["INVALID"] = "No preview.png file found"
+        return component_info if existing_info else None
 
     # Read manifest file
     try:
         with open(manifest_path, 'r') as f:
             manifest_data = json.load(f)
-    except json.JSONDecodeError:
-        print(f"Error: Invalid JSON in {manifest_path}")
-        return None
+    except json.JSONDecodeError as e:
+        error_msg = f"Invalid JSON in manifest: {str(e)}"
+        print(f"Error: {error_msg}")
+        if existing_info:
+            component_info["INVALID"] = error_msg
+        return component_info if existing_info else None
     except Exception as e:
-        print(f"Error reading manifest {manifest_path}: {str(e)}")
-        return None
+        error_msg = f"Error reading manifest: {str(e)}"
+        print(f"Error: {error_msg}")
+        if existing_info:
+            component_info["INVALID"] = error_msg
+        return component_info if existing_info else None
 
     # Extract author and description
     author = manifest_data.get("component_info", {}).get("author", "Unknown")
@@ -185,31 +220,14 @@ def extract_component_info(component_path, component_type):
     # Generate URL for the ZIP file
     url = f"{GITHUB_RAW_URL}/Components/{component_type}/{zip_filename}"
 
-    # Return component info
-    component_info = {
+    # Update component info
+    component_info.update({
         "preview_path": preview_rel_path,
         "manifest_path": manifest_rel_path,
         "author": author,
         "description": description,
         "URL": url  # Use "URL" property as requested
-    }
-
-    # If this component was in the old catalog and had repository info, preserve it
-    old_catalog_path = os.path.join(CATALOG_DIR, "catalog.json")
-    if os.path.exists(old_catalog_path):
-        try:
-            with open(old_catalog_path, 'r') as f:
-                old_catalog = json.load(f)
-
-            comp_type_lower = COMPONENT_TYPES[component_type]
-            if comp_name in old_catalog.get("components", {}).get(comp_type_lower, {}):
-                old_comp_info = old_catalog["components"][comp_type_lower][comp_name]
-                if "repository" in old_comp_info:
-                    component_info["repository"] = old_comp_info["repository"]
-                if "commit" in old_comp_info:
-                    component_info["commit"] = old_comp_info["commit"]
-        except:
-            pass  # If anything goes wrong, just continue without the repository info
+    })
 
     return component_info
 
@@ -217,29 +235,72 @@ def main():
     """Main function to build the catalog"""
     # Create necessary directories
     os.makedirs(CATALOG_DIR, exist_ok=True)
-
+    
+    # Load existing catalog
+    catalog = load_existing_catalog()
+    
     # Process themes
     if os.path.exists(THEMES_DIR):
+        # First, scan filesystem for themes
+        processed_themes = set()
         for theme_entry in os.listdir(THEMES_DIR):
             theme_path = THEMES_DIR / theme_entry
             if os.path.isdir(theme_path) and not theme_entry.startswith('.') and theme_entry not in ['previews', 'manifests']:
-                theme_info = extract_theme_info(theme_path)
+                # Get existing theme info if available
+                existing_info = catalog["themes"].get(theme_entry)
+                
+                # Process theme
+                theme_info = extract_theme_info(theme_path, existing_info)
                 if theme_info:
                     catalog["themes"][theme_entry] = theme_info
+                    processed_themes.add(theme_entry)
+        
+        # Now handle repository-based themes that might not be on filesystem
+        for theme_name, theme_info in list(catalog["themes"].items()):
+            if theme_name not in processed_themes and "repository" in theme_info and "commit" in theme_info:
+                # Preserve repository-based themes
+                print(f"Preserving repository-based theme: {theme_name}")
+                processed_themes.add(theme_name)
+            elif theme_name not in processed_themes and "INVALID" not in theme_info:
+                # Theme was removed from filesystem and isn't repository-based
+                print(f"Removing theme that no longer exists: {theme_name}")
+                del catalog["themes"][theme_name]
 
     # Process components
     if os.path.exists(COMPONENTS_DIR):
         for comp_type in COMPONENT_TYPES.keys():
             component_dir = COMPONENTS_DIR / comp_type
             comp_type_lower = COMPONENT_TYPES[comp_type]
-
+            
+            # Track which components we've processed
+            processed_components = set()
+            
             if os.path.exists(component_dir):
                 for component_entry in os.listdir(component_dir):
                     component_path = component_dir / component_entry
                     if os.path.isdir(component_path) and not component_entry.startswith('.') and component_entry not in ['previews', 'manifests']:
-                        component_info = extract_component_info(component_path, comp_type)
+                        # Get existing component info if available
+                        existing_info = catalog["components"][comp_type_lower].get(component_entry)
+                        
+                        # Process component
+                        component_info = extract_component_info(component_path, comp_type, existing_info)
                         if component_info:
                             catalog["components"][comp_type_lower][component_entry] = component_info
+                            processed_components.add(component_entry)
+            
+            # Now handle repository-based components that might not be on filesystem
+            for comp_name, comp_info in list(catalog["components"][comp_type_lower].items()):
+                if comp_name not in processed_components and "repository" in comp_info and "commit" in comp_info:
+                    # Preserve repository-based components
+                    print(f"Preserving repository-based component: {comp_name}")
+                    processed_components.add(comp_name)
+                elif comp_name not in processed_components and "INVALID" not in comp_info:
+                    # Component was removed from filesystem and isn't repository-based
+                    print(f"Removing component that no longer exists: {comp_name}")
+                    del catalog["components"][comp_type_lower][comp_name]
+
+    # Update timestamp
+    catalog["last_updated"] = datetime.utcnow().isoformat() + "Z"
 
     # Write catalog.json
     catalog_path = CATALOG_DIR / "catalog.json"
