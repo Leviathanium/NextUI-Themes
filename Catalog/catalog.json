@@ -8,11 +8,10 @@
       "description": "Consolized.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
     },
-    "Pearly Gate.theme": {
+    "Deep-Space.theme": {
       "author": "Shin",
-      "preview_path": "Catalog/Themes/previews/Pearly Gate.theme.png",
-      "manifest_path": "Catalog/Themes/manifests/Pearly Gate.theme.json",
-      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly Gate.theme.zip",
+      "repository": "https://github.com/KrutzOtrem/deep-space.theme.git"
+      "commit": "55cf8093457426c4736cc8ff5a87aef2b8c06730"
       "description": "Pearly Gate.theme"
     },
     "Default.theme": {
