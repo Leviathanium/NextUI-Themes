@@ -12,7 +12,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Retro-Programmer.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
@@ -25,7 +25,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Sunset-Forest.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
@@ -38,7 +38,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Retro-Mario-Chill.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 </tr><tr>
@@ -51,7 +51,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Arcade-Dark.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
@@ -64,7 +64,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Firewatch.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Firewatch.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
@@ -77,7 +77,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Cozy.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Cozy.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 </tr><tr>
@@ -90,7 +90,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Blackstreets.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Blackstreets.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
@@ -103,7 +103,7 @@
 <sup><i>Leviathan</i></sup><br>
 <sub>
 <sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/Default.bg"></a></sup>
-&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/Default.bg.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>&nbsp;&nbsp;<a href="https://github.com/search?q=filename%3A%22Leviathan%22+repo%3ALeviathanium%2FNextUI-Themes"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>
+
 </sub>
 </td>
 
