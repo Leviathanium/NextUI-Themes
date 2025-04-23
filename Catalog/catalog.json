@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-23T20:54:20.518174Z",
+  "last_updated": "2025-04-23T21:01:01.855624Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -17,9 +17,12 @@
     },
     "Deep-Space.theme": {
       "author": "Shin",
-      "description": "Deep-Space.theme",
+      "description": "Deep Space",
       "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
-      "commit": "b1701a59d5f7ba4b677567891de3219167768457"
+      "commit": "b1701a59d5f7ba4b677567891de3219167768457",
+      "preview_path": "Catalog/Themes/previews/Deep-Space.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Deep-Space.theme.json",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip"
     }
   },
   "components": {
