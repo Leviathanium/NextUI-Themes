@@ -11,7 +11,8 @@
     "Deep-Space.theme": {
       "author": "Shin",
       "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
-      "commit": "55cf8093457426c4736cc8ff5a87aef2b8c06730"
+      "commit": "55cf8093457426c4736cc8ff5a87aef2b8c06730",
+      "description": "Deep-Space.theme"
     },
     "Default.theme": {
       "preview_path": "Catalog/Themes/previews/Default.theme.png",
