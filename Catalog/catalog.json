@@ -14,6 +14,11 @@
       "author": "NextUI",
       "description": "Default.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip"
+    },
+    "Deep-Space.theme": {
+      "author": "Shin",
+      "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
+      "commit": "b1701a59d5f7ba4b677567891de3219167768457"
     }
   },
   "components": {
