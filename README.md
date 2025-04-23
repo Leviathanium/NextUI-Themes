@@ -2,74 +2,13 @@
 
 Repository for NextUI themes and component packages.
 
-# NextUI Themes Repository
+<!-- GALLERY_START -->
+## Featured Themes
 
-A collection of themes and component packages for NextUI devices. This gallery allows you to browse and download themes directly.
+<!-- This will be replaced by the gallery generator -->
 
-## Browse Themes and Components
-
-### [Browse All Themes (3)](generated/themes/index.md)
-
-### [Browse Wallpaper Components (8)](generated/components/wallpapers/index.md)
-
-### [Browse Icon Components (0)](generated/components/icons/index.md)
-
-### [Browse Accent Components (0)](generated/components/accents/index.md)
-
-### [Browse LED Components (0)](generated/components/leds/index.md)
-
-### [Browse Font Components (0)](generated/components/fonts/index.md)
-
-### [Browse Overlay Components (1)](generated/components/overlays/index.md)
-
-## Recently Updated Themes
-
-<table align="center"><tr>
-<td align="center" valign="top" width="33.33%">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip">
-<img title="Name: Consolized.theme
-Author: Gamnrd
-Last updated: 2025-04-23
-(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Consolized.theme.png" /><br/>
-<b>Consolized.theme</b>
-</a><br/>
-<sup><i>Gamnrd</i></sup><br>
-<sub>
-<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Consolized.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22Gamnrd%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Consolized.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
-</sub>
-</td>
-
-<td align="center" valign="top" width="33.33%">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly%20Gate.theme.zip">
-<img title="Name: Pearly Gate.theme
-Author: Shin
-Last updated: 2025-04-23
-(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Pearly%20Gate.theme.png" /><br/>
-<b>Pearly Gate.theme</b>
-</a><br/>
-<sup><i>Shin</i></sup><br>
-<sub>
-<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Pearly Gate.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22Shin%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Pearly%20Gate.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
-</sub>
-</td>
-
-<td align="center" valign="top" width="33.33%">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip">
-<img title="Name: Default.theme
-Author: NextUI
-Last updated: 2025-04-23
-(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Default.theme.png" /><br/>
-<b>Default.theme</b>
-</a><br/>
-<sup><i>NextUI</i></sup><br>
-<sub>
-<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Default.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22NextUI%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Default.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
-</sub>
-</td>
-</tr></table>
+[Browse All Themes](.github/index/index.md)
+<!-- GALLERY_END -->
 
 ## How to Install
 
@@ -141,6 +80,7 @@ All themes and components must include:
 ### Full Theme Package (.theme)
 
 A full theme package should contain:
+
 - `manifest.json` - Theme metadata
 - `preview.png` - Theme preview image
 - `Wallpapers/` - Directory for wallpaper images
@@ -151,6 +91,7 @@ A full theme package should contain:
 ### Component Packages
 
 A component package should contain only the relevant files for that component type:
+
 - `manifest.json` - Component metadata
 - `preview.png` - Component preview image
 - Component-specific directories and files

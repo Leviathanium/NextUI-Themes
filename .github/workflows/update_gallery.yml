@@ -1,0 +1,31 @@
+name: Update Theme Gallery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Catalog/catalog.json'
+  workflow_dispatch:
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Generate gallery
+        run: |
+          python .github/generate_gallery.py
+          
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add README.md .github/index
+          git commit -m "Update theme gallery" || echo "No changes to commit"
+          git push
