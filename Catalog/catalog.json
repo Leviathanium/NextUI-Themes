@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-23T17:24:04.486275Z",
+  "last_updated": "2025-04-23T17:33:44.369564Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -95,11 +95,6 @@
         "author": "Shin",
         "description": "Vanilla",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip"
-      },
-      "Limited-Editions.over": {
-        "author": "Shin",
-        "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
-        "commit": "75a28b61d4d2f2cdce8ade3f5ffd2efb2da04a8e"
       }
     }
   }
