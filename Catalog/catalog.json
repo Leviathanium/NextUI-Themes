@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-22T23:45:51.077083Z",
+  "last_updated": "2025-04-23T17:20:02.585220Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -8,18 +8,21 @@
       "description": "Consolized.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
     },
-    "Deep-Space.theme": {
-      "author": "Shin",
-      "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
-      "commit": "55cf8093457426c4736cc8ff5a87aef2b8c06730",
-      "description": "Deep-Space.theme"
-    },
     "Default.theme": {
       "preview_path": "Catalog/Themes/previews/Default.theme.png",
       "manifest_path": "Catalog/Themes/manifests/Default.theme.json",
       "author": "NextUI",
       "description": "Default.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip"
+    },
+    "Deep-Space.theme": {
+      "preview_path": "Catalog/Themes/previews/Deep-Space.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Deep-Space.theme.json",
+      "author": "Shin",
+      "description": "Deep Space",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip",
+      "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
+      "commit": "55cf8093457426c4736cc8ff5a87aef2b8c06730"
     }
   },
   "components": {
@@ -35,6 +38,13 @@
         "description": "Retro-Programmer.bg",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Retro-Programmer.bg.zip"
       },
+      "Blackstreets.bg": {
+        "preview_path": "Catalog/Components/Wallpapers/previews/Blackstreets.bg.png",
+        "manifest_path": "Catalog/Components/Wallpapers/manifests/Blackstreets.bg.json",
+        "author": "Leviathan",
+        "description": "Blackstreets.bg",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Blackstreets.bg.zip"
+      },
       "Sunset-Forest.bg": {
         "preview_path": "Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png",
         "manifest_path": "Catalog/Components/Wallpapers/manifests/Sunset-Forest.bg.json",
@@ -49,12 +59,19 @@
         "description": "Retro-Mario-Chill.bg",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Retro-Mario-Chill.bg.zip"
       },
-      "Arcade-Dark.bg": {
-        "preview_path": "Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png",
-        "manifest_path": "Catalog/Components/Wallpapers/manifests/Arcade-Dark.bg.json",
+      "Cozy.bg": {
+        "preview_path": "Catalog/Components/Wallpapers/previews/Cozy.bg.png",
+        "manifest_path": "Catalog/Components/Wallpapers/manifests/Cozy.bg.json",
         "author": "Leviathan",
-        "description": "Arcade-Dark.bg",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Arcade-Dark.bg.zip"
+        "description": "Cozy.bg",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Cozy.bg.zip"
+      },
+      "Default.bg": {
+        "preview_path": "Catalog/Components/Wallpapers/previews/Default.bg.png",
+        "manifest_path": "Catalog/Components/Wallpapers/manifests/Default.bg.json",
+        "author": "Leviathan",
+        "description": "Default.bg",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Default.bg.zip"
       },
       "Firewatch.bg": {
         "preview_path": "Catalog/Components/Wallpapers/previews/Firewatch.bg.png",
@@ -63,35 +80,21 @@
         "description": "Firewatch.bg",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Firewatch.bg.zip"
       },
-      "Cozy.bg": {
-        "preview_path": "Catalog/Components/Wallpapers/previews/Cozy.bg.png",
-        "manifest_path": "Catalog/Components/Wallpapers/manifests/Cozy.bg.json",
+      "Arcade-Dark.bg": {
+        "preview_path": "Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png",
+        "manifest_path": "Catalog/Components/Wallpapers/manifests/Arcade-Dark.bg.json",
         "author": "Leviathan",
-        "description": "Cozy.bg",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Cozy.bg.zip"
-      },
-      "Blackstreets.bg": {
-        "preview_path": "Catalog/Components/Wallpapers/previews/Blackstreets.bg.png",
-        "manifest_path": "Catalog/Components/Wallpapers/manifests/Blackstreets.bg.json",
-        "author": "Leviathan",
-        "description": "Blackstreets.bg",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Blackstreets.bg.zip"
-      },
-      "Default.bg": {
-        "preview_path": "Catalog/Components/Wallpapers/previews/Default.bg.png",
-        "manifest_path": "Catalog/Components/Wallpapers/manifests/Default.bg.json",
-        "author": "Leviathan",
-        "description": "Default.bg",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Default.bg.zip"
+        "description": "Arcade-Dark.bg",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Arcade-Dark.bg.zip"
       }
     },
     "overlays": {
       "Vanilla.over": {
-        "author": "Shin",
         "preview_path": "Catalog/Components/Overlays/previews/Vanilla.over.png",
         "manifest_path": "Catalog/Components/Overlays/manifests/Vanilla.over.json",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip",
-        "description": "Vanilla.over"
+        "author": "Shin",
+        "description": "Vanilla",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip"
       }
     }
   }
