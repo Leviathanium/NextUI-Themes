@@ -8,28 +8,28 @@ Repository for NextUI themes and component packages.
 
 | Name | Author | Preview |
 |------|--------|---------|
-| Consolized.theme | Gamnrd | [Preview](Catalog/Themes/previews/Consolized.theme.png) |
-| Pearly Gate.theme | Shin | [Preview](Catalog/Themes/previews/Pearly%20Gate.theme.png) |
-| Default.theme | NextUI | [Preview](Catalog/Themes/previews/Default.theme.png) |
+| Consolized.theme | Gamnrd | ![Consolized.theme](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Consolized.theme.png) |
+| Pearly Gate.theme | Shin | ![Pearly Gate.theme](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Pearly%20Gate.theme.png) |
+| Default.theme | NextUI | ![Default.theme](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Default.theme.png) |
 
 ### Wallpapers
 
 | Name | Author | Preview |
 |------|--------|---------|
-| Retro-Programmer.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png) |
-| Sunset-Forest.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png) |
-| Retro-Mario-Chill.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png) |
-| Arcade-Dark.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png) |
-| Firewatch.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Firewatch.bg.png) |
-| Cozy.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Cozy.bg.png) |
-| Blackstreets.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Blackstreets.bg.png) |
-| Default.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Default.bg.png) |
+| Retro-Programmer.bg | Leviathan | ![Retro-Programmer.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png) |
+| Sunset-Forest.bg | Leviathan | ![Sunset-Forest.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png) |
+| Retro-Mario-Chill.bg | Leviathan | ![Retro-Mario-Chill.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png) |
+| Arcade-Dark.bg | Leviathan | ![Arcade-Dark.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png) |
+| Firewatch.bg | Leviathan | ![Firewatch.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Firewatch.bg.png) |
+| Cozy.bg | Leviathan | ![Cozy.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Cozy.bg.png) |
+| Blackstreets.bg | Leviathan | ![Blackstreets.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Blackstreets.bg.png) |
+| Default.bg | Leviathan | ![Default.bg](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Default.bg.png) |
 
 ### Overlays
 
 | Name | Author | Preview |
 |------|--------|---------|
-| Vanilla.over | Shin | [Preview](Catalog/Components/Overlays/previews/Vanilla.over.png) |
+| Vanilla.over | Shin | ![Vanilla.over](https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Overlays/previews/Vanilla.over.png) |
 
 ### Icons
 
