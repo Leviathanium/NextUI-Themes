@@ -2,6 +2,43 @@
 
 Repository for NextUI themes and component packages.
 
+## Gallery
+
+### Themes
+
+| Name | Author | Preview |
+|------|--------|---------|
+| Consolized.theme | Gamnrd | [Preview](Catalog/Themes/previews/Consolized.theme.png) |
+| Pearly Gate.theme | Shin | [Preview](Catalog/Themes/previews/Pearly%20Gate.theme.png) |
+| Default.theme | NextUI | [Preview](Catalog/Themes/previews/Default.theme.png) |
+
+### Wallpapers
+
+| Name | Author | Preview |
+|------|--------|---------|
+| Retro-Programmer.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png) |
+| Sunset-Forest.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png) |
+| Retro-Mario-Chill.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png) |
+| Arcade-Dark.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png) |
+| Firewatch.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Firewatch.bg.png) |
+| Cozy.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Cozy.bg.png) |
+| Blackstreets.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Blackstreets.bg.png) |
+| Default.bg | Leviathan | [Preview](Catalog/Components/Wallpapers/previews/Default.bg.png) |
+
+### Overlays
+
+| Name | Author | Preview |
+|------|--------|---------|
+| Vanilla.over | Shin | [Preview](Catalog/Components/Overlays/previews/Vanilla.over.png) |
+
+### Icons
+
+*No icon components found in the catalog.*
+
+### Accents
+
+*No accent components found in the catalog.*
+
 ## About This Repository
 
 This repository hosts themes and component packages for NextUI devices. It uses an automated workflow to process uploaded zip files.
