@@ -2,38 +2,92 @@
 
 Repository for NextUI themes and component packages.
 
-## Gallery
+# NextUI Themes Repository
+
+A collection of themes and component packages for NextUI devices. This gallery allows you to browse and download themes directly.
+
+## Browse Themes and Components
+
+### [Browse All Themes (3)](generated/themes/index.md)
+
+### [Browse Wallpaper Components (8)](generated/components/wallpapers/index.md)
+
+### [Browse Icon Components (0)](generated/components/icons/index.md)
+
+### [Browse Accent Components (0)](generated/components/accents/index.md)
+
+### [Browse LED Components (0)](generated/components/leds/index.md)
+
+### [Browse Font Components (0)](generated/components/fonts/index.md)
+
+### [Browse Overlay Components (1)](generated/components/overlays/index.md)
+
+## Recently Updated Themes
+
+<table align="center"><tr>
+<td align="center" valign="top" width="33.33%">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip">
+<img title="Name: Consolized.theme
+Author: Gamnrd
+Last updated: 2025-04-23
+(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Consolized.theme.png" /><br/>
+<b>Consolized.theme</b>
+</a><br/>
+<sup><i>Gamnrd</i></sup><br>
+<sub>
+<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Consolized.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22Gamnrd%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Consolized.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
+</sub>
+</td>
+
+<td align="center" valign="top" width="33.33%">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly%20Gate.theme.zip">
+<img title="Name: Pearly Gate.theme
+Author: Shin
+Last updated: 2025-04-23
+(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Pearly%20Gate.theme.png" /><br/>
+<b>Pearly Gate.theme</b>
+</a><br/>
+<sup><i>Shin</i></sup><br>
+<sub>
+<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Pearly Gate.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22Shin%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Pearly%20Gate.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
+</sub>
+</td>
+
+<td align="center" valign="top" width="33.33%">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip">
+<img title="Name: Default.theme
+Author: NextUI
+Last updated: 2025-04-23
+(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Default.theme.png" /><br/>
+<b>Default.theme</b>
+</a><br/>
+<sup><i>NextUI</i></sup><br>
+<sub>
+<sup><a title="Last updated: 2025-04-23" href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/Themes/Default.theme">2025-04-23</a></sup> &nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/search?l=ZIP&q=filename%3A%22NextUI%22"><img src="https://user-images.githubusercontent.com/44569252/194037581-698a5004-8b75-4da6-a63d-b41d541ebde2.png" width="16" title="Search themes by this author"></a>&nbsp;&nbsp;<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Default.theme.png"><img title="View full-size preview" src="https://user-images.githubusercontent.com/44569252/194037184-ae453506-2536-4c6f-8a19-4a6c1de6ce32.png" width="16"></a>
+</sub>
+</td>
+</tr></table>
+
+## How to Install
 
 ### Themes
 
-| Pearly Gate Background | Bottomless Ocean Background | Early Morning Background |
-| -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Pearly%20Gate.theme.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Consolized.theme.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Default.theme.png" width="250"> |
-| **Pearly Gate.theme**<br>by Shin | **Consolized.theme**<br>by Gamnrd | **Default.theme**<br>by NextUI |
+1. Download the theme package (click on a theme image above)
+2. Extract the theme to your TrimUI Brick device in the `Tools/tg5040/Theme-Manager.pak/Themes/` directory
+3. Open the Theme Manager app on your device
+4. Select the theme and apply it
 
-### Wallpapers
+### Components
 
-| Retro-Programmer | Sunset-Forest | Retro-Mario-Chill |
-| -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png" width="250"> |
-| **Retro-Programmer.bg**<br>by Leviathan | **Sunset-Forest.bg**<br>by Leviathan | **Retro-Mario-Chill.bg**<br>by Leviathan |
-
-| Arcade-Dark | Firewatch | Cozy |
-| -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Firewatch.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Cozy.bg.png" width="250"> |
-| **Arcade-Dark.bg**<br>by Leviathan | **Firewatch.bg**<br>by Leviathan | **Cozy.bg**<br>by Leviathan |
-
-| Blackstreets | Default | |
-| -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Blackstreets.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Default.bg.png" width="250"> | |
-| **Blackstreets.bg**<br>by Leviathan | **Default.bg**<br>by Leviathan | |
-
-### Overlays
-
-| Vanilla | | |
-| -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Overlays/previews/Vanilla.over.png" width="250"> | | |
-| **Vanilla.over**<br>by Shin | | |
+1. Download the component package
+2. Extract to your TrimUI Brick device in the appropriate component directory:
+   - `Tools/tg5040/Theme-Manager.pak/Components/[Type]/`
+3. Open the Theme Manager app on your device
+4. Select "Components" and the appropriate component type
+5. Choose the component and apply it
 
 ## About This Repository
 
