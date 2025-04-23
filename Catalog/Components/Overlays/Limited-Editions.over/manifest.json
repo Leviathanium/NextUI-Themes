@@ -1,0 +1,82 @@
+{
+  "component_info": {
+    "name": "GBC & GBC Limited Editions",
+    "type": "overlay",
+    "version": "1.0.0",
+    "author": "Shin",
+    "creation_date": "2025-04-22T00:00:00Z",
+    "exported_by": "Theme Manager v1.0.0"
+  },
+  "content": {
+    "systems": [
+        "GBA",
+        "GBC",
+      ]
+  },
+  "path_mappings": [
+    {
+        "theme_path": "Overlays/GBA/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBA/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBA/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay4.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay4.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay5.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay5.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBC"
+        }
+      },
+  ]
+}
