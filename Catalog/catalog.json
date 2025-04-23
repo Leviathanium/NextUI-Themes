@@ -89,13 +89,6 @@
       }
     },
     "overlays": {
-      "Vanilla.over": {
-        "preview_path": "Catalog/Components/Overlays/previews/Vanilla.over.png",
-        "manifest_path": "Catalog/Components/Overlays/manifests/Vanilla.over.json",
-        "author": "Shin",
-        "description": "Vanilla",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip"
-      },
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
