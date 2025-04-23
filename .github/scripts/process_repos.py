@@ -168,7 +168,8 @@ def process_component_repository(name, repo_url, commit_hash):
 
     if component_type is None:
         print(f"Warning: Could not determine component type for {name}")
-        return None, None
+        # Return three values to avoid the "not enough values to unpack" error
+        return None, None, None
 
     # Create a temporary directory for cloning
     with tempfile.TemporaryDirectory() as temp_dir:
