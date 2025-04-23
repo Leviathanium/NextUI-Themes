@@ -216,6 +216,12 @@ def generate_category_page(items, type_key, current_page, total_pages, total_ite
         "PAGINATION": pagination
     })
 
+# Add this function to check if an item is valid
+def is_valid_item(item):
+    """Check if an item is valid (doesn't have the INVALID flag)"""
+    return "INVALID" not in item and "preview_path" in item and "manifest_path" in item
+
+# Then modify the generate_category_pages function to filter out invalid items:
 def generate_category_pages(catalog, type_key):
     """Generate pages for a category"""
     type_info = COMPONENT_TYPES[type_key]
@@ -224,15 +230,17 @@ def generate_category_pages(catalog, type_key):
 
     # Get items for this type
     if type_key == "themes":
-        items = catalog.get("themes", {}).values()
+        all_items = catalog.get("themes", {}).values()
     else:
-        items = catalog.get("components", {}).get(type_key, {}).values()
-
+        all_items = catalog.get("components", {}).get(type_key, {}).values()
+    
+    # Filter out invalid items
+    items = [item for item in all_items if is_valid_item(item)]
     items = sorted(items, key=lambda x: x.get("last_updated", ""), reverse=True)
     total_items = len(items)
 
     if total_items == 0:
-        print(f"No items found for {type_info['title']}")
+        print(f"No valid items found for {type_info['title']}")
         return []
 
     # Split items into pages
