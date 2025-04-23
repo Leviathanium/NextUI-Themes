@@ -20,7 +20,7 @@ jobs:
           
       - name: Generate gallery
         run: |
-          python .github/generate_gallery.py
+          python .github/scripts/generate_gallery.py
           
       - name: Commit changes
         run: |

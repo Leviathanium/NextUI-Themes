@@ -4,12 +4,12 @@ Browse and download themes and components for NextUI devices.
 
 ## Categories
 
-- [Full Themes (.theme)](/Catalog/index/themes/index.md) - Complete theme packages
-- [Wallpapers (.bg)](/Catalog/index/wallpapers/index.md) - Background image collections
-- [Icons (.icon)](/Catalog/index/icons/index.md) - Custom icon packs
-- [Accents (.acc)](/Catalog/index/accents/index.md) - UI color schemes
-- [Fonts (.font)](/Catalog/index/fonts/index.md) - Custom system fonts
-- [Overlays (.over)](/Catalog/index/overlays/index.md) - System-specific overlays
+- [Full Themes (.theme)](/.github/index/themes/index.md) - Complete theme packages
+- [Wallpapers (.bg)](/.github/index/wallpapers/index.md) - Background image collections
+- [Icons (.icon)](/.github/index/icons/index.md) - Custom icon packs
+- [Accents (.acc)](/.github/index/accents/index.md) - UI color schemes
+- [Fonts (.font)](/.github/index/fonts/index.md) - Custom system fonts
+- [Overlays (.over)](/.github/index/overlays/index.md) - System-specific overlays
 
 ## Featured Themes
 
