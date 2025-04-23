@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-23T17:33:44.369564Z",
+  "last_updated": "2025-04-23T18:18:44.320001Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -99,7 +99,8 @@
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
-        "commit": "75a28b61d4d2f2cdce8ade3f5ffd2efb2da04a8e"
+        "commit": "75a28b61d4d2f2cdce8ade3f5ffd2efb2da04a8e",
+        "INVALID": "Invalid JSON in manifest: Expecting value: line 14 column 7 (char 295)"
       }
     }
   }
