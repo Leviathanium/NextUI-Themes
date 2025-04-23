@@ -21,13 +21,13 @@ Repository for NextUI themes and component packages.
 
 <td align="center" valign="top" width="33%">
 
-<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pearly Gate.theme.zip">
-<img title="Name: Pearly Gate.theme&#013;Author: Shin&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Pearly Gate.theme.png" /><br/>
-<b>Pearly Gate.theme</b>
+<a href="">
+<img title="Author: Shin&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/" /><br/>
+<b></b>
 </a><br/>
 <sup><i>Shin</i></sup><br>
 <sub>
-<sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/themes/Pearly Gate.theme"></a></sup>
+<sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/themes/"></a></sup>
 
 </sub>
 </td>
