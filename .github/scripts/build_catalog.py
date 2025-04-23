@@ -110,7 +110,7 @@ def extract_theme_info(theme_path):
     }
 
     # If this theme was in the old catalog and had repository info, preserve it
-    old_catalog_path = filepath.join(CATALOG_DIR, "catalog.json")
+    old_catalog_path = os.path.join(CATALOG_DIR, "catalog.json")
     if os.path.exists(old_catalog_path):
         try:
             with open(old_catalog_path, 'r') as f:
@@ -195,7 +195,7 @@ def extract_component_info(component_path, component_type):
     }
 
     # If this component was in the old catalog and had repository info, preserve it
-    old_catalog_path = filepath.join(CATALOG_DIR, "catalog.json")
+    old_catalog_path = os.path.join(CATALOG_DIR, "catalog.json")
     if os.path.exists(old_catalog_path):
         try:
             with open(old_catalog_path, 'r') as f:
