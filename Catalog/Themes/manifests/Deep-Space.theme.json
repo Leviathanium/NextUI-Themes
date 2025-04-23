@@ -1,0 +1,574 @@
+{
+  "theme_info": {
+    "name": "Deep Space",
+    "version": "1.0.0",
+    "author": "Shin",
+    "creation_date": "2025-04-23T03:30:34.454608929+03:00",
+    "exported_by": "Theme Manager v1.0.0"
+  },
+  "content": {
+    "wallpapers": {
+      "present": true,
+      "count": 16
+    },
+    "icons": {
+      "present": false,
+      "system_count": 0,
+      "tool_count": 0,
+      "collection_count": 0
+    },
+    "overlays": {
+      "present": true,
+      "systems": [
+        "FBN",
+        "FC",
+        "GB",
+        "GBA",
+        "GBC",
+        "GG",
+        "LYNX",
+        "MD",
+        "NGPC",
+        "PCE",
+        "PS",
+        "SFC"
+      ]
+    },
+    "fonts": {
+      "present": true,
+      "og_replaced": true,
+      "next_replaced": true
+    },
+    "settings": {
+      "accents_included": true,
+      "leds_included": true
+    }
+  },
+  "path_mappings": {
+    "wallpapers": [
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/Root.png",
+        "system_path": "/mnt/SDCARD/bg.png",
+        "metadata": {
+          "SystemName": "Root",
+          "WallpaperType": "Main"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/00) NES (FC).png",
+        "system_path": "/mnt/SDCARD/Roms/00) NES (FC)/.media/bg.png",
+        "metadata": {
+          "SystemName": "00) NES (FC)",
+          "SystemTag": "FC",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/01) SNES (SFC).png",
+        "system_path": "/mnt/SDCARD/Roms/01) SNES (SFC)/.media/bg.png",
+        "metadata": {
+          "SystemName": "01) SNES (SFC)",
+          "SystemTag": "SFC",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/02) Game Boy (GB).png",
+        "system_path": "/mnt/SDCARD/Roms/02) Game Boy (GB)/.media/bg.png",
+        "metadata": {
+          "SystemName": "02) Game Boy (GB)",
+          "SystemTag": "GB",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/03) Game Boy Color (GBC).png",
+        "system_path": "/mnt/SDCARD/Roms/03) Game Boy Color (GBC)/.media/bg.png",
+        "metadata": {
+          "SystemName": "03) Game Boy Color (GBC)",
+          "SystemTag": "GBC",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/04) Game Boy Advance (GBA).png",
+        "system_path": "/mnt/SDCARD/Roms/04) Game Boy Advance (GBA)/.media/bg.png",
+        "metadata": {
+          "SystemName": "04) Game Boy Advance (GBA)",
+          "SystemTag": "GBA",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/06) Pico-8 (PICO).png",
+        "system_path": "/mnt/SDCARD/Roms/06) Pico-8 (PICO)/.media/bg.png",
+        "metadata": {
+          "SystemName": "06) Pico-8 (PICO)",
+          "SystemTag": "PICO",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/07) Sega Genesis (MD).png",
+        "system_path": "/mnt/SDCARD/Roms/07) Sega Genesis (MD)/.media/bg.png",
+        "metadata": {
+          "SystemName": "07) Sega Genesis (MD)",
+          "SystemTag": "MD",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/08) Sega Master System (SMS).png",
+        "system_path": "/mnt/SDCARD/Roms/08) Sega Master System (SMS)/.media/bg.png",
+        "metadata": {
+          "SystemName": "08) Sega Master System (SMS)",
+          "SystemTag": "SMS",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/09) Arcade (FBN).png",
+        "system_path": "/mnt/SDCARD/Roms/09) Arcade (FBN)/.media/bg.png",
+        "metadata": {
+          "SystemName": "09) Arcade (FBN)",
+          "SystemTag": "FBN",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/11) Neo Geo Pocket & Color (NGPC).png",
+        "system_path": "/mnt/SDCARD/Roms/11) Neo Geo Pocket & Color (NGPC)/.media/bg.png",
+        "metadata": {
+          "SystemName": "11) Neo Geo Pocket & Color (NGPC)",
+          "SystemTag": "NGPC",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/13) TurboGrafx-16 (PCE).png",
+        "system_path": "/mnt/SDCARD/Roms/13) TurboGrafx-16 (PCE)/.media/bg.png",
+        "metadata": {
+          "SystemName": "13) TurboGrafx-16 (PCE)",
+          "SystemTag": "PCE",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/15) Sony PlayStation (PS).png",
+        "system_path": "/mnt/SDCARD/Roms/15) Sony PlayStation (PS)/.media/bg.png",
+        "metadata": {
+          "SystemName": "15) Sony PlayStation (PS)",
+          "SystemTag": "PS",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/16) Sega Game Gear (GG).png",
+        "system_path": "/mnt/SDCARD/Roms/16) Sega Game Gear (GG)/.media/bg.png",
+        "metadata": {
+          "SystemName": "16) Sega Game Gear (GG)",
+          "SystemTag": "GG",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/18) Nintendo 64 (N64).png",
+        "system_path": "/mnt/SDCARD/Roms/18) Nintendo 64 (N64)/.media/bg.png",
+        "metadata": {
+          "SystemName": "18) Nintendo 64 (N64)",
+          "SystemTag": "N64",
+          "WallpaperType": "System"
+        }
+      },
+      {
+        "theme_path": "Wallpapers/SystemWallpapers/19) Atari Lynx (LYNX).png",
+        "system_path": "/mnt/SDCARD/Roms/19) Atari Lynx (LYNX)/.media/bg.png",
+        "metadata": {
+          "SystemName": "19) Atari Lynx (LYNX)",
+          "SystemTag": "LYNX",
+          "WallpaperType": "System"
+        }
+      }
+    ],
+    "icons": [],
+    "overlays": [
+      {
+        "theme_path": "Overlays/FBN/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/FBN/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "FBN"
+        }
+      },
+      {
+        "theme_path": "Overlays/FBN/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/FBN/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "FBN"
+        }
+      },
+      {
+        "theme_path": "Overlays/FBN/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/FBN/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "FBN"
+        }
+      },
+      {
+        "theme_path": "Overlays/FBN/overlay4.png",
+        "system_path": "/mnt/SDCARD/Overlays/FBN/overlay4.png",
+        "metadata": {
+          "OverlayName": "overlay4.png",
+          "SystemTag": "FBN"
+        }
+      },
+      {
+        "theme_path": "Overlays/FBN/overlay5.png",
+        "system_path": "/mnt/SDCARD/Overlays/FBN/overlay5.png",
+        "metadata": {
+          "OverlayName": "overlay5.png",
+          "SystemTag": "FBN"
+        }
+      },
+      {
+        "theme_path": "Overlays/FC/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/FC/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "FC"
+        }
+      },
+      {
+        "theme_path": "Overlays/FC/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/FC/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "FC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GB/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GB/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GB"
+        }
+      },
+      {
+        "theme_path": "Overlays/GB/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GB/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GB"
+        }
+      },
+      {
+        "theme_path": "Overlays/GB/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GB/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GB"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBA/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBA/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBA/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBA/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GBA"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GBC/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GBC/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GBC"
+        }
+      },
+      {
+        "theme_path": "Overlays/GG/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/GG/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "GG"
+        }
+      },
+      {
+        "theme_path": "Overlays/GG/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/GG/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "GG"
+        }
+      },
+      {
+        "theme_path": "Overlays/GG/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/GG/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "GG"
+        }
+      },
+      {
+        "theme_path": "Overlays/LYNX/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/LYNX/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "LYNX"
+        }
+      },
+      {
+        "theme_path": "Overlays/LYNX/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/LYNX/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "LYNX"
+        }
+      },
+      {
+        "theme_path": "Overlays/LYNX/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/LYNX/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "LYNX"
+        }
+      },
+      {
+        "theme_path": "Overlays/MD/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/MD/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "MD"
+        }
+      },
+      {
+        "theme_path": "Overlays/MD/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/MD/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "MD"
+        }
+      },
+      {
+        "theme_path": "Overlays/MD/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/MD/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "MD"
+        }
+      },
+      {
+        "theme_path": "Overlays/NGPC/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/NGPC/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "NGPC"
+        }
+      },
+      {
+        "theme_path": "Overlays/NGPC/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/NGPC/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "NGPC"
+        }
+      },
+      {
+        "theme_path": "Overlays/NGPC/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/NGPC/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "NGPC"
+        }
+      },
+      {
+        "theme_path": "Overlays/PCE/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/PCE/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "PCE"
+        }
+      },
+      {
+        "theme_path": "Overlays/PCE/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/PCE/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "PCE"
+        }
+      },
+      {
+        "theme_path": "Overlays/PCE/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/PCE/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "PCE"
+        }
+      },
+      {
+        "theme_path": "Overlays/PCE/overlay4.png",
+        "system_path": "/mnt/SDCARD/Overlays/PCE/overlay4.png",
+        "metadata": {
+          "OverlayName": "overlay4.png",
+          "SystemTag": "PCE"
+        }
+      },
+      {
+        "theme_path": "Overlays/PCE/overlay5.png",
+        "system_path": "/mnt/SDCARD/Overlays/PCE/overlay5.png",
+        "metadata": {
+          "OverlayName": "overlay5.png",
+          "SystemTag": "PCE"
+        }
+      },
+      {
+        "theme_path": "Overlays/PS/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/PS/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "PS"
+        }
+      },
+      {
+        "theme_path": "Overlays/PS/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/PS/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "PS"
+        }
+      },
+      {
+        "theme_path": "Overlays/PS/overlay3.png",
+        "system_path": "/mnt/SDCARD/Overlays/PS/overlay3.png",
+        "metadata": {
+          "OverlayName": "overlay3.png",
+          "SystemTag": "PS"
+        }
+      },
+      {
+        "theme_path": "Overlays/PS/overlay4.png",
+        "system_path": "/mnt/SDCARD/Overlays/PS/overlay4.png",
+        "metadata": {
+          "OverlayName": "overlay4.png",
+          "SystemTag": "PS"
+        }
+      },
+      {
+        "theme_path": "Overlays/PS/overlay5.png",
+        "system_path": "/mnt/SDCARD/Overlays/PS/overlay5.png",
+        "metadata": {
+          "OverlayName": "overlay5.png",
+          "SystemTag": "PS"
+        }
+      },
+      {
+        "theme_path": "Overlays/SFC/overlay1.png",
+        "system_path": "/mnt/SDCARD/Overlays/SFC/overlay1.png",
+        "metadata": {
+          "OverlayName": "overlay1.png",
+          "SystemTag": "SFC"
+        }
+      },
+      {
+        "theme_path": "Overlays/SFC/overlay2.png",
+        "system_path": "/mnt/SDCARD/Overlays/SFC/overlay2.png",
+        "metadata": {
+          "OverlayName": "overlay2.png",
+          "SystemTag": "SFC"
+        }
+      }
+    ],
+    "fonts": {
+      "Next": {
+        "theme_path": "Fonts/Next.ttf",
+        "system_path": "/mnt/SDCARD/.system/res/font1.ttf"
+      },
+      "OG": {
+        "theme_path": "Fonts/OG.ttf",
+        "system_path": "/mnt/SDCARD/.system/res/font2.ttf"
+      }
+    },
+    "settings": null
+  },
+  "accent_colors": {
+    "color1": "0xFFBB80",
+    "color2": "0x282828",
+    "color3": "0x1E2329",
+    "color4": "0xFFFFFF",
+    "color5": "0x282828",
+    "color6": "0xFFFFFF"
+  },
+  "led_settings": {
+    "f1_key": {
+      "effect": 0,
+      "color1": "",
+      "color2": "",
+      "speed": 0,
+      "brightness": 0,
+      "trigger": 0,
+      "in_brightness": 0
+    },
+    "f2_key": {
+      "effect": 0,
+      "color1": "",
+      "color2": "",
+      "speed": 0,
+      "brightness": 0,
+      "trigger": 0,
+      "in_brightness": 0
+    },
+    "top_bar": {
+      "effect": 0,
+      "color1": "",
+      "color2": "",
+      "speed": 0,
+      "brightness": 0,
+      "trigger": 0,
+      "in_brightness": 0
+    },
+    "lr_triggers": {
+      "effect": 0,
+      "color1": "",
+      "color2": "",
+      "speed": 0,
+      "brightness": 0,
+      "trigger": 0,
+      "in_brightness": 0
+    }
+  }
+}
