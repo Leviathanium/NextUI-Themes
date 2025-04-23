@@ -6,29 +6,34 @@ Repository for NextUI themes and component packages.
 
 ### Themes
 
-| Pearly Gate Background | Bottomless Ocean Background | Early Morning Background | Deep Space Background |
-| -- | -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Pearly%20Gate.theme.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Consolized.theme.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Default.theme.png" width="200"> | |
-| **Pearly Gate.theme**<br>by Shin | **Consolized.theme**<br>by Gamnrd | **Default.theme**<br>by NextUI | |
+| Pearly Gate Background | Bottomless Ocean Background | Early Morning Background |
+| -- | -- | -- |
+| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Pearly%20Gate.theme.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Consolized.theme.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Themes/previews/Default.theme.png" width="250"> |
+| **Pearly Gate.theme**<br>by Shin | **Consolized.theme**<br>by Gamnrd | **Default.theme**<br>by NextUI |
 
 ### Wallpapers
 
-| Retro-Programmer | Sunset-Forest | Retro-Mario-Chill | Arcade-Dark |
-| -- | -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png" width="200"> |
-| **Retro-Programmer.bg**<br>by Leviathan | **Sunset-Forest.bg**<br>by Leviathan | **Retro-Mario-Chill.bg**<br>by Leviathan | **Arcade-Dark.bg**<br>by Leviathan |
+| Retro-Programmer | Sunset-Forest | Retro-Mario-Chill |
+| -- | -- | -- |
+| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Sunset-Forest.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Retro-Mario-Chill.bg.png" width="250"> |
+| **Retro-Programmer.bg**<br>by Leviathan | **Sunset-Forest.bg**<br>by Leviathan | **Retro-Mario-Chill.bg**<br>by Leviathan |
 
-| Firewatch | Cozy | Blackstreets | Default |
-| -- | -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Firewatch.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Cozy.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Blackstreets.bg.png" width="200"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Default.bg.png" width="200"> |
-| **Firewatch.bg**<br>by Leviathan | **Cozy.bg**<br>by Leviathan | **Blackstreets.bg**<br>by Leviathan | **Default.bg**<br>by Leviathan |
+| Arcade-Dark | Firewatch | Cozy |
+| -- | -- | -- |
+| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Arcade-Dark.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Firewatch.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Cozy.bg.png" width="250"> |
+| **Arcade-Dark.bg**<br>by Leviathan | **Firewatch.bg**<br>by Leviathan | **Cozy.bg**<br>by Leviathan |
+
+| Blackstreets | Default | |
+| -- | -- | -- |
+| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Blackstreets.bg.png" width="250"> | <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Wallpapers/previews/Default.bg.png" width="250"> | |
+| **Blackstreets.bg**<br>by Leviathan | **Default.bg**<br>by Leviathan | |
 
 ### Overlays
 
-| Vanilla |  |  |  |
-| -- | -- | -- | -- |
-| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Overlays/previews/Vanilla.over.png" width="200"> | | | |
-| **Vanilla.over**<br>by Shin | | | |
+| Vanilla | | |
+| -- | -- | -- |
+| <img src="https://raw.githubusercontent.com/Leviathanium/NextUI-Themes/main/Catalog/Components/Overlays/previews/Vanilla.over.png" width="250"> | | |
+| **Vanilla.over**<br>by Shin | | |
 
 ## About This Repository
 
