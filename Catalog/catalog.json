@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-23T17:20:02.585220Z",
+  "last_updated": "2025-04-23T17:24:04.486275Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -89,10 +89,12 @@
       }
     },
     "overlays": {
-      "Limited-Editions": {
+      "Vanilla.over": {
+        "preview_path": "Catalog/Components/Overlays/previews/Vanilla.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/Vanilla.over.json",
         "author": "Shin",
-        "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
-        "commit": "75a28b61d4d2f2cdce8ade3f5ffd2efb2da04a8e"
+        "description": "Vanilla",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Vanilla.over.zip"
       }
     }
   }
