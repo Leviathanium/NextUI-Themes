@@ -32,12 +32,12 @@
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip">
-<img title="Name: Deep Space&#013;Author: Shin&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Deep-Space.theme.png" /><br/>
-<b>Deep Space</b>
+<img title="Name: Deep-Space&#013;Author: Shin&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Themes/previews/Deep-Space.theme.png" /><br/>
+<b>Deep-Space</b>
 </a><br/>
 <sup><i>Shin</i></sup><br>
 <sub>
-<sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/themes/Deep Space"></a></sup>
+<sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/themes/Deep-Space"></a></sup>
 
 </sub>
 </td>
