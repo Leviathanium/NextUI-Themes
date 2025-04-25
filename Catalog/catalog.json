@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T21:09:28.090059Z",
+  "last_updated": "2025-04-25T21:50:04.618799Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -118,9 +118,11 @@
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip"
       },
       "Limited-Editions.over": {
+        "author": "Shin",
+        "repository": "https://github.com/KrutzOtrem/limited-editions.over",
+        "commit": "5e06a1ad77a5236f884a3160827296d001e53062",
         "preview_path": "Catalog/Components/Overlays/previews/Limited-Editions.over.png",
         "manifest_path": "Catalog/Components/Overlays/manifests/Limited-Editions.over.json",
-        "author": "Shin",
         "description": "GBC & GBA Limited Editions",
         "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Limited-Editions.over.zip"
       }
