@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T00:35:27.387571Z",
+  "last_updated": "2025-04-25T00:41:32.001048Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -21,7 +21,10 @@
       "author": "Shin",
       "description": "Deep Space",
       "repository": "https://github.com/KrutzOtrem/deep-space.theme.git",
-      "commit": "e25fe2a237d49ab78e2ca754ce8a1c8e584f4967"
+      "commit": "e25fe2a237d49ab78e2ca754ce8a1c8e584f4967",
+      "preview_path": "Catalog/Themes/previews/Deep-Space.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Deep-Space.theme.json",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip"
     },
     "Default.theme": {
       "preview_path": "Catalog/Themes/previews/Default.theme.png",
