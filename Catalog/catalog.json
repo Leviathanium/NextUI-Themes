@@ -101,8 +101,7 @@
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
-        "commit": "75a28b61d4d2f2cdce8ade3f5ffd2efb2da04a8e",
-        "INVALID": "Invalid JSON in manifest: Expecting value: line 14 column 7 (char 295)"
+        "commit": "5e06a1ad77a5236f884a3160827296d001e53062"
       }
     }
   }
