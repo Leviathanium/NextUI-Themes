@@ -40,16 +40,6 @@
     "icons": {},
     "fonts": {},
     "wallpapers": {
-      "testwallpapers.bg": {
-        "author": "Your Name",
-        "repository": "https://github.com/Leviathanium/Template.bg",
-        "commit": "11afad8005411b34f0d548087af9addd5b07bb10",
-        "has_list_wallpapers": true,
-        "preview_path": "Catalog/Components/Wallpapers/previews/testwallpapers.bg.png",
-        "manifest_path": "Catalog/Components/Wallpapers/manifests/testwallpapers.bg.json",
-        "description": "My Wallpaper Component",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/testwallpapers.bg.zip"
-      },
       "Retro-Programmer.bg": {
         "preview_path": "Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png",
         "manifest_path": "Catalog/Components/Wallpapers/manifests/Retro-Programmer.bg.json",
@@ -108,19 +98,6 @@
       }
     },
     "overlays": {
-      "testoverlays.over": {
-        "author": "Your Name",
-        "repository": "https://github.com/Leviathanium/Template.over",
-        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543",
-        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
-        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
-        "description": "My Overlay Component",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip",
-        "systems": [
-          "MGBA",
-          "SFC"
-        ]
-      },
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over",
