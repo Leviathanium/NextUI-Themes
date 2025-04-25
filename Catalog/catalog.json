@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T16:10:35.873049Z",
+  "last_updated": "2025-04-25T21:09:28.090059Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -41,9 +41,14 @@
     "fonts": {},
     "wallpapers": {
       "testwallpapers.bg": {
-        "author": "test",
+        "author": "Your Name",
         "repository": "https://github.com/Leviathanium/Template.bg",
-        "commit": "11afad8005411b34f0d548087af9addd5b07bb10"
+        "commit": "11afad8005411b34f0d548087af9addd5b07bb10",
+        "has_list_wallpapers": true,
+        "preview_path": "Catalog/Components/Wallpapers/previews/testwallpapers.bg.png",
+        "manifest_path": "Catalog/Components/Wallpapers/manifests/testwallpapers.bg.json",
+        "description": "My Wallpaper Component",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/testwallpapers.bg.zip"
       },
       "Retro-Programmer.bg": {
         "preview_path": "Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png",
@@ -104,9 +109,20 @@
     },
     "overlays": {
       "testoverlays.over": {
-        "author": "testing",
+        "author": "Your Name",
         "repository": "https://github.com/Leviathanium/Template.over",
-        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543"
+        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543",
+        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
+        "description": "My Overlay Component",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip"
+      },
+      "Limited-Editions.over": {
+        "preview_path": "Catalog/Components/Overlays/previews/Limited-Editions.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/Limited-Editions.over.json",
+        "author": "Shin",
+        "description": "GBC & GBA Limited Editions",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Limited-Editions.over.zip"
       }
     }
   }
