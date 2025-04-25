@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T22:45:20.532654Z",
+  "last_updated": "2025-04-25T22:54:11.195893Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -109,6 +109,17 @@
         "systems": [
           "GBA",
           "GBC"
+        ]
+      },
+      "testoverlays.over": {
+        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
+        "author": "Your Name",
+        "description": "My Overlay Component",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip",
+        "systems": [
+          "MGBA",
+          "SFC"
         ]
       }
     }
