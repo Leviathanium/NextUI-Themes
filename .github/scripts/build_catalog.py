@@ -143,10 +143,44 @@ def extract_theme_info(theme_path, existing_info=None):
 
     return theme_info
 
+def extract_wallpaper_content(component_path):
+    """Extract information about wallpaper content types"""
+    content_info = {
+        "has_system_wallpapers": False,
+        "has_list_wallpapers": False,
+        "has_collection_wallpapers": False
+    }
+
+    # Check for SystemWallpapers directory
+    system_wallpapers_path = os.path.join(component_path, "SystemWallpapers")
+    if os.path.exists(system_wallpapers_path):
+        for file in os.listdir(system_wallpapers_path):
+            if file.lower().endswith('.png') and not file.startswith('.'):
+                content_info["has_system_wallpapers"] = True
+                break
+
+    # Check for ListWallpapers directory
+    list_wallpapers_path = os.path.join(component_path, "ListWallpapers")
+    if os.path.exists(list_wallpapers_path):
+        for file in os.listdir(list_wallpapers_path):
+            if file.lower().endswith('.png') and not file.startswith('.'):
+                content_info["has_list_wallpapers"] = True
+                break
+
+    # Check for CollectionWallpapers directory
+    collection_wallpapers_path = os.path.join(component_path, "CollectionWallpapers")
+    if os.path.exists(collection_wallpapers_path):
+        for file in os.listdir(collection_wallpapers_path):
+            if file.lower().endswith('.png') and not file.startswith('.'):
+                content_info["has_collection_wallpapers"] = True
+                break
+
+    return content_info
+
 def extract_component_info(component_path, component_type, existing_info=None):
     """Extract component information from the component directory and preview/manifest"""
     component_name = os.path.basename(component_path)
-    
+
     # Start with existing info if available
     component_info = {}
     if existing_info:
@@ -155,7 +189,7 @@ def extract_component_info(component_path, component_type, existing_info=None):
         # we'll want to remove the INVALID flag
         if "INVALID" in component_info:
             del component_info["INVALID"]
-    
+
     # Check for manifest in the component directory
     comp_manifest_path = os.path.join(component_path, "manifest.json")
     comp_preview_path = os.path.join(component_path, "preview.png")
@@ -220,6 +254,25 @@ def extract_component_info(component_path, component_type, existing_info=None):
     # Generate URL for the ZIP file
     url = f"{GITHUB_RAW_URL}/Components/{component_type}/{zip_filename}"
 
+    # Extract supported systems for overlays
+    systems = None
+    if component_type == "Overlays":
+        systems = extract_overlay_systems(component_path)
+        # Also try to get systems from manifest if available
+        if not systems and "content" in manifest_data and "systems" in manifest_data["content"]:
+            try:
+                systems = manifest_data["content"]["systems"]
+                if isinstance(systems, list):
+                    systems.sort()  # Sort alphabetically
+            except Exception as e:
+                print(f"Error extracting systems from manifest: {str(e)}")
+
+    # Add this to extract_component_info when processing Wallpapers
+    if component_type == "Wallpapers":
+        wallpaper_content = extract_wallpaper_content(component_path)
+        if wallpaper_content["has_list_wallpapers"]:
+            component_info["has_list_wallpapers"] = True
+
     # Update component info
     component_info.update({
         "preview_path": preview_rel_path,
@@ -229,7 +282,41 @@ def extract_component_info(component_path, component_type, existing_info=None):
         "URL": url  # Use "URL" property as requested
     })
 
+    # Add systems for overlays
+    if systems:
+        component_info["systems"] = systems
+
     return component_info
+
+def extract_overlay_systems(component_path):
+    """Extract supported system tags from an overlay component's directory structure"""
+    systems_path = os.path.join(component_path, "Systems")
+    supported_systems = []
+
+    # Check if Systems directory exists
+    if os.path.exists(systems_path):
+        # List all directories in Systems folder, each is a system tag
+        try:
+            for entry in os.listdir(systems_path):
+                entry_path = os.path.join(systems_path, entry)
+                if os.path.isdir(entry_path) and not entry.startswith('.'):
+                    # Make sure directory actually contains overlay files
+                    has_overlays = False
+                    for file in os.listdir(entry_path):
+                        if file.lower().endswith('.png') and not file.startswith('.'):
+                            has_overlays = True
+                            break
+
+                    if has_overlays:
+                        supported_systems.append(entry)
+        except Exception as e:
+            print(f"Error scanning overlay systems: {str(e)}")
+
+    # If we found systems, sort them alphabetically
+    if supported_systems:
+        supported_systems.sort()
+
+    return supported_systems
 
 def main():
     """Main function to build the catalog"""

@@ -243,6 +243,10 @@ def ensure_directory_structure():
         os.makedirs(COMPONENTS_DIR / comp_dir / "manifests", exist_ok=True)
         os.makedirs(UPLOADS_DIR / "Components" / comp_dir, exist_ok=True)
 
+        # Create ListWallpapers directory if this is the Wallpapers component
+        if comp_dir == "Wallpapers":
+            os.makedirs(COMPONENTS_DIR / comp_dir / "ListWallpapers", exist_ok=True)
+
     # Add .gitkeep files to all empty directories to ensure they're tracked by Git
     add_gitkeep_files()
 
@@ -266,6 +270,10 @@ def add_gitkeep_files():
         all_dirs.append(COMPONENTS_DIR / comp_dir / "previews")
         all_dirs.append(COMPONENTS_DIR / comp_dir / "manifests")
         all_dirs.append(UPLOADS_DIR / "Components" / comp_dir)
+
+        # Add ListWallpapers directory if this is the Wallpapers component
+        if comp_dir == "Wallpapers":
+            all_dirs.append(COMPONENTS_DIR / comp_dir / "ListWallpapers")
 
     # Add .gitkeep to empty directories
     for directory in all_dirs:

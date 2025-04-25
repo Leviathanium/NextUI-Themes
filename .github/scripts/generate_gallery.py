@@ -200,6 +200,69 @@ def generate_grid(items, type_key):
     grid_items = "</tr><tr>\n".join(rows)
     return grid_template.substitute({"GRID_ITEMS": grid_items})
 
+def generate_systems_grid(overlays, type_key):
+    """Generate a systems-based grid of overlay items"""
+
+    # Group overlays by system
+    systems_map = {}
+
+    for overlay_name, overlay_info in overlays.items():
+        # Get the systems this overlay supports
+        systems = overlay_info.get("systems", [])
+
+        # If no systems defined, add to "Unknown" category
+        if not systems:
+            if "Unknown" not in systems_map:
+                systems_map["Unknown"] = []
+            systems_map["Unknown"].append((overlay_name, overlay_info))
+        else:
+            # Add this overlay to each system it supports
+            for system in systems:
+                if system not in systems_map:
+                    systems_map[system] = []
+                systems_map[system].append((overlay_name, overlay_info))
+
+    # Sort systems alphabetically
+    sorted_systems = sorted(systems_map.keys())
+
+    # Create the systems grid
+    result = []
+
+    for system in sorted_systems:
+        # Skip empty systems
+        if not systems_map[system]:
+            continue
+
+        overlays_for_system = systems_map[system]
+
+        # Add system header
+        result.append(f"### {system}\n")
+
+        # Generate grid of overlays for this system
+        rows = []
+        current_row = []
+
+        for i, (overlay_name, overlay_info) in enumerate(overlays_for_system):
+            current_row.append(generate_item_card(overlay_info, type_key))
+
+            if (i + 1) % COLUMNS_PER_ROW == 0 or i == len(overlays_for_system) - 1:
+                # Fill the row with empty cells if needed
+                while len(current_row) < COLUMNS_PER_ROW:
+                    current_row.append("")
+
+                rows.append("\n".join(current_row))
+                current_row = []
+
+        # Create grid for this system
+        grid_template = load_template("grid_template.md")
+        grid_items = "</tr><tr>\n".join(rows)
+        system_grid = grid_template.substitute({"GRID_ITEMS": grid_items})
+
+        result.append(system_grid)
+        result.append("\n\n")
+
+    return "\n".join(result)
+
 def generate_category_page(items, type_key, current_page, total_pages, total_items):
     """Generate a category page"""
     category_template = load_template("category_template.md")
@@ -233,7 +296,7 @@ def generate_category_pages(catalog, type_key):
         all_items = catalog.get("themes", {}).values()
     else:
         all_items = catalog.get("components", {}).get(type_key, {}).values()
-    
+
     # Filter out invalid items
     items = [item for item in all_items if is_valid_item(item)]
     items = sorted(items, key=lambda x: x.get("last_updated", ""), reverse=True)
@@ -243,6 +306,31 @@ def generate_category_pages(catalog, type_key):
         print(f"No valid items found for {type_info['title']}")
         return []
 
+    # For overlays, use system-based organization instead of pagination
+    if type_key == "overlays":
+        print(f"Generating system-based pages for {type_info['title']}")
+
+        # Get overlay items as dictionary with names
+        overlay_items = catalog.get("components", {}).get(type_key, {})
+
+        # Filter invalid items
+        overlay_items = {name: item for name, item in overlay_items.items()
+                         if is_valid_item(item)}
+
+        # Generate single page with systems-based organization
+        content = f"# {type_info['title']}\n\n"
+        content += f"*{len(overlay_items)} items organized by system*\n\n"
+
+        # Generate systems grid
+        content += generate_systems_grid(overlay_items, type_key)
+
+        # Write to index.md
+        with open(f"{category_dir}/index.md", "w", encoding="utf-8") as f:
+            f.write(content)
+
+        return items
+
+    # For everything else, use normal pagination
     # Split items into pages
     pages = paginate_items(items)
     total_pages = len(pages)
