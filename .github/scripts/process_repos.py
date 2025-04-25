@@ -141,7 +141,7 @@ def process_theme_repository(name, repo_url, commit_hash):
 
         if preview_path is None or manifest_path is None:
             print(f"Warning: Could not extract preview or manifest for {name}")
-            return None, None
+            return None, None, None
 
         # Create uploads directory if it doesn't exist
         os.makedirs(UPLOADS_THEMES_DIR, exist_ok=True)
