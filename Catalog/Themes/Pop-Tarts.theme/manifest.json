@@ -1,0 +1,45 @@
+
+{
+  "theme_info": {
+    "name": "Pop-Tarts.theme",
+    "version": "1.0.0",
+    "author": "Shin",
+    "creation_date": "2025-04-22T00:00:00Z", 
+    "exported_by": "Theme Manager v1.0.0"
+  },
+  "content": {
+    "wallpapers": {
+      "present": false,
+      "count": 0
+    },
+    "icons": {
+      "present": false,
+      "system_count": 0,
+      "tool_count": 0,
+      "collection_count": 0
+    },
+    "overlays": {
+      "present": false,
+      "systems": []
+    },
+    "fonts": {
+      "present": true,
+      "og_replaced": true,
+      "next_replaced": true
+    },
+    "settings": {
+      "accents_included": true,
+      "leds_included": true
+    }
+  },
+  "path_mappings": {},
+   "accent_colors": {
+    "color1": "0xFF6666",
+    "color2": "0xFF6666",
+    "color3": "0x1E2329",
+    "color4": "0xFFFFFF",
+    "color5": "0xFFFFFF",
+    "color6": "0xFFFFFF"
+  },
+  "led_settings": {}
+}
