@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T00:27:43.507728Z",
+  "last_updated": "2025-04-25T00:29:49.277563Z",
   "themes": {
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
@@ -27,7 +27,11 @@
     "Pop-Tarts.theme": {
       "author": "Shin",
       "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
-      "commit": "3adc2c2ff2fccc0352de5f241ef1b3f08fdeeec6"
+      "commit": "3adc2c2ff2fccc0352de5f241ef1b3f08fdeeec6",
+      "preview_path": "Catalog/Themes/previews/Pop-Tarts.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Pop-Tarts.theme.json",
+      "description": "Pop-Tarts.theme",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pop-Tarts.theme.zip"
     }
   },
   "components": {
