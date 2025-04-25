@@ -1,19 +1,21 @@
 {
   "last_updated": "2025-04-25T00:29:49.277563Z",
   "themes": {
+    "Pop-Tarts.theme": {
+      "author": "Shin",
+      "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
+      "commit": "3adc2c2ff2fccc0352de5f241ef1b3f08fdeeec6",
+      "preview_path": "Catalog/Themes/previews/Pop-Tarts.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Pop-Tarts.theme.json",
+      "description": "Pop-Tarts.theme",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pop-Tarts.theme.zip"
+    },
     "Consolized.theme": {
       "preview_path": "Catalog/Themes/previews/Consolized.theme.png",
       "manifest_path": "Catalog/Themes/manifests/Consolized.theme.json",
       "author": "Gamnrd",
       "description": "Consolized.theme",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Consolized.theme.zip"
-    },
-    "Default.theme": {
-      "preview_path": "Catalog/Themes/previews/Default.theme.png",
-      "manifest_path": "Catalog/Themes/manifests/Default.theme.json",
-      "author": "NextUI",
-      "description": "Default.theme",
-      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip"
     },
     "Deep-Space.theme": {
       "author": "Shin",
@@ -24,14 +26,12 @@
       "manifest_path": "Catalog/Themes/manifests/Deep-Space.theme.json",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip"
     },
-    "Pop-Tarts.theme": {
-      "author": "Shin",
-      "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
-      "commit": "3adc2c2ff2fccc0352de5f241ef1b3f08fdeeec6",
-      "preview_path": "Catalog/Themes/previews/Pop-Tarts.theme.png",
-      "manifest_path": "Catalog/Themes/manifests/Pop-Tarts.theme.json",
-      "description": "Pop-Tarts.theme",
-      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Pop-Tarts.theme.zip"
+    "Default.theme": {
+      "preview_path": "Catalog/Themes/previews/Default.theme.png",
+      "manifest_path": "Catalog/Themes/manifests/Default.theme.json",
+      "author": "NextUI",
+      "description": "Default.theme",
+      "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Default.theme.zip"
     }
   },
   "components": {
