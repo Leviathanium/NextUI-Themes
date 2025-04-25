@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T23:09:37.508195Z",
+  "last_updated": "2025-04-25T23:10:59.078436Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -101,7 +101,26 @@
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over",
-        "commit": "5e06a1ad77a5236f884a3160827296d001e53062"
+        "commit": "5e06a1ad77a5236f884a3160827296d001e53062",
+        "preview_path": "Catalog/Components/Overlays/previews/Limited-Editions.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/Limited-Editions.over.json",
+        "description": "GBC & GBA Limited Editions",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Limited-Editions.over.zip",
+        "systems": [
+          "GBA",
+          "GBC"
+        ]
+      },
+      "testoverlays.over": {
+        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
+        "author": "Your Name",
+        "description": "My Overlay Component",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip",
+        "systems": [
+          "MGBA",
+          "SFC"
+        ]
       }
     }
   }
