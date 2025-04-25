@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-04-25T23:14:20.093122Z",
+  "last_updated": "2025-04-25T23:16:13.645261Z",
   "themes": {
     "Pop-Tarts.theme": {
       "author": "Shin",
@@ -101,7 +101,14 @@
       "Limited-Editions.over": {
         "author": "Shin",
         "repository": "https://github.com/KrutzOtrem/limited-editions.over",
-        "commit": "d235766403c02b6f0002f75e1b859cbf65d73b50"
+        "commit": "d235766403c02b6f0002f75e1b859cbf65d73b50",
+        "preview_path": "Catalog/Components/Overlays/previews/Limited-Editions.over.png",
+        "manifest_path": "Catalog/Components/Overlays/manifests/Limited-Editions.over.json",
+        "description": "Pokemon and Mario Limited Editions",
+        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Limited-Editions.over.zip",
+        "systems": [
+          "GBC"
+        ]
       }
     }
   }
