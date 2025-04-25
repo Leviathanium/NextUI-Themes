@@ -26,6 +26,7 @@
     },
     "Pop-Tarts.theme": {
       "author": "Shin",
+      "description": "Pop-Tarts.theme",
       "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
       "commit": "1b107386d634a9b0736974a3084aa3f25d0b1ace"
     }
