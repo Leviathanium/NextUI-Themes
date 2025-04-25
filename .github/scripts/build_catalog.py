@@ -378,6 +378,26 @@ def main():
             # Now handle repository-based components that might not be on filesystem
             for comp_name, comp_info in list(catalog["components"][comp_type_lower].items()):
                 if comp_name not in processed_components and "repository" in comp_info and "commit" in comp_info:
+                    # ADDED CODE: Special handling for repository-based overlays
+                    # This extracts system information from the manifest file for overlay components
+                    if comp_type_lower == "overlays":
+                        manifest_path = os.path.join(COMPONENTS_DIR, comp_type, "manifests", f"{comp_name}.json")
+                        if os.path.exists(manifest_path):
+                            try:
+                                with open(manifest_path, 'r') as f:
+                                    manifest_data = json.load(f)
+                                
+                                # Extract systems from manifest content
+                                if "content" in manifest_data and "systems" in manifest_data["content"]:
+                                    systems = manifest_data["content"]["systems"]
+                                    if isinstance(systems, list) and systems:
+                                        systems.sort()  # Sort alphabetically
+                                        comp_info["systems"] = systems
+                                        print(f"Added systems for repository-based overlay: {comp_name}")
+                            except Exception as e:
+                                print(f"Error processing manifest for {comp_name}: {str(e)}")
+                    # END ADDED CODE
+                    
                     # Preserve repository-based components
                     print(f"Preserving repository-based component: {comp_name}")
                     processed_components.add(comp_name)
