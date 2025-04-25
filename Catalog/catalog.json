@@ -1,6 +1,11 @@
 {
   "last_updated": "2025-04-25T23:22:03.062311Z",
   "themes": {
+     "Pop-Tarts Clean.theme": {
+      "author": "Shin", 
+      "repository": "https://github.com/KrutzOtrem/pop-tarts.theme/tree/Clean",
+      "commit": "a53b93ef9baef44da11db81576abbdf8296eab9f", 
+    },
     "Pop-Tarts.theme": {
       "author": "Shin",
       "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
