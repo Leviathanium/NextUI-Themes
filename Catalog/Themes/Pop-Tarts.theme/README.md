@@ -2,4 +2,4 @@
 
 | Pop-tarts | 
 | -- |
-| ![Preview](https://github.com/user-attachments/assets/59c64b96-5779-41f8-9649-25af2d8a5d8f) |
+| ![preview](https://github.com/user-attachments/assets/33660385-a49c-4097-a3b7-1c5106138f85) |
