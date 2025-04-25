@@ -1,8 +1,21 @@
 # Wallpapers
 
-*Page 1 of 1 — 8 items*
+*Page 1 of 1 — 9 items*
 
 <table align="center"><tr>
+<td align="center" valign="top" width="33%">
+
+<a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/testwallpapers.bg.zip">
+<img title="Name: My Wallpaper Component&#013;Author: Your Name&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/Components/Wallpapers/previews/testwallpapers.bg.png" /><br/>
+<b>My Wallpaper Component</b>
+</a><br/>
+<sup><i>Your Name</i></sup><br>
+<sub>
+<sup><a title="Last updated: " href="https://github.com/Leviathanium/NextUI-Themes/commits/main/Catalog/wallpapers/My Wallpaper Component"></a></sup>
+
+</sub>
+</td>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Retro-Programmer.bg.zip">
@@ -28,7 +41,7 @@
 
 </sub>
 </td>
-
+</tr><tr>
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Sunset-Forest.bg.zip">
@@ -41,7 +54,7 @@
 
 </sub>
 </td>
-</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Retro-Mario-Chill.bg.zip">
@@ -67,7 +80,7 @@
 
 </sub>
 </td>
-
+</tr><tr>
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Default.bg.zip">
@@ -80,7 +93,7 @@
 
 </sub>
 </td>
-</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Wallpapers/Firewatch.bg.zip">
@@ -106,7 +119,6 @@
 
 </sub>
 </td>
-
 
 </tr></table>
 
