@@ -40,7 +40,7 @@ def load_existing_catalog():
             print(f"Warning: Existing catalog.json is invalid, creating a new one")
         except Exception as e:
             print(f"Error reading existing catalog: {str(e)}")
-    
+
     # Return default structure if no catalog exists or there was an error
     return {
         "last_updated": datetime.utcnow().isoformat() + "Z",
@@ -58,7 +58,7 @@ def load_existing_catalog():
 def extract_theme_info(theme_path, existing_info=None):
     """Extract theme information from the theme directory and preview/manifest"""
     theme_name = os.path.basename(theme_path)
-    
+
     # Start with existing info if available
     theme_info = {}
     if existing_info:
@@ -67,7 +67,7 @@ def extract_theme_info(theme_path, existing_info=None):
         # we'll want to remove the INVALID flag
         if "INVALID" in theme_info:
             del theme_info["INVALID"]
-    
+
     # Check for manifest in the theme directory
     theme_manifest_path = os.path.join(theme_path, "manifest.json")
     theme_preview_path = os.path.join(theme_path, "preview.png")
@@ -176,6 +176,36 @@ def extract_wallpaper_content(component_path):
                 break
 
     return content_info
+
+def extract_overlay_systems(component_path):
+    """Extract supported system tags from an overlay component's directory structure"""
+    systems_path = os.path.join(component_path, "Systems")
+    supported_systems = []
+
+    # Check if Systems directory exists
+    if os.path.exists(systems_path):
+        # List all directories in Systems folder, each is a system tag
+        try:
+            for entry in os.listdir(systems_path):
+                entry_path = os.path.join(systems_path, entry)
+                if os.path.isdir(entry_path) and not entry.startswith('.'):
+                    # Make sure directory actually contains overlay files
+                    has_overlays = False
+                    for file in os.listdir(entry_path):
+                        if file.lower().endswith('.png') and not file.startswith('.'):
+                            has_overlays = True
+                            break
+
+                    if has_overlays:
+                        supported_systems.append(entry)
+        except Exception as e:
+            print(f"Error scanning overlay systems: {str(e)}")
+
+    # If we found systems, sort them alphabetically
+    if supported_systems:
+        supported_systems.sort()
+
+    return supported_systems
 
 def extract_component_info(component_path, component_type, existing_info=None):
     """Extract component information from the component directory and preview/manifest"""
@@ -288,44 +318,14 @@ def extract_component_info(component_path, component_type, existing_info=None):
 
     return component_info
 
-def extract_overlay_systems(component_path):
-    """Extract supported system tags from an overlay component's directory structure"""
-    systems_path = os.path.join(component_path, "Systems")
-    supported_systems = []
-
-    # Check if Systems directory exists
-    if os.path.exists(systems_path):
-        # List all directories in Systems folder, each is a system tag
-        try:
-            for entry in os.listdir(systems_path):
-                entry_path = os.path.join(systems_path, entry)
-                if os.path.isdir(entry_path) and not entry.startswith('.'):
-                    # Make sure directory actually contains overlay files
-                    has_overlays = False
-                    for file in os.listdir(entry_path):
-                        if file.lower().endswith('.png') and not file.startswith('.'):
-                            has_overlays = True
-                            break
-
-                    if has_overlays:
-                        supported_systems.append(entry)
-        except Exception as e:
-            print(f"Error scanning overlay systems: {str(e)}")
-
-    # If we found systems, sort them alphabetically
-    if supported_systems:
-        supported_systems.sort()
-
-    return supported_systems
-
 def main():
     """Main function to build the catalog"""
     # Create necessary directories
     os.makedirs(CATALOG_DIR, exist_ok=True)
-    
+
     # Load existing catalog
     catalog = load_existing_catalog()
-    
+
     # Process themes
     if os.path.exists(THEMES_DIR):
         # First, scan filesystem for themes
@@ -335,13 +335,13 @@ def main():
             if os.path.isdir(theme_path) and not theme_entry.startswith('.') and theme_entry not in ['previews', 'manifests']:
                 # Get existing theme info if available
                 existing_info = catalog["themes"].get(theme_entry)
-                
+
                 # Process theme
                 theme_info = extract_theme_info(theme_path, existing_info)
                 if theme_info:
                     catalog["themes"][theme_entry] = theme_info
                     processed_themes.add(theme_entry)
-        
+
         # Now handle repository-based themes that might not be on filesystem
         for theme_name, theme_info in list(catalog["themes"].items()):
             if theme_name not in processed_themes and "repository" in theme_info and "commit" in theme_info:
@@ -358,26 +358,44 @@ def main():
         for comp_type in COMPONENT_TYPES.keys():
             component_dir = COMPONENTS_DIR / comp_type
             comp_type_lower = COMPONENT_TYPES[comp_type]
-            
+
             # Track which components we've processed
             processed_components = set()
-            
+
             if os.path.exists(component_dir):
                 for component_entry in os.listdir(component_dir):
                     component_path = component_dir / component_entry
                     if os.path.isdir(component_path) and not component_entry.startswith('.') and component_entry not in ['previews', 'manifests']:
                         # Get existing component info if available
                         existing_info = catalog["components"][comp_type_lower].get(component_entry)
-                        
+
                         # Process component
                         component_info = extract_component_info(component_path, comp_type, existing_info)
                         if component_info:
                             catalog["components"][comp_type_lower][component_entry] = component_info
                             processed_components.add(component_entry)
-            
+
             # Now handle repository-based components that might not be on filesystem
             for comp_name, comp_info in list(catalog["components"][comp_type_lower].items()):
                 if comp_name not in processed_components and "repository" in comp_info and "commit" in comp_info:
+                    # Special handling for repository-based overlays
+                    if comp_type_lower == "overlays":
+                        manifest_path = os.path.join(COMPONENTS_DIR, comp_type, "manifests", f"{comp_name}.json")
+                        if os.path.exists(manifest_path):
+                            try:
+                                with open(manifest_path, 'r') as f:
+                                    manifest_data = json.load(f)
+
+                                # Extract systems from manifest content
+                                if "content" in manifest_data and "systems" in manifest_data["content"]:
+                                    systems = manifest_data["content"]["systems"]
+                                    if isinstance(systems, list) and systems:
+                                        systems.sort()  # Sort alphabetically
+                                        comp_info["systems"] = systems
+                                        print(f"Added systems for repository-based overlay: {comp_name}")
+                            except Exception as e:
+                                print(f"Error processing manifest for {comp_name}: {str(e)}")
+
                     # Preserve repository-based components
                     print(f"Preserving repository-based component: {comp_name}")
                     processed_components.add(comp_name)
