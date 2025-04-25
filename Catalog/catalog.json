@@ -23,6 +23,11 @@
       "preview_path": "Catalog/Themes/previews/Deep-Space.theme.png",
       "manifest_path": "Catalog/Themes/manifests/Deep-Space.theme.json",
       "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Themes/Deep-Space.theme.zip"
+    },
+    "Pop-Tarts.theme": {
+      "author": "Shin",
+      "repository": "https://github.com/KrutzOtrem/pop-tarts.theme",
+      "commit": "1b107386d634a9b0736974a3084aa3f25d0b1ace"
     }
   },
   "components": {
