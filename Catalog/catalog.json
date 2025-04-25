@@ -110,17 +110,6 @@
           "GBA",
           "GBC"
         ]
-      },
-      "testoverlays.over": {
-        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
-        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
-        "author": "Your Name",
-        "description": "My Overlay Component",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip",
-        "systems": [
-          "MGBA",
-          "SFC"
-        ]
       }
     }
   }
