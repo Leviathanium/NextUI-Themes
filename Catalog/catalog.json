@@ -111,18 +111,12 @@
       "testoverlays.over": {
         "author": "Your Name",
         "repository": "https://github.com/Leviathanium/Template.over",
-        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543",
-        "preview_path": "Catalog/Components/Overlays/previews/testoverlays.over.png",
-        "manifest_path": "Catalog/Components/Overlays/manifests/testoverlays.over.json",
-        "description": "My Overlay Component",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/testoverlays.over.zip"
+        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543"
       },
       "Limited-Editions.over": {
-        "preview_path": "Catalog/Components/Overlays/previews/Limited-Editions.over.png",
-        "manifest_path": "Catalog/Components/Overlays/manifests/Limited-Editions.over.json",
         "author": "Shin",
-        "description": "GBC & GBA Limited Editions",
-        "URL": "https://github.com/Leviathanium/NextUI-Themes/raw/main/Uploads/Components/Overlays/Limited-Editions.over.zip"
+        "repository": "https://github.com/KrutzOtrem/limited-editions.over",
+        "commit": "5e06a1ad77a5236f884a3160827296d001e53062"
       }
     }
   }
