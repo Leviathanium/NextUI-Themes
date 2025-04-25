@@ -40,6 +40,11 @@
     "icons": {},
     "fonts": {},
     "wallpapers": {
+      "testwallpapers.bg": {
+        "author": "test",
+        "repository": "https://github.com/Leviathanium/Template.bg",
+        "commit": "11afad8005411b34f0d548087af9addd5b07bb10"
+      },
       "Retro-Programmer.bg": {
         "preview_path": "Catalog/Components/Wallpapers/previews/Retro-Programmer.bg.png",
         "manifest_path": "Catalog/Components/Wallpapers/manifests/Retro-Programmer.bg.json",
@@ -98,10 +103,10 @@
       }
     },
     "overlays": {
-      "Limited-Editions.over": {
-        "author": "Shin",
-        "repository": "https://github.com/KrutzOtrem/limited-editions.over.git",
-        "commit": "5e06a1ad77a5236f884a3160827296d001e53062"
+      "testoverlays.over": {
+        "author": "testing",
+        "repository": "https://github.com/Leviathanium/Template.over",
+        "commit": "819c692bdfbe53157896efd1c2040d34d9c6c543"
       }
     }
   }
