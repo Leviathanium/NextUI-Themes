@@ -49,7 +49,6 @@ def extract_without_nested_dirs(zip_path, dest_path):
         file_list = zip_ref.namelist()
 
         # Identify if there's a common parent directory in the zip
-        # We'll use this to determine if we need to strip a directory level
         common_parent = None
         for item in file_list:
             # Skip __MACOSX entries
@@ -62,6 +61,10 @@ def extract_without_nested_dirs(zip_path, dest_path):
             elif len(parts) > 1 and parts[0] and parts[0] != common_parent:
                 common_parent = None
                 break
+
+        # Don't strip the "Systems" directory for overlay components
+        if common_parent == "Systems" and ".over" in zip_path:
+            common_parent = None
 
         # Extract files, skipping __MACOSX directories and stripping common parent if needed
         for item in file_list:

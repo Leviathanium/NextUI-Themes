@@ -204,6 +204,7 @@ def extract_overlay_systems(component_path):
     # If we found systems, sort them alphabetically
     if supported_systems:
         supported_systems.sort()
+        print(f"Detected systems for {os.path.basename(component_path)}: {supported_systems}")
 
     return supported_systems
 
