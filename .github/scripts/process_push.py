@@ -1,84 +1,86 @@
 #!/usr/bin/env python3
 """
-Script to process the push.json file with theme and component submissions.
-Updated to use the .metadata folder structure for previews and manifests.
+Script to process the push.yml file with theme submissions.
+Updated for YAML format and direct cloning to Themes/ directory.
 """
 
 import os
-import json
+import yaml
 import shutil
 import tempfile
 import zipfile
 import subprocess
 import re
+import json
 from pathlib import Path
 from datetime import datetime
 import urllib.request
-import tempfile
 import ssl
 
 # Base paths
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 UPLOAD_DIR = REPO_ROOT / "Upload"
-PACKAGES_DIR = REPO_ROOT / "Packages"
+THEMES_DIR = REPO_ROOT / "Themes"
 CATALOG_DIR = REPO_ROOT / "Catalog"
-METADATA_DIR = CATALOG_DIR / ".metadata"
-PUSH_JSON_PATH = UPLOAD_DIR / "push.json"
+PUSH_YML_PATH = UPLOAD_DIR / "push.yml"
+CATALOG_YML_PATH = CATALOG_DIR / "catalog.yml"
 
-# Component types and their extensions
-COMPONENT_TYPES = {
-    "theme": ".theme",
-    "wallpaper": ".bg",
-    "icon": ".icon",
-    "accent": ".acc",
-    "led": ".led",
-    "font": ".font",
-    "overlay": ".over"
-}
-
-# Mapping for catalog.json component keys
-CATALOG_COMPONENT_KEYS = {
-    "theme": "themes",  # Not actually used in components section
-    "wallpaper": "wallpapers",
-    "icon": "icons",
-    "accent": "accents",
-    "led": "leds",
-    "font": "fonts",
-    "overlay": "overlays"
-}
-
-# Directory name mappings for catalog (capitalized)
-CATALOG_DIR_MAPPINGS = {
-    "theme": "Themes",
-    "wallpaper": "Wallpapers",
-    "icon": "Icons",
-    "accent": "Accents",
-    "led": "LEDs",
-    "font": "Fonts",
-    "overlay": "Overlays"
-}
-
-
-def load_push_json():
-    """Load the push.json file"""
-    if not PUSH_JSON_PATH.exists():
-        print(f"Error: {PUSH_JSON_PATH} does not exist")
+def load_push_yml():
+    """Load the push.yml file"""
+    if not PUSH_YML_PATH.exists():
+        print(f"Error: {PUSH_YML_PATH} does not exist")
         return None
 
     try:
-        with open(PUSH_JSON_PATH, 'r') as f:
-            push_data = json.load(f)
+        with open(PUSH_YML_PATH, 'r') as f:
+            push_data = yaml.safe_load(f)
         return push_data
-    except json.JSONDecodeError as e:
-        print(f"Error parsing push.json: {e}")
+    except yaml.YAMLError as e:
+        print(f"Error parsing push.yml: {e}")
         return None
     except Exception as e:
-        print(f"Error loading push.json: {e}")
+        print(f"Error loading push.yml: {e}")
         return None
+
+def load_catalog_yml():
+    """Load the catalog.yml file"""
+    if not CATALOG_YML_PATH.exists():
+        # Create initial catalog if it doesn't exist
+        initial_catalog = {
+            "info": {
+                "last_updated": datetime.utcnow().isoformat() + "Z",
+                "repository_url": "https://github.com/Leviathanium/NextUI-Themes.git",
+                "branch": "main"
+            },
+            "themes": {}
+        }
+        with open(CATALOG_YML_PATH, 'w') as f:
+            yaml.dump(initial_catalog, f, default_flow_style=False, sort_keys=False)
+        return initial_catalog
+
+    try:
+        with open(CATALOG_YML_PATH, 'r') as f:
+            return yaml.safe_load(f)
+    except Exception as e:
+        print(f"Error loading catalog.yml: {e}")
+        return None
+
+def save_catalog_yml(catalog):
+    """Save the catalog.yml file"""
+    try:
+        # Update last_updated timestamp
+        catalog["info"]["last_updated"] = datetime.utcnow().isoformat() + "Z"
+
+        with open(CATALOG_YML_PATH, 'w') as f:
+            yaml.dump(catalog, f, default_flow_style=False, sort_keys=False, indent=2)
+        print(f"Updated catalog.yml")
+        return True
+    except Exception as e:
+        print(f"Error saving catalog.yml: {e}")
+        return False
 
 def validate_submission(submission):
     """Validate a submission entry"""
-    # Basic required fields for all submissions
     required_fields = ["type", "name", "author", "submission_method"]
 
     # Check for required fields
@@ -87,14 +89,14 @@ def validate_submission(submission):
             print(f"Error: Missing required field '{field}' in submission")
             return False
 
-    # Validate type
-    if submission["type"] not in COMPONENT_TYPES:
-        print(f"Error: Invalid type '{submission['type']}'. Must be one of: {', '.join(COMPONENT_TYPES.keys())}")
+    # Validate type (only themes supported)
+    if submission["type"] != "theme":
+        print(f"Error: Invalid type '{submission['type']}'. Only 'theme' is supported")
         return False
 
     # Validate name
-    if not submission["name"].endswith(COMPONENT_TYPES[submission["type"]]):
-        print(f"Error: Name '{submission['name']}' must end with '{COMPONENT_TYPES[submission['type']]}'")
+    if not submission["name"].endswith(".theme"):
+        print(f"Error: Name '{submission['name']}' must end with '.theme'")
         return False
 
     # Validate submission_method
@@ -105,118 +107,56 @@ def validate_submission(submission):
 
     # Validate method-specific fields
     if submission["submission_method"] == "repository":
-        # Check for required repository fields
         if "url" not in submission or not submission["url"]:
             print(f"Error: 'url' is required for repository submissions")
             return False
-
         if "commit" not in submission or not submission["commit"]:
             print(f"Error: 'commit' is required for repository submissions")
             return False
-
-        # Branch is optional, but if provided should not be "None"
         if "branch" not in submission:
             submission["branch"] = "main"  # Default to main if not specified
 
     elif submission["submission_method"] == "zip":
-        # Check for zip file
         zip_path = UPLOAD_DIR / f"{submission['name']}.zip"
         if not zip_path.exists():
             print(f"Error: Zip file '{zip_path}' not found for zip submission")
             return False
 
     elif submission["submission_method"] == "url":
-        # Check for required URL field
         if "url" not in submission or not submission["url"]:
             print(f"Error: 'url' is required for url submissions")
             return False
-
-        # Validate URL format (basic check)
         if not submission["url"].startswith(("http://", "https://")):
             print(f"Error: Invalid URL format '{submission['url']}'")
             return False
 
     return True
 
-def clean_existing_entry(submission):
-    """Clean up existing entry with the same name from catalog and packages"""
-    name = submission["name"]
-    component_type = submission["type"]
+def clean_existing_theme(theme_name):
+    """Clean up existing theme from Themes/ directory and catalog"""
+    print(f"Cleaning up existing theme: {theme_name}")
 
-    # Load catalog.json
-    catalog_path = CATALOG_DIR / "catalog.json"
-    if not catalog_path.exists():
-        print(f"Note: No catalog.json found, skipping cleanup")
-        return
+    # Remove from Themes/ directory
+    theme_path = THEMES_DIR / theme_name
+    if theme_path.exists():
+        shutil.rmtree(theme_path)
+        print(f"Removed existing theme directory: {theme_path}")
 
-    try:
-        with open(catalog_path, 'r') as f:
-            catalog = json.load(f)
+    # Remove preview and manifest files
+    preview_path = CATALOG_DIR / "previews" / f"{theme_name}.png"
+    manifest_path = CATALOG_DIR / "manifests" / f"{theme_name}.json"
 
-        # Check if entry exists in catalog
-        entry_exists = False
-        if component_type == "theme":
-            if name in catalog.get("themes", {}):
-                entry_exists = True
-                entry_info = catalog["themes"][name]
-        else:
-            comp_type_key = COMPONENT_TYPES[component_type][1:]  # Remove the dot
-            if comp_type_key in catalog.get("components", {}) and name in catalog["components"][comp_type_key]:
-                entry_exists = True
-                entry_info = catalog["components"][comp_type_key][name]
+    if preview_path.exists():
+        os.remove(preview_path)
+        print(f"Removed existing preview: {preview_path}")
 
-        if entry_exists:
-            print(f"Found existing entry for {name}, cleaning up...")
-
-            # Remove preview file from .metadata
-            if "preview_path" in entry_info:
-                preview_path = REPO_ROOT / entry_info["preview_path"]
-                if preview_path.exists():
-                    os.remove(preview_path)
-                    print(f"Removed {preview_path}")
-
-            # Remove manifest file from .metadata
-            if "manifest_path" in entry_info:
-                manifest_path = REPO_ROOT / entry_info["manifest_path"]
-                if manifest_path.exists():
-                    os.remove(manifest_path)
-                    print(f"Removed {manifest_path}")
-
-            # Remove package file
-            if "URL" in entry_info:
-                url = entry_info["URL"]
-                # Extract the package path from the URL
-                package_path_match = re.search(r'raw/main/(.+?)\.zip', url)
-                if package_path_match:
-                    package_rel_path = package_path_match.group(1) + ".zip"
-                    package_path = REPO_ROOT / package_rel_path
-                    if package_path.exists():
-                        os.remove(package_path)
-                        print(f"Removed {package_path}")
-
-            # Remove extracted directory in Catalog
-            if component_type == "theme":
-                extracted_dir = CATALOG_DIR / "Themes" / name
-            else:
-                extracted_dir = CATALOG_DIR / CATALOG_DIR_MAPPINGS[component_type] / name
-
-            if extracted_dir.exists() and extracted_dir.is_dir():
-                shutil.rmtree(extracted_dir)
-                print(f"Removed {extracted_dir}")
-
-            print(f"Cleanup complete for {name}")
-        else:
-            print(f"No existing entry found for {name}, skipping cleanup")
-
-    except Exception as e:
-        print(f"Error during cleanup: {e}")
+    if manifest_path.exists():
+        os.remove(manifest_path)
+        print(f"Removed existing manifest: {manifest_path}")
 
 def clone_repository(repo_url, commit_hash, branch, target_dir):
     """Clone a repository at a specific commit and branch"""
     print(f"Cloning {repo_url} (branch: {branch}, commit: {commit_hash})")
-
-    # Create target directory
-    os.makedirs(os.path.dirname(target_dir), exist_ok=True)
 
     try:
         # Clone repository
@@ -227,8 +167,8 @@ def clone_repository(repo_url, commit_hash, branch, target_dir):
         os.chdir(target_dir)
 
         try:
-            # Fetch branch if specified
-            if branch and branch != "None" and branch != "main":
+            # Fetch branch if specified and different from main
+            if branch and branch != "main":
                 subprocess.run(['git', 'fetch', 'origin', branch], check=True)
                 subprocess.run(['git', 'checkout', branch], check=True)
             else:
@@ -237,510 +177,322 @@ def clone_repository(repo_url, commit_hash, branch, target_dir):
             # Checkout specific commit
             subprocess.run(['git', 'checkout', commit_hash], check=True)
 
-            # Remove .git directory
+            # Remove .git directory to save space
             shutil.rmtree('.git', ignore_errors=True)
         finally:
             # Return to original directory
             os.chdir(cwd)
 
-        print(f"Repository cloned successfully at {target_dir}")
+        print(f"Repository cloned successfully to {target_dir}")
         return True
     except Exception as e:
         print(f"Error cloning repository: {e}")
         return False
 
-def create_zip_file(source_dir, zip_path):
-    """Create a ZIP file from a directory"""
+def validate_theme_structure(theme_dir):
+    """Validate that the theme directory contains required files"""
+    required_files = ["manifest.yml", "preview.png"]
+
+    for required_file in required_files:
+        file_path = theme_dir / required_file
+        if not file_path.exists():
+            print(f"Error: Required file '{required_file}' not found in theme directory")
+            return False
+
+    return True
+
+def copy_metadata_files(theme_dir, theme_name):
+    """Copy preview.png and manifest files to Catalog directories"""
     try:
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for root, _, files in os.walk(source_dir):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    arc_name = os.path.relpath(file_path, source_dir)
-                    zipf.write(file_path, arc_name)
+        # Source files
+        preview_src = theme_dir / "preview.png"
+        manifest_src = theme_dir / "manifest.yml"
 
-        print(f"Created ZIP file: {zip_path}")
-        return True
-    except Exception as e:
-        print(f"Error creating ZIP file: {e}")
-        return False
-
-def validate_package_contents(package_path):
-    """Validate that the package zip file contains required files"""
-    try:
-        with zipfile.ZipFile(package_path, 'r') as zip_ref:
-            file_list = zip_ref.namelist()
-
-            # Check if manifest.json exists (at any level)
-            manifest_exists = any('manifest.json' in f for f in file_list)
-
-            # Check if preview.png exists (at any level)
-            preview_exists = any('preview.png' in f for f in file_list)
-
-            if not manifest_exists:
-                print(f"Error: {package_path} is missing manifest.json")
-                return False
-
-            if not preview_exists:
-                print(f"Error: {package_path} is missing preview.png")
-                return False
-
-            return True
-    except Exception as e:
-        print(f"Error validating package contents: {e}")
-        return False
-
-def extract_package(package_path, dest_dir):
-    """Extract package without nested directories"""
-    try:
-        with zipfile.ZipFile(package_path, 'r') as zip_ref:
-            file_list = zip_ref.namelist()
-
-            # Identify if there's a common parent directory in the zip
-            common_parent = None
-            for item in file_list:
-                # Skip __MACOSX entries
-                if "__MACOSX" in item:
-                    continue
-
-                parts = item.split('/')
-                if len(parts) > 1 and parts[0] and not common_parent:
-                    common_parent = parts[0]
-                elif len(parts) > 1 and parts[0] and parts[0] != common_parent:
-                    common_parent = None
-                    break
-
-            # Don't strip the "Systems" directory for overlay components
-            if common_parent == "Systems" and ".over" in str(package_path):
-                common_parent = None
-
-            # Extract files
-            for item in file_list:
-                # Skip __MACOSX entries
-                if "__MACOSX" in item:
-                    continue
-
-                # Determine the correct extraction path
-                if common_parent and item.startswith(common_parent + '/'):
-                    # Strip the common parent directory
-                    target_path = os.path.join(dest_dir, item[len(common_parent) + 1:])
-                else:
-                    target_path = os.path.join(dest_dir, item)
-
-                # Skip directories
-                if item.endswith('/'):
-                    continue
-
-                # Create the directory structure
-                os.makedirs(os.path.dirname(target_path), exist_ok=True)
-
-                # Extract the file
-                with zip_ref.open(item) as source_file, open(target_path, 'wb') as target_file:
-                    shutil.copyfileobj(source_file, target_file)
-
-        # Remove any __MACOSX directory that might have been created
-        macosx_dir = os.path.join(dest_dir, "__MACOSX")
-        if os.path.exists(macosx_dir):
-            shutil.rmtree(macosx_dir)
-
-        print(f"Extracted package to {dest_dir}")
-        return True
-    except Exception as e:
-        print(f"Error extracting package: {e}")
-        return False
-
-def copy_to_metadata(src_dir, component_type, name):
-    """Copy preview.png and manifest.json to the .metadata directory"""
-    try:
-        # Get source files
-        preview_src = os.path.join(src_dir, "preview.png")
-        manifest_src = os.path.join(src_dir, "manifest.json")
-
-        if not os.path.exists(preview_src):
-            print(f"Error: preview.png not found in {src_dir}")
-            return None, None
-
-        if not os.path.exists(manifest_src):
-            print(f"Error: manifest.json not found in {src_dir}")
-            return None, None
-
-        # Determine destination paths
-        catalog_type_dir = CATALOG_DIR_MAPPINGS[component_type]
-
-        preview_dest = METADATA_DIR / "previews" / f"{name}.png"
-        manifest_dest = METADATA_DIR / "manifests" / f"{name}.json"
+        # Destination files
+        preview_dest = CATALOG_DIR / "previews" / f"{theme_name}.png"
+        manifest_dest = CATALOG_DIR / "manifests" / f"{theme_name}.json"
 
         # Create directories if they don't exist
         os.makedirs(os.path.dirname(preview_dest), exist_ok=True)
         os.makedirs(os.path.dirname(manifest_dest), exist_ok=True)
 
-        # Copy files
+        # Copy preview
         shutil.copy2(preview_src, preview_dest)
-        shutil.copy2(manifest_src, manifest_dest)
+        print(f"Copied preview: {preview_src} -> {preview_dest}")
 
-        print(f"Copied preview and manifest to .metadata directory")
+        # Convert YAML manifest to JSON and copy
+        with open(manifest_src, 'r') as f:
+            manifest_data = yaml.safe_load(f)
 
-        # Return relative paths from REPO_ROOT
-        preview_rel_path = str(preview_dest.relative_to(REPO_ROOT))
-        manifest_rel_path = str(manifest_dest.relative_to(REPO_ROOT))
+        with open(manifest_dest, 'w') as f:
+            json.dump(manifest_data, f, indent=2)
+        print(f"Converted and copied manifest: {manifest_src} -> {manifest_dest}")
 
-        return preview_rel_path, manifest_rel_path
-    except Exception as e:
-        print(f"Error copying to metadata: {e}")
-        return None, None
-
-def extract_metadata_from_manifest(manifest_path):
-    """Extract author and description from manifest.json"""
-    try:
-        with open(manifest_path, 'r') as f:
-            manifest_data = json.load(f)
-
-        # Check if it's a theme or component
-        if "theme_info" in manifest_data:
-            author = manifest_data.get("theme_info", {}).get("author", "Unknown")
-            description = manifest_data.get("theme_info", {}).get("name", os.path.basename(manifest_path).replace(".json", ""))
-        else:
-            author = manifest_data.get("component_info", {}).get("author", "Unknown")
-            description = manifest_data.get("component_info", {}).get("name", os.path.basename(manifest_path).replace(".json", ""))
-
-        # Extract systems for overlays
-        systems = None
-        if "content" in manifest_data and "systems" in manifest_data["content"]:
-            systems = manifest_data["content"]["systems"]
-            if isinstance(systems, list):
-                systems.sort()
-
-        return {
-            "author": author,
-            "description": description,
-            "systems": systems
-        }
-    except Exception as e:
-        print(f"Error extracting metadata from manifest: {e}")
-        return {
-            "author": "Unknown",
-            "description": os.path.basename(manifest_path).replace(".json", ""),
-            "systems": None
-        }
-
-def update_catalog(submission, preview_path, manifest_path, package_url):
-    """Update catalog.json with the new entry"""
-    catalog_path = CATALOG_DIR / "catalog.json"
-
-    # Create catalog.json if it doesn't exist
-    if not catalog_path.exists():
-        initial_catalog = {
-            "last_updated": datetime.utcnow().isoformat() + "Z",
-            "themes": {},
-            "components": {
-                "accents": {},
-                "leds": {},
-                "icons": {},
-                "fonts": {},
-                "wallpapers": {},
-                "overlays": {}
-            }
-        }
-        with open(catalog_path, 'w') as f:
-            json.dump(initial_catalog, f, indent=2)
-
-    # Load existing catalog
-    try:
-        with open(catalog_path, 'r') as f:
-            catalog = json.load(f)
-    except Exception as e:
-        print(f"Error loading catalog: {e}")
-        return False
-
-    # Extract metadata from manifest (but use submission author as primary source)
-    manifest_full_path = REPO_ROOT / manifest_path
-    metadata = extract_metadata_from_manifest(manifest_full_path)
-
-    # Create entry - Use author from submission (prioritize it over manifest)
-    entry = {
-        "preview_path": preview_path,
-        "manifest_path": manifest_path,
-        "author": submission["author"],  # Use author from submission
-        "description": metadata["description"],
-        "URL": package_url,
-        "last_updated": datetime.utcnow().isoformat() + "Z"
-    }
-
-    # Add repository info if it's a repository submission
-    if submission["submission_method"] == "repository":
-        entry["repository"] = submission.get("url", submission.get("repository_url", ""))
-        entry["commit"] = submission["commit"]
-        if "branch" in submission and submission["branch"] != "None":
-            entry["branch"] = submission["branch"]
-        else:
-            entry["branch"] = "main"
-
-    # Add systems for overlays
-    if submission["type"] == "overlay" and metadata["systems"]:
-        entry["systems"] = metadata["systems"]
-
-    # Update catalog
-    name = submission["name"]
-    component_type = submission["type"]
-
-    if component_type == "theme":
-        # Add to themes section at the beginning
-        themes = catalog.get("themes", {})
-
-        # Create a new dictionary with the new entry first
-        new_themes = {name: entry}
-
-        # Add all other entries
-        for theme_name, theme_info in themes.items():
-            if theme_name != name:  # Skip the current one if it exists
-                new_themes[theme_name] = theme_info
-
-        catalog["themes"] = new_themes
-    else:
-        # Add to components section at the beginning
-        # Use the consistent mapping instead of deriving from file extension
-        comp_type_key = CATALOG_COMPONENT_KEYS[component_type]
-        components = catalog.get("components", {}).get(comp_type_key, {})
-
-        # Create a new dictionary with the new entry first
-        new_components = {name: entry}
-
-        # Add all other entries
-        for comp_name, comp_info in components.items():
-            if comp_name != name:  # Skip the current one if it exists
-                new_components[comp_name] = comp_info
-
-        catalog["components"][comp_type_key] = new_components
-
-    # Update last_updated timestamp
-    catalog["last_updated"] = datetime.utcnow().isoformat() + "Z"
-
-    # Save catalog
-    try:
-        with open(catalog_path, 'w') as f:
-            json.dump(catalog, f, indent=2)
-        print(f"Updated catalog.json with {name}")
         return True
     except Exception as e:
-        print(f"Error saving catalog: {e}")
+        print(f"Error copying metadata files: {e}")
         return False
 
-# Add a new function to process URL-based submissions
-def process_url_submission(submission):
-    """Process a submission with a direct download URL"""
-    name = submission["name"]
-    component_type = submission["type"]
-    download_url = submission["url"]
+def extract_zip_to_theme_dir(zip_path, theme_name):
+    """Extract a zip file to the Themes directory"""
+    theme_dir = THEMES_DIR / theme_name
 
-    print(f"Processing URL submission: {name}")
-    print(f"Download URL: {download_url}")
+    try:
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            # Create theme directory
+            os.makedirs(theme_dir, exist_ok=True)
 
-    # Clean up existing entry
-    clean_existing_entry(submission)
+            # Extract files, handling nested directories
+            file_list = zip_ref.namelist()
 
-    # Create a temporary file to download the zip
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.zip') as temp_file:
-        temp_path = temp_file.name
-        print(f"Downloading to temporary file: {temp_path}")
+            # Check for common root directory
+            common_root = None
+            for item in file_list:
+                if "__MACOSX" in item:
+                    continue
+                parts = item.split('/')
+                if len(parts) > 1 and parts[0] and not common_root:
+                    common_root = parts[0]
+                elif len(parts) > 1 and parts[0] and parts[0] != common_root:
+                    common_root = None
+                    break
 
-        try:
-            # Create SSL context that ignores certificate validation for some hosting services
-            context = ssl._create_unverified_context()
+            # Extract files
+            for item in file_list:
+                if "__MACOSX" in item:
+                    continue
 
-            # Download the file
-            print(f"Starting download from {download_url}")
-            urllib.request.urlretrieve(download_url, temp_path)
-            print(f"Download complete: {os.path.getsize(temp_path)} bytes")
+                # Determine target path
+                if common_root and item.startswith(common_root + '/'):
+                    relative_path = item[len(common_root) + 1:]
+                    if not relative_path:  # Skip root directory entry
+                        continue
+                    target_path = theme_dir / relative_path
+                else:
+                    target_path = theme_dir / item
 
-            # Validate package contents
-            if not validate_package_contents(temp_path):
-                os.unlink(temp_path)
-                return False
+                # Skip directories
+                if item.endswith('/'):
+                    continue
 
+                # Create directory structure
+                os.makedirs(os.path.dirname(target_path), exist_ok=True)
 
-            # Copy to Packages directory
-            package_dir = PACKAGES_DIR / (component_type + "s")  # Add 's' to get themes, wallpapers, etc.
-            os.makedirs(package_dir, exist_ok=True)
+                # Extract file
+                with zip_ref.open(item) as source_file, open(target_path, 'wb') as target_file:
+                    shutil.copyfileobj(source_file, target_file)
 
-            package_path = package_dir / f"{name}.zip"
-            shutil.copy2(temp_path, package_path)
-            print(f"Copied to {package_path}")
+        print(f"Extracted zip to: {theme_dir}")
+        return theme_dir
+    except Exception as e:
+        print(f"Error extracting zip file: {e}")
+        return None
 
-            # Extract package to Catalog
-            catalog_type_dir = CATALOG_DIR_MAPPINGS[component_type]
-            extract_dir = CATALOG_DIR / catalog_type_dir / name
-            os.makedirs(extract_dir, exist_ok=True)
+def download_file(url, local_path):
+    """Download a file from a URL"""
+    try:
+        # Create directory structure
+        os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
-            if not extract_package(package_path, extract_dir):
-                os.unlink(temp_path)
-                return False
+        # Create SSL context for some hosting services
+        context = ssl._create_unverified_context()
 
-            # Copy to .metadata directory
-            preview_path, manifest_path = copy_to_metadata(extract_dir, component_type, name)
-            if not preview_path or not manifest_path:
-                os.unlink(temp_path)
-                return False
+        # Download file
+        urllib.request.urlretrieve(url, local_path)
+        print(f"Downloaded: {url} -> {local_path}")
+        return True
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+        return False
 
-            # Generate package URL (use the original download URL)
-            package_url = download_url
+def update_catalog(submission, theme_name):
+    """Update catalog.yml with the new theme entry"""
+    catalog = load_catalog_yml()
+    if not catalog:
+        return False
 
-            # Update catalog
-            if not update_catalog(submission, preview_path, manifest_path, package_url):
-                os.unlink(temp_path)
-                return False
+    # Create theme entry
+    theme_entry = {
+        "author": submission["author"],
+        "description": theme_name.replace(".theme", ""),  # Use theme name as description
+        "last_updated": datetime.utcnow().isoformat() + "Z",
+        "preview_path": f"Catalog/previews/{theme_name}.png",
+        "manifest_path": f"Catalog/manifests/{theme_name}.json",
+        "theme_path": f"Themes/{theme_name}"
+    }
 
-            print(f"Successfully processed zip_url submission: {name}")
-            os.unlink(temp_path)
-            return True
-        except Exception as e:
-            print(f"Error processing zip_url submission: {e}")
-            os.unlink(temp_path)
-            return False
+    # Add source information if it's a repository submission
+    if submission["submission_method"] == "repository":
+        theme_entry["source"] = {
+            "repository": submission["url"],
+            "commit": submission["commit"],
+            "branch": submission.get("branch", "main")
+        }
+
+    # Add theme to catalog (at the beginning to maintain insertion order)
+    themes = catalog.get("themes", {})
+    new_themes = {theme_name: theme_entry}
+
+    # Add all other themes
+    for name, info in themes.items():
+        if name != theme_name:  # Skip if already exists
+            new_themes[name] = info
+
+    catalog["themes"] = new_themes
+
+    return save_catalog_yml(catalog)
 
 def process_repository_submission(submission):
     """Process a repository submission"""
-    name = submission["name"]
-    component_type = submission["type"]
-    repo_url = submission["url"]  # Changed from repository_url to url
-    commit = submission["commit"]
-    branch = submission["branch"]
+    theme_name = submission["name"]
+    print(f"Processing repository submission: {theme_name}")
 
-    print(f"Processing repository submission: {name}")
+    # Clean existing theme
+    clean_existing_theme(theme_name)
 
-    # Clean up existing entry
-    clean_existing_entry(submission)
-
-    # Create a temporary directory for cloning
+    # Clone to temporary directory
     with tempfile.TemporaryDirectory() as temp_dir:
-        # Clone repository
-        if not clone_repository(repo_url, commit, branch, temp_dir):
+        if not clone_repository(submission["url"], submission["commit"],
+                                submission.get("branch", "main"), temp_dir):
             return False
 
-        # Create a package file
-        package_dir = PACKAGES_DIR / (component_type + "s")  # Add 's' to get themes, wallpapers, etc.
-        os.makedirs(package_dir, exist_ok=True)
+        temp_path = Path(temp_dir)
 
-        package_path = package_dir / f"{name}.zip"
-        if not create_zip_file(temp_dir, package_path):
+        # Validate theme structure
+        if not validate_theme_structure(temp_path):
             return False
 
-        # Validate package contents
-        if not validate_package_contents(package_path):
+        # Copy to Themes directory
+        theme_dir = THEMES_DIR / theme_name
+        os.makedirs(THEMES_DIR, exist_ok=True)
+        shutil.copytree(temp_path, theme_dir)
+        print(f"Copied theme to: {theme_dir}")
+
+        # Copy metadata files
+        if not copy_metadata_files(theme_dir, theme_name):
             return False
-
-        # Extract package to Catalog
-        catalog_type_dir = CATALOG_DIR_MAPPINGS[component_type]
-        extract_dir = CATALOG_DIR / catalog_type_dir / name
-        os.makedirs(extract_dir, exist_ok=True)
-
-        if not extract_package(package_path, extract_dir):
-            return False
-
-        # Copy to .metadata directory
-        preview_path, manifest_path = copy_to_metadata(extract_dir, component_type, name)
-        if not preview_path or not manifest_path:
-            return False
-
-        # Generate package URL
-        package_url = f"https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/{component_type}s/{name}.zip"
 
         # Update catalog
-        if not update_catalog(submission, preview_path, manifest_path, package_url):
+        if not update_catalog(submission, theme_name):
             return False
 
-        print(f"Successfully processed repository submission: {name}")
+        print(f"Successfully processed repository submission: {theme_name}")
         return True
 
 def process_zip_submission(submission):
     """Process a zip submission"""
-    name = submission["name"]
-    component_type = submission["type"]
+    theme_name = submission["name"]
+    print(f"Processing zip submission: {theme_name}")
 
-    print(f"Processing zip submission: {name}")
-
-    # Clean up existing entry
-    clean_existing_entry(submission)
+    # Clean existing theme
+    clean_existing_theme(theme_name)
 
     # Source zip file
-    source_zip = UPLOAD_DIR / f"{name}.zip"
+    source_zip = UPLOAD_DIR / f"{theme_name}.zip"
 
-    # Validate package contents
-    if not validate_package_contents(source_zip):
+    # Extract to Themes directory
+    theme_dir = extract_zip_to_theme_dir(source_zip, theme_name)
+    if not theme_dir:
         return False
 
-    # Copy to Packages directory
-    package_dir = PACKAGES_DIR / (component_type + "s")  # Add 's' to get themes, wallpapers, etc.
-    os.makedirs(package_dir, exist_ok=True)
-
-    package_path = package_dir / f"{name}.zip"
-    shutil.copy2(source_zip, package_path)
-    print(f"Copied {source_zip} to {package_path}")
-
-    # Extract package to Catalog
-    catalog_type_dir = CATALOG_DIR_MAPPINGS[component_type]
-    extract_dir = CATALOG_DIR / catalog_type_dir / name
-    os.makedirs(extract_dir, exist_ok=True)
-
-    if not extract_package(package_path, extract_dir):
+    # Validate theme structure
+    if not validate_theme_structure(theme_dir):
         return False
 
-    # Copy to .metadata directory
-    preview_path, manifest_path = copy_to_metadata(extract_dir, component_type, name)
-    if not preview_path or not manifest_path:
+    # Copy metadata files
+    if not copy_metadata_files(theme_dir, theme_name):
         return False
-
-    # Generate package URL
-    package_url = f"https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/{component_type}s/{name}.zip"
 
     # Update catalog
-    if not update_catalog(submission, preview_path, manifest_path, package_url):
+    if not update_catalog(submission, theme_name):
         return False
 
-    # Remove the original zip file from the Upload directory after successful processing
+    # Remove original zip file
     try:
         os.remove(source_zip)
-        print(f"Removed original zip file from Upload directory: {source_zip}")
+        print(f"Removed original zip file: {source_zip}")
     except Exception as e:
-        print(f"Warning: Could not remove original zip file {source_zip}: {e}")
+        print(f"Warning: Could not remove original zip file: {e}")
 
-    print(f"Successfully processed zip submission: {name}")
+    print(f"Successfully processed zip submission: {theme_name}")
     return True
 
-def reset_push_json():
-    """Reset push.json after successful processing"""
+def process_url_submission(submission):
+    """Process a URL submission"""
+    theme_name = submission["name"]
+    print(f"Processing URL submission: {theme_name}")
+
+    # Clean existing theme
+    clean_existing_theme(theme_name)
+
+    # Download to temporary file
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.zip') as temp_file:
+        temp_path = temp_file.name
+
+        try:
+            if not download_file(submission["url"], temp_path):
+                return False
+
+            # Extract to Themes directory
+            theme_dir = extract_zip_to_theme_dir(temp_path, theme_name)
+            if not theme_dir:
+                return False
+
+            # Validate theme structure
+            if not validate_theme_structure(theme_dir):
+                return False
+
+            # Copy metadata files
+            if not copy_metadata_files(theme_dir, theme_name):
+                return False
+
+            # Update catalog
+            if not update_catalog(submission, theme_name):
+                return False
+
+            print(f"Successfully processed URL submission: {theme_name}")
+            return True
+        finally:
+            # Clean up temp file
+            try:
+                os.unlink(temp_path)
+            except:
+                pass
+
+def reset_push_yml():
+    """Reset push.yml after successful processing"""
     empty_push = {
         "submission": []
     }
 
     try:
-        with open(PUSH_JSON_PATH, 'w') as f:
-            json.dump(empty_push, f, indent=2)
-        print("Reset push.json to empty state")
+        with open(PUSH_YML_PATH, 'w') as f:
+            yaml.dump(empty_push, f, default_flow_style=False)
+        print("Reset push.yml to empty state")
         return True
     except Exception as e:
-        print(f"Error resetting push.json: {e}")
+        print(f"Error resetting push.yml: {e}")
         return False
 
 def main():
-    """Main function to process push.json"""
-    print("Starting push.json processing")
+    """Main function to process push.yml"""
+    print("Starting push.yml processing")
 
     # Create necessary directories
     os.makedirs(UPLOAD_DIR, exist_ok=True)
-    os.makedirs(PACKAGES_DIR, exist_ok=True)
-    os.makedirs(CATALOG_DIR, exist_ok=True)
-    os.makedirs(METADATA_DIR / "previews", exist_ok=True)
-    os.makedirs(METADATA_DIR / "manifests", exist_ok=True)
+    os.makedirs(THEMES_DIR, exist_ok=True)
+    os.makedirs(CATALOG_DIR / "previews", exist_ok=True)
+    os.makedirs(CATALOG_DIR / "manifests", exist_ok=True)
 
-    # Load push.json
-    push_data = load_push_json()
+    # Load push.yml
+    push_data = load_push_yml()
     if not push_data:
-        print("Failed to load push.json, aborting")
+        print("Failed to load push.yml, aborting")
         return False
 
-    # Check if push.json has submissions
+    # Check if push.yml has submissions
     if "submission" not in push_data or not push_data["submission"]:
-        print("No submissions found in push.json")
+        print("No submissions found in push.yml")
         return True
 
     # Process each submission
@@ -766,17 +518,16 @@ def main():
                 print(f"Failed to process URL submission: {submission['name']}")
                 success = False
 
-    # Reset push.json if all submissions were processed successfully
+    # Reset push.yml if all submissions were processed successfully
     if success:
-        if not reset_push_json():
-            print("Warning: Failed to reset push.json")
+        if not reset_push_yml():
+            print("Warning: Failed to reset push.yml")
             success = False
 
-    print("Push.json processing complete" if success else "Push.json processing completed with errors")
+    print("Push.yml processing complete" if success else "Push.yml processing completed with errors")
     return success
 
 if __name__ == "__main__":
     success = main()
     if not success:
-        # Exit with error code if there were any failures
         exit(1)
