@@ -34,6 +34,21 @@ Repository for NextUI themes and component packages.
 
 <td align="center" valign="top" width="33%">
 
+<a href="./Packages/themes/ArtBookOutlineNextUI.theme.zip">
+<img title="Name: Art Book Outline NextUI&#013;Author: Chris Nash&#013;Last updated: 2026-03-24&#013;(Click to download)" width="480px" src="./Catalog/Themes/ArtBookOutlineNextUI.theme/preview.png" /><br/>
+<b>Art Book Outline NextUI</b>
+</a><br/>
+<sup><i>Chris Nash</i></sup><br>
+<sub>
+<sup><a title="Last updated: 2026-03-24" href="./Catalog/Themes/ArtBookOutlineNextUI.theme">2026-03-24</a></sup>
+
+</sub>
+</td>
+
+</tr><tr>
+
+<td align="center" valign="top" width="33%">
+
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Fallout.theme.zip">
 <img title="Name: Fallout&#013;Author: Soko&#013;Last updated: 2025-04-29&#013;(Click to download)" width="480px" src="https://github.com/Leviathanium/NextUI-Themes/raw/main/Catalog/.metadata/previews/Fallout.theme.png" /><br/>
 <b>Fallout</b>
@@ -44,7 +59,7 @@ Repository for NextUI themes and component packages.
 
 </sub>
 </td>
-</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Nao-Black.theme.zip">
@@ -71,6 +86,8 @@ Repository for NextUI themes and component packages.
 </sub>
 </td>
 
+</tr><tr>
+  
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Pearly-Gate.theme.zip">
@@ -83,7 +100,7 @@ Repository for NextUI themes and component packages.
 
 </sub>
 </td>
-</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Game-Rentals.theme.zip">
@@ -110,6 +127,8 @@ Repository for NextUI themes and component packages.
 </sub>
 </td>
 
+</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Pop-Tarts-Clean.theme.zip">
@@ -122,7 +141,7 @@ Repository for NextUI themes and component packages.
 
 </sub>
 </td>
-</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Pop-Tarts.theme.zip">
@@ -149,6 +168,8 @@ Repository for NextUI themes and component packages.
 </sub>
 </td>
 
+</tr><tr>
+
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Consolized.theme.zip">
@@ -161,7 +182,7 @@ Repository for NextUI themes and component packages.
 
 </sub>
 </td>
-</tr><tr>
+  
 <td align="center" valign="top" width="33%">
 
 <a href="https://github.com/Leviathanium/NextUI-Themes/raw/main/Packages/themes/Default.theme.zip">
